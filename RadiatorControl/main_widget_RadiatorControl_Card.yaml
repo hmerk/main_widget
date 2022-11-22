@@ -1,0 +1,227 @@
+uid: main_widget_RadiatorControl_Card
+tags: []
+props:
+  parameters:
+    - description: Title of the card
+      label: Title
+      name: Title
+      required: false
+      type: TEXT
+    - context: item
+      description: Temperature Equipment Group
+      label: Temperature Equipment Group
+      name: groupItem
+      required: false
+      type: TEXT
+component: f7-card
+config:
+  noShadow: false
+  padding: false
+  style:
+    padding: 0px
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 15px 1px rgba(0,0,0,0.05)
+    background: RGB(247, 247, 247)
+    margin-left: 5px
+    margin-right: 5px
+    height: auto
+  stylesheet: >
+    .card-header:after {
+      display: none;
+    }
+slots:
+  default:
+    - component: f7-card-header
+      config: {}
+      slots:
+        default:
+          - component: oh-icon
+            config:
+              icon: iconify:ph:flame-duotone
+              width: 40px
+              style:
+                position: absolute
+                top: 25px
+                color: rgb(106,106,106)
+          - component: f7-block
+            config:
+              style:
+                position: absolute
+                left: 60px
+                margin-top: 4%
+                margin-bottom: 10%
+            slots:
+              default:
+                - component: Label
+                  config:
+                    style:
+                      font-size: 15px
+                      font-weight: 500
+                    text: =props.Title
+          - component: f7-row
+            config:
+              style:
+                margin-left: 50px
+                margin-top: 6%
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    style:
+                      width: auto
+                  slots:
+                    default:
+                      - component: oh-repeater
+                        config:
+                          fetchMetadata: semantics,metadata,listWidget
+                          for: tempItem
+                          sourceType: itemsWithTags
+                          itemTags: Measurement,Temperature
+                          filter: "(loop.tempItem.groupNames.indexOf(props.groupItem) >= 0) ? true : false"
+                        slots:
+                          default:
+                            - component: f7-chip
+                              config:
+                                text: =items[loop.tempItem.name].state
+                                style:
+                                  font-weight: 500
+                - component: f7-col
+                  config:
+                    style:
+                      width: auto
+                      position: absolute
+                      margin-left: 80px
+                  slots:
+                    default:
+                      - component: oh-repeater
+                        config:
+                          fetchMetadata: semantics,metadata,listWidget
+                          for: setpointItem
+                          sourceType: itemsWithTags
+                          itemTags: Setpoint,Temperature
+                          filter: "(loop.setpointItem.groupNames.indexOf(props.groupItem) >= 0) ? true : false"
+                        slots:
+                          default:
+                            - component: f7-chip
+                              config:
+                                text: =items[loop.setpointItem.name].state
+                                style:
+                                  color: red
+                                  background: none
+                                  font-weight: 500
+    - component: f7-card-content
+      config:
+        style:
+          height: auto
+      slots:
+        default:
+          - component: f7-row
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    width: 60
+                  slots:
+                    default:
+                      - component: oh-repeater
+                        config:
+                          fetchMetadata: semantics,metadata,listWidget
+                          for: tempItem
+                          sourceType: itemsWithTags
+                          itemTags: Measurement,Temperature
+                          filter: "(loop.tempItem.groupNames.indexOf(props.groupItem) >= 0) ? true : false"
+                        slots:
+                          default:
+                            - component: oh-trend
+                              config:
+                                trendItem: =loop.tempItem.name
+                                trendGradient:
+                                  - red
+                                style:
+                                  --f7-theme-color-bg-color: transparent
+                                  background: var(--f7-theme-color-bg-color)
+                                  filter: opacity(100%)
+                                  margin-top: -5%
+                                  height: 50
+                                  z-index: 98
+          - component: f7-col
+            config: {}
+            slots:
+              default:
+                - component: oh-repeater
+                  config:
+                    fetchMetadata: semantics,metadata,listWidget
+                    for: setpointItem
+                    sourceType: itemsWithTags
+                    itemTags: Setpoint,Temperature
+                    filter: "(loop.setpointItem.groupNames.indexOf(props.groupItem) >= 0) ? true : false"
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          iconF7: arrow_up_circle
+                          iconColor: RGB(231, 66, 57)
+                          iconSize: 35
+                          action: command
+                          actionItem: =loop.setpointItem.name
+                          actionCommand: =Number(items[loop.setpointItem.name].state.split(' ')[0]) + 0.5
+                          style:
+                            position: absolute
+                            bottom: 10%
+                            right: 20%
+                            height: 35px
+                            background: transparent
+                            z-index: 98
+                      - component: oh-button
+                        config:
+                          iconF7: arrow_down_circle
+                          iconColor: RGB(231, 66, 57)
+                          iconSize: 35
+                          action: command
+                          actionItem: =loop.setpointItem.name
+                          actionCommand: =Number(items[loop.setpointItem.name].state.split(' ')[0]) - 0.5
+                          style:
+                            position: absolute
+                            bottom: 10%
+                            right: 5%
+                            height: 35px
+                            background: transparent
+                            z-index: 98
+    - component: f7-card-footer
+      config:
+        style:
+          height: auto
+          background: RGB(242, 242, 242)
+          border-radius: 0 0 var(--f7-card-expandable-border-radius) var(--f7-card-expandable-border-radius)
+          --f7-card-footer-border-color: transparent
+      slots:
+        default:
+          - component: oh-repeater
+            config:
+              fetchMetadata: semantics,metadata,listWidget
+              for: modeItem
+              sourceType: itemsWithTags
+              itemTags: Control,Temperature
+              filter: '((loop.modeItem.groupNames.indexOf(props.groupItem) >= 0) && (loop.modeItem.type=="String")) ? true : false'
+            slots:
+              default:
+                - component: f7-block
+                  config:
+                    style:
+                      width: 150px
+                      padding: 0
+                      display: flex
+                      justify-content: space-between
+                      margin-top: 0px
+                      margin-left: 10px
+                  slots:
+                    default:
+                      - component: oh-link
+                        config:
+                          action: options
+                          actionItem: =loop.modeItem.name
+                        slots:
+                          default:
+                            - component: f7-chip
+                              config:
+                                text: "=items[loop.modeItem.name].displayState ? items[loop.modeItem.name].displayState : items.items[loop.modeItem.name].state"
