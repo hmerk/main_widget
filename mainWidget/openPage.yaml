@@ -1,0 +1,32 @@
+config:
+  label: openPage
+  sidebar: true
+  hideNavbar: true
+  showFullscreenIcon: false
+  hideSidebarIcon: true
+  style:
+    --f7-block-padding-horizontal: 0px
+    --f7-navbar-height: 0
+blocks:
+  - component: oh-block
+    config:
+      stylesheet: |
+        .block:first-child{
+          margin-top: 15px;
+          }
+    slots:
+      default:
+        - component: oh-grid-row
+          config: {}
+          slots:
+            default:
+              - component: oh-grid-col
+                config: {}
+                slots:
+                  default:
+                    - component: widget:main_widget
+                      config:
+                        locationTitle:
+                        scenesGroup:
+masonry: null
+grid: []
