@@ -1,0 +1,48 @@
+uid: main_widget_Home_Card
+tags: []
+props:
+  parameters:
+    - description: Name for your weather location
+      label: Weather Location
+      name: locationTitle
+      required: false
+      type: TEXT
+    - context: item
+      description: Name of scenes group item
+      label: Scenes Group
+      name: scenesGroup
+      required: false
+      type: TEXT
+  parameterGroups: []
+component: f7-block
+config:
+  style:
+    flex: 1 1 auto
+    overflow: scroll
+    margin-top: -1em
+    margin-bottom: -1em
+slots:
+  default:
+    - component: widget:main_widget_Weather_Card
+      config:
+        bigCard: true
+        dateFormat: true
+        locationTitle: =props.locationTitle
+        sunIndicator: true
+        visible: '=(!vars.objVar || ((vars.objVar.selectSection=="SECTION0") && !vars.objVar.selectThing)) ? true : false'
+    - component: oh-repeater
+      config:
+        fetchMetadata: semantics,metadata,listWidget
+        for: sceneItem
+        groupItem: =props.scenesGroup
+        sourceType: itemsInGroup
+      slots:
+        default:
+          - component: widget:main_widget_Scene_Card
+            config:
+              scene: =loop.sceneItem.name
+              sceneName: =loop.sceneItem.label
+              visible: '=vars.objVar ? ((vars.objVar.selectSection + vars.objVar.selectThing)=="SECTION0Scenes") ? true : false : false'
+    - component: widget:main_widget_Security_Card
+      config:
+        visible: '=vars.objVar ? ((vars.objVar.selectSection + vars.objVar.selectThing)=="SECTION0Security") ? true : false : false'
