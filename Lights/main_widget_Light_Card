@@ -1,0 +1,171 @@
+uid: main_widget_Light_Card
+tags: []
+props:
+  parameters:
+    - context: item
+      description: Light Equipment Group
+      label: Light Equipment Group
+      name: groupItem
+      required: false
+      type: TEXT
+    - context: item
+      description: Light Power Item
+      label: Light Power Item
+      name: powerItem
+      required: false
+      type: TEXT
+timestamp: Oct 6, 2022, 12:03:46 PM
+component: f7-block
+config:
+  style:
+    padding: 0px
+    border-top-left-radius: var(--f7-card-expandable-border-radius)
+    border-top-right-radius: var(--f7-card-expandable-border-radius)
+    border-bottom-left-radius: var(--f7-card-expandable-border-radius)
+    border-bottom-right-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 15px 1px rgba(0,0,0,0.05)
+    background: RGB(247, 247, 247)
+slots:
+  default:
+    - component: f7-block
+      config:
+        style:
+          height: 60px
+          background: RGB(247, 247, 247)
+          display: flex
+          flex-direction: row
+          align-items: center
+      slots:
+        default:
+          - component: oh-icon
+            config:
+              icon: f7:lightbulb_fill
+              width: 40px
+              style:
+                color: '=items[props.powerItem].state=="ON" ? "yellow" : "gray"'
+          - component: f7-row
+            config:
+              style:
+                display: flex
+                flex-direction: row
+                justify-content: flex-end
+                align-self: flex-end
+                flex-wrap: nowrap
+                flex: 1 1 auto
+            slots:
+              default:
+                - component: Label
+                  config:
+                    text: =props.groupItem
+                - component: f7-row
+                  config:
+                    style:
+                      display: flex
+                      flex-direction: row
+                      justify-content: flex-end
+                      align-self: flex-end
+                      flex-wrap: nowrap
+                      flex: 1 1 auto
+                  slots:
+                    default:
+                      - component: oh-toggle
+                        config:
+                          item: =props.powerItem
+                          color: orange
+                          style:
+                            display: flex
+                            flex-direction: row
+                            justify-content: flex-end
+                            align-self: flex-end
+    - component: oh-repeater
+      config:
+        fetchMetadata: semantics,metadata,listWidget
+        for: dimmerItem
+        groupItem: =props.groupItem
+        sourceType: itemsInGroup
+        filter: '(loop.dimmerItem.type=="Dimmer") ? true : false'
+      slots:
+        default:
+          - component: f7-card-content
+            config:
+              style:
+                margin-bottom: -1rem
+                --f7-range-bar-size: 2px
+                --f7-range-bar-border-radius: 0
+                --f7-range-bar-border-color: rgba(0, 0, 0, 0.2)
+                --f7-range-knob-size: 25px
+                --f7-range-knob-color: white
+                --f7-range-knob-box-shadow: none
+                --f7-range-bar-active-bg-color: transparent
+              stylesheet: >
+                .range-bar  {
+                  opacity: 0.3;
+                } .range-knob {
+                  border-color: rgba(0, 0, 0, 0.3);
+                  border-width: 2px;
+                  border-style: solid;
+                }
+            slots:
+              default:
+                - component: Label
+                  config:
+                    text: Brightness
+                    style:
+                      color: black
+                      font-size: 13px
+                      font-weight: var(--f7-list-item-footer-font-weight)
+                      margin-left: 1rem
+                      line-height: 0.5
+                    visible: =items[props.powerItem].state=="ON"
+                - component: oh-slider
+                  config:
+                    item: =loop.dimmerItem.name
+                    min: 0
+                    max: 100
+                    style:
+                      width: calc(100% - 1rem)
+                      margin-top: 15px
+                    visible: =items[props.powerItem].state=="ON"
+    - component: oh-repeater
+      config:
+        fetchMetadata: semantics,metadata,listWidget
+        for: colorItem
+        groupItem: =props.groupItem
+        sourceType: itemsInGroup
+        filter: '(loop.colorItem.type=="Color") ? true : false'
+      slots:
+        default:
+          - component: Label
+            config:
+              text: RGB Colors
+              style:
+                color: black
+                font-size: 13px
+                font-weight: var(--f7-list-item-footer-font-weight)
+                margin-left: 2rem
+                line-height: 0.5
+                margin-top: 15px
+              visible: =items[props.powerItem].state=="ON"
+          - component: oh-colorpicker
+            config:
+              item: =loop.colorItem.name
+              modules:
+                - rgb-sliders
+              style:
+              visible: =items[props.powerItem].state=="ON"
+    - component: f7-block
+      config:
+        style:
+          height: 50px
+          background: RGB(242, 242, 242)
+          border-radius: 0 0 var(--f7-card-expandable-border-radius) var(--f7-card-expandable-border-radius)
+          --f7-card-footer-border-color: transparent
+          display: flex
+          flex-direction: row
+          flex-wrap: nowrap
+          align-items: center
+      slots:
+        default:
+          - component: oh-link
+            config:
+              visible: false```
