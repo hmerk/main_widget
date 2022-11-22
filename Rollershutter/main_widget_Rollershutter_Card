@@ -1,0 +1,523 @@
+uid: main_widget_Rollershutter_Card
+tags: []
+props:
+  parameters:
+    - description: Title of the card
+      label: Title
+      name: Title
+      required: false
+      type: TEXT
+    - context: item
+      description: Group to control
+      label: Rollershutter Group
+      name: RollerGroup
+      required: true
+      type: TEXT
+    - context: item
+      description: Item to control
+      label: Rollershutter Item
+      name: RollerItem
+      required: true
+      type: TEXT
+    - context: item
+      description: Rollershutter Mode
+      label: Rollershutter Mode Item
+      name: RollerMode
+      required: true
+      type: TEXT
+timestamp: Nov 3, 2022, 10:16:58 PM
+component: f7-block
+config:
+  style:
+    background: "#F7F7F7"
+    border-bottom-left-radius: var(--f7-card-expandable-border-radius)
+    border-bottom-right-radius: var(--f7-card-expandable-border-radius)
+    border-top-left-radius: var(--f7-card-expandable-border-radius)
+    border-top-right-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 15px 1px rgba(0,0,0,0.05)
+    padding: 0px
+slots:
+  default:
+    - component: f7-block
+      config:
+        style:
+          align-items: center
+          background: transparent
+          display: flex
+          flex-direction: row
+          height: 60px
+      slots:
+        default:
+          - component: oh-icon
+            config:
+              icon: iconify:mdi:window-shutter
+              style:
+                margin-left: 5px
+                color: rgb(106,106,106)
+                padding-right: 15px
+              width: 40px
+          - component: f7-row
+            config:
+              style:
+                display: flex
+                flex-direction: column
+                flex-wrap: nowrap
+            slots:
+              default:
+                - component: Label
+                  config:
+                    style:
+                      align-self: flex-end
+                      display: flex
+                      flex: 1 1 auto
+                      flex-direction: row
+                      flex-wrap: nowrap
+                      font-size: 14px
+                      font-weight: 400
+                      justify-content: flex-end
+                      padding-top: 10px
+                      color: black
+                    text: =props.Title
+                - component: f7-row
+                  config:
+                    style:
+                      display: flex
+                      flex-direction: row
+                  slots:
+                    default:
+                      - component: f7-chip
+                        config:
+                          style:
+                            background-color: '=(Number(items[props.RollerItem].state.split(" ")[0])==0) ? "#6A6A6A" : (Number(items[props.RollerItem].state.split(" ")[0])==100) ? "#6A6A6A" : "Transparent"'
+                            color: '=(Number(items[props.RollerItem].state.split(" ")[0])==0) ? "white" : (Number(items[props.RollerItem].state.split(" ")[0])==100) ? "white" : "#6A6A6A"'
+                            font-size: 16px
+                            font-weight: 200
+                            justify-content: flex-end
+                          text: '=(Number(items[props.RollerItem].state.split(" ")[0])==0) ? "OPEN" : (Number(items[props.RollerItem].state.split(" ")[0])==100) ? "CLOSED" : items[props.RollerItem].displayState ? items[props.RollerItem].displayState : items[props.RollerItem].state'
+          - component: f7-row
+            config:
+              style:
+                align-self: flex-end
+                display: flex
+                flex: 1 1 auto
+                flex-direction: row
+                flex-wrap: nowrap
+                justify-content: flex-end
+            slots:
+              default:
+                - component: oh-link
+                  config:
+                    action: toggle
+                    actionCommand: ON
+                    actionCommandAlt: OFF
+                    actionItem: =props.RollerMode
+                    style:
+                      align-self: flex-end
+                      display: flex
+                      flex-direction: row
+                      justify-content: flex-end
+                  slots:
+                    default:
+                      - component: oh-icon
+                        config:
+                          icon: iconify:material-symbols:astrophotography-auto
+                          style:
+                            color: '=items[props.RollerMode].state=="ON" ? "green" : "gray"'
+                            margin-right: 10px
+                          width: 40px
+    - component: f7-block
+      config:
+        style:
+          align-items: center
+          background: transparent
+          display: flex
+          flex-direction: row
+          height: 10px
+      slots:
+        default:
+          - component: f7-row
+            config:
+              style:
+                margin-left: 5px
+                align-self: flex-start
+                display: flex
+                flex: 1 1 auto
+                flex-direction: row
+                flex-wrap: nowrap
+                justify-content: flex-start
+            slots:
+              default:
+                - component: oh-repeater
+                  config:
+                    fetchMetadata: semantics,metadata
+                    filter: loop.openWeek.type=="DateTime" && loop.openWeek.name.includes("open") && !(loop.openWeek.name.includes("Weekend"))
+                    for: openWeek
+                    groupItem: =props.RollerGroup
+                    sourceType: itemsInGroup
+                  slots:
+                    default:
+                      - component: oh-link
+                        config:
+                          action: popover
+                          popoverOpen: ="."+loop.openWeek.name
+                          style:
+                            background: transparent
+                            color: black
+                            height: 35px
+                          text: Weekday
+                          visible: '=items[props.RollerMode].state=="ON" ? true : false'
+                        slots:
+                          default:
+                            - component: f7-chip
+                              config:
+                                style:
+                                  background-color: "#D3D3D3"
+                                  color: black
+                                text: =items[loop.openWeek.name].displayState
+                              slots:
+                                media:
+                                  - component: oh-icon
+                                    config:
+                                      color: red
+                                      icon: f7:chevron_up
+                            - component: f7-popover
+                              config:
+                                backdrop: false
+                                class: =loop.openWeek.name
+                                closeByBackdropClick: true
+                                closeByOutsideClick: true
+                                closeOnEscape: true
+                                style:
+                                  --f7-popover-border-radius: 4px
+                                  --f7-popover-width: 300px
+                              slots:
+                                default:
+                                  - component: widget:timepicker
+                                    config:
+                                      item: =loop.openWeek.name
+                                      timeFormat: 24h
+                - component: oh-repeater
+                  config:
+                    fetchMetadata: semantics,metadata
+                    filter: loop.closeWeek.type=="DateTime" && loop.closeWeek.name.includes("close") && !(loop.closeWeek.name.includes("Weekend"))
+                    for: closeWeek
+                    groupItem: =props.RollerGroup
+                    sourceType: itemsInGroup
+                  slots:
+                    default:
+                      - component: oh-link
+                        config:
+                          action: popover
+                          popoverOpen: ="."+loop.closeWeek.name
+                          style:
+                            background: transparent
+                            height: 35px
+                          visible: '=items[props.RollerMode].state=="ON" ? true : false'
+                        slots:
+                          default:
+                            - component: f7-chip
+                              config:
+                                style:
+                                  background-color: "#D3D3D3"
+                                  color: black
+                                text: =items[loop.closeWeek.name].displayState
+                              slots:
+                                media:
+                                  - component: oh-icon
+                                    config:
+                                      color: red
+                                      icon: f7:chevron_down
+                            - component: f7-popover
+                              config:
+                                backdrop: false
+                                class: =loop.closeWeek.name
+                                closeByBackdropClick: true
+                                closeByOutsideClick: true
+                                closeOnEscape: true
+                                style:
+                                  --f7-popover-border-radius: 4px
+                                  --f7-popover-width: 300px
+                              slots:
+                                default:
+                                  - component: widget:timepicker
+                                    config:
+                                      item: =loop.closeWeek.name
+                                      timeFormat: 24h
+          - component: f7-row
+            config:
+              style:
+                align-items: center
+                display: flex
+                flex: 1 1 auto
+                flex-direction: row
+                justify-content: flex-end
+                margin-top: 25px
+            slots:
+              default:
+                - component: oh-button
+                  config:
+                    action: command
+                    actionCommand: UP
+                    actionItem: =props.RollerItem
+                    iconColor: "#E74239"
+                    iconF7: arrow_up_circle
+                    iconSize: 35
+                    style:
+                      align-self: flex-end
+                      background: transparent
+                      display: flex
+                      flex-direction: row
+                      flex-wrap: nowrap
+                      height: 35px
+                      justify-content: flex-end
+                - component: oh-button
+                  config:
+                    action: command
+                    actionCommand: STOP
+                    actionItem: =props.RollerItem
+                    iconColor: "#E74239"
+                    iconF7: stop_circle
+                    iconSize: 35
+                    style:
+                      align-self: flex-end
+                      background: transparent
+                      display: flex
+                      flex-direction: row
+                      flex-wrap: nowrap
+                      height: 35px
+                      justify-content: flex-end
+                - component: oh-button
+                  config:
+                    action: command
+                    actionCommand: DOWN
+                    actionItem: =props.RollerItem
+                    iconColor: "#E74239"
+                    iconF7: arrow_down_circle
+                    iconSize: 35
+                    style:
+                      align-self: flex-end
+                      background: transparent
+                      display: flex
+                      flex-direction: row
+                      flex-wrap: nowrap
+                      height: 35px
+                      justify-content: flex-end
+    - component: f7-block
+      config:
+        style:
+          align-items: left
+          background: transparent
+          display: flex
+          flex-direction: row
+          height: 15px
+      slots:
+        default:
+          - {}
+          - component: f7-row
+            config:
+              style:
+                margin-left: 5px
+                align-self: flex-start
+                display: flex
+                flex: 1 1 auto
+                flex-direction: row
+                flex-wrap: nowrap
+                justify-content: flex-start
+            slots:
+              default:
+                - component: oh-repeater
+                  config:
+                    fetchMetadata: semantics,metadata
+                    filter: loop.openWeekend.type=="DateTime" && loop.openWeekend.name.includes("open") && (loop.openWeekend.name.includes("Weekend"))
+                    for: openWeekend
+                    groupItem: =props.RollerGroup
+                    sourceType: itemsInGroup
+                  slots:
+                    default:
+                      - component: oh-link
+                        config:
+                          action: popover
+                          popoverOpen: ="."+loop.openWeekend.name
+                          style:
+                            background: transparent
+                            color: black
+                            height: 35px
+                          text: Weekend
+                          visible: '=items[props.RollerMode].state=="ON" ? true : false'
+                        slots:
+                          default:
+                            - component: f7-chip
+                              config:
+                                style:
+                                  background-color: "#D3D3D3"
+                                  color: black
+                                text: =items[loop.openWeekend.name].displayState
+                              slots:
+                                media:
+                                  - component: oh-icon
+                                    config:
+                                      color: red
+                                      icon: f7:chevron_up
+                            - component: f7-popover
+                              config:
+                                backdrop: false
+                                class: =loop.openWeekend.name
+                                closeByBackdropClick: true
+                                closeByOutsideClick: true
+                                closeOnEscape: true
+                                style:
+                                  --f7-popover-border-radius: 4px
+                                  --f7-popover-width: 300px
+                              slots:
+                                default:
+                                  - component: widget:timepicker
+                                    config:
+                                      item: =loop.openWeekend.name
+                                      timeFormat: 24h
+                - component: oh-repeater
+                  config:
+                    fetchMetadata: semantics,metadata
+                    filter: loop.closeWeekend.type=="DateTime" && loop.closeWeekend.name.includes("close") && (loop.closeWeekend.name.includes("Weekend"))
+                    for: closeWeekend
+                    groupItem: =props.RollerGroup
+                    sourceType: itemsInGroup
+                  slots:
+                    default:
+                      - component: oh-link
+                        config:
+                          action: popover
+                          popoverOpen: ="."+loop.closeWeekend.name
+                          style:
+                            background: transparent
+                            height: 35px
+                          visible: '=items[props.RollerMode].state=="ON" ? true : false'
+                        slots:
+                          default:
+                            - component: f7-chip
+                              config:
+                                style:
+                                  color: black
+                                  background-color: "#D3D3D3"
+                                text: =items[loop.closeWeekend.name].displayState
+                              slots:
+                                media:
+                                  - component: oh-icon
+                                    config:
+                                      color: red
+                                      icon: f7:chevron_down
+                            - component: f7-popover
+                              config:
+                                backdrop: false
+                                class: =loop.closeWeekend.name
+                                closeByBackdropClick: true
+                                closeByOutsideClick: true
+                                closeOnEscape: true
+                                style:
+                                  --f7-popover-border-radius: 4px
+                                  --f7-popover-width: 300px
+                              slots:
+                                default:
+                                  - component: widget:timepicker
+                                    config:
+                                      item: =loop.closeWeekend.name
+                                      timeFormat: 24h
+    - component: f7-block
+      config:
+        style:
+          --f7-card-footer-border-color: transparent
+          align-items: center
+          background: "#F2F2F2"
+          border-radius: 0 0 var(--f7-card-expandable-border-radius) var(--f7-card-expandable-border-radius)
+          display: flex
+          flex-direction: row
+          height: 50px
+      slots:
+        default:
+          - component: f7-row
+            config:
+              style:
+                align-items: center
+                display: flex
+                flex: 1 1 auto
+                flex-direction: row
+                justify-content: space-around
+            slots:
+              default:
+                - component: oh-link
+                  config:
+                    action: command
+                    actionCommand: 20
+                    actionItem: =props.RollerItem
+                  slots:
+                    default:
+                      - component: f7-chip
+                        config:
+                          style:
+                            color: black
+                            background-color: '=(Number(items[props.RollerItem].state.split(" ")[0])==20) ? "#E74239" : "#D3D3D3"'
+                          text: 20
+                - component: oh-link
+                  config:
+                    action: command
+                    actionCommand: 32
+                    actionItem: =props.RollerItem
+                  slots:
+                    default:
+                      - component: f7-chip
+                        config:
+                          style:
+                            color: black
+                            background-color: '=(Number(items[props.RollerItem].state.split(" ")[0])==32) ? "#E74239" : "#D3D3D3"'
+                          text: 32
+                - component: oh-link
+                  config:
+                    action: command
+                    actionCommand: 50
+                    actionItem: =props.RollerItem
+                  slots:
+                    default:
+                      - component: f7-chip
+                        config:
+                          style:
+                            color: black
+                            background-color: '=(Number(items[props.RollerItem].state.split(" ")[0])==50) ? "#E74239" : "#D3D3D3"'
+                          text: 50
+                - component: oh-link
+                  config:
+                    action: command
+                    actionCommand: 60
+                    actionItem: =props.RollerItem
+                  slots:
+                    default:
+                      - component: f7-chip
+                        config:
+                          style:
+                            color: black
+                            background-color: '=(Number(items[props.RollerItem].state.split(" ")[0])==60) ? "#E74239" : "#D3D3D3"'
+                          text: 60
+                - component: oh-link
+                  config:
+                    action: command
+                    actionCommand: 80
+                    actionItem: =props.RollerItem
+                  slots:
+                    default:
+                      - component: f7-chip
+                        config:
+                          style:
+                            color: black
+                            background-color: '=(Number(items[props.RollerItem].state.split(" ")[0])==80) ? "#E74239" : "#D3D3D3"'
+                          text: 80
+                - component: oh-link
+                  config:
+                    action: command
+                    actionCommand: 90
+                    actionItem: =props.RollerItem
+                  slots:
+                    default:
+                      - component: f7-chip
+                        config:
+                          style:
+                            color: black
+                            background-color: '=(Number(items[props.RollerItem].state.split(" ")[0])==90) ? "#E74239" : "#D3D3D3"'
+                          text: 90```
