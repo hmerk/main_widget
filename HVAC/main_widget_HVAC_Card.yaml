@@ -1,0 +1,290 @@
+uid: main_widget_HVAC_Card
+tags: []
+props:
+  parameters:
+    - default: test
+      description: Title of the card
+      label: Title
+      name: Title
+      required: false
+      type: TEXT
+    - context: item
+      description: HVAC Equipment Group
+      label: HVAC Equipment Group
+      name: groupItem
+      required: false
+      type: TEXT
+    - context: item
+      description: HVAC Power Item
+      label: HVAC Power Item
+      name: powerItem
+      required: false
+      type: TEXT
+    - context: item
+      description: HVAC Mode Item
+      label: HVAC Mode Item
+      name: modeItem
+      required: false
+      type: TEXT
+timestamp: Nov 3, 2022, 10:55:42 PM
+component: f7-block
+config:
+  style:
+    background: RGB(247, 247, 247)
+    border-bottom-left-radius: var(--f7-card-expandable-border-radius)
+    border-bottom-right-radius: var(--f7-card-expandable-border-radius)
+    border-top-left-radius: var(--f7-card-expandable-border-radius)
+    border-top-right-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 15px 1px rgba(0,0,0,0.05)
+    padding: 0px
+slots:
+  default:
+    - component: f7-block
+      config:
+        style:
+          align-items: center
+          background: RGB(247, 247, 247)
+          display: flex
+          flex-direction: row
+          height: 60px
+      slots:
+        default:
+          - component: oh-icon
+            config:
+              icon: iconify:iconoir:air-conditioner
+              style:
+                margin-left: 5px
+                color: rgb(106,106,106)
+                padding-right: 15px
+              width: 40px
+          - component: f7-row
+            config:
+              style:
+                display: flex
+                flex-direction: column
+                flex-wrap: nowrap
+                padding-top: 10px
+            slots:
+              default:
+                - component: Label
+                  config:
+                    text: =props.Title
+                - component: f7-row
+                  config:
+                    style:
+                      display: flex
+                      flex-direction: row
+                  slots:
+                    default:
+                      - component: oh-repeater
+                        config:
+                          fetchMetadata: semantics,metadata,listWidget
+                          filter: "(loop.tempItem.groupNames.indexOf(props.groupItem) >= 0) ? true : false"
+                          for: tempItem
+                          itemTags: Measurement,Temperature
+                          sourceType: itemsWithTags
+                        slots:
+                          default:
+                            - component: f7-chip
+                              config:
+                                style:
+                                  font-weight: 500
+                                  justify-content: flex-end
+                                text: =items[loop.tempItem.name].state
+                      - component: oh-repeater
+                        config:
+                          fetchMetadata: semantics,metadata,listWidget
+                          filter: "(loop.setpointItem.groupNames.indexOf(props.groupItem) >= 0) ? true : false"
+                          for: setpointItem
+                          itemTags: Setpoint,Temperature
+                          sourceType: itemsWithTags
+                        slots:
+                          default:
+                            - component: f7-chip
+                              config:
+                                style:
+                                  background: none
+                                  color: '=(items[props.modeItem].state=="COOL") ? "#15B4B7" : (items[props.modeItem].state=="HEAT") ? "#E74239" : (items[props.modeItem].state=="DRY") ? "#E7D200" : "gray"'
+                                  font-weight: 500
+                                text: =items[loop.setpointItem.name].state
+          - component: f7-row
+            config:
+              style:
+                align-self: flex-end
+                display: flex
+                flex: 1 1 auto
+                flex-direction: row
+                flex-wrap: nowrap
+                justify-content: flex-end
+            slots:
+              default:
+                - component: oh-toggle
+                  config:
+                    item: =props.powerItem
+                    style:
+                      --f7-toggle-active-color: =(items[props.modeItem].state=="COOL")?"#15B4B7":(items[props.modeItem].state=="HEAT")?"#E74239":(items[props.modeItem].state=="DRY")?"#E7D200":"gray"
+                      --f7-toggle-inactive-color: gray
+    - component: f7-block
+      config:
+        style:
+          align-items: center
+          display: flex
+          flex-direction: row
+        visible: =items[props.powerItem].state=="ON"
+      slots:
+        default:
+          - component: oh-repeater
+            config:
+              fetchMetadata: semantics,metadata,listWidget
+              filter: "(loop.tempItem.groupNames.indexOf(props.groupItem) >= 0) ? true : false"
+              for: tempItem
+              itemTags: Measurement,Temperature
+              sourceType: itemsWithTags
+            slots:
+              default:
+                - component: oh-trend
+                  config:
+                    trendGradient: =[(items[props.modeItem].state=='COOL')?('#15B4B7'):(items[props.modeItem].state=='HEAT')?('#E74239'):(items[props.modeItem].state=='DRY')?('#E7D200'):('gray'),('gray')]
+                    trendItem: =loop.tempItem.name
+                    trendSampling: 5
+          - component: f7-row
+            config:
+              style:
+                align-self: flex-end
+                display: flex
+                flex-direction: row
+                flex-wrap: nowrap
+                justify-content: flex-end
+            slots:
+              default:
+                - component: oh-link
+                  config:
+                    action: command
+                    actionCommand: =Number(items[loop.setpointItem.name].state.split(' ')[0]) + 0.5
+                    actionItem: =loop.setpointItem.name
+                  slots:
+                    default:
+                      - component: oh-icon
+                        config:
+                          icon: f7:arrow_up_circle
+                          style:
+                            color: '=(items[props.modeItem].state=="COOL") ? "#15B4B7" : (items[props.modeItem].state=="HEAT") ? "#E74239" : (items[props.modeItem].state=="DRY") ? "#E7D200" : "gray"'
+                          width: 35px
+                - component: oh-link
+                  config:
+                    action: command
+                    actionCommand: =Number(items[loop.setpointItem.name].state.split(' ')[0]) 1 0.5
+                    actionItem: =loop.setpointItem.name
+                  slots:
+                    default:
+                      - component: oh-icon
+                        config:
+                          icon: f7:arrow_down_circle
+                          style:
+                            color: '=(items[props.modeItem].state=="COOL") ? "#15B4B7" : (items[props.modeItem].state=="HEAT") ? "#E74239" : (items[props.modeItem].state=="DRY") ? "#E7D200" : "gray"'
+                            margin-left: 20px
+                          width: 35px
+    - component: f7-block
+      config:
+        style:
+          --f7-card-footer-border-color: transparent
+          align-items: center
+          background: RGB(242, 242, 242)
+          border-radius: 0 0 var(--f7-card-expandable-border-radius) var(--f7-card-expandable-border-radius)
+          display: flex
+          flex-direction: row
+          flex-wrap: nowrap
+          height: 50px
+        visible: =items[props.powerItem].state=="ON"
+      slots:
+        default:
+          - component: oh-link
+            config:
+              action: command
+              actionCommand: COOL
+              actionItem: =props.modeItem
+            slots:
+              default:
+                - component: oh-icon
+                  config:
+                    color: '=(items[props.modeItem].state=="COOL") ? "#15B4B7" : "gray"'
+                    icon: iconify:ion:snow
+                    width: 25px
+          - component: oh-link
+            config:
+              action: command
+              actionCommand: HEAT
+              actionItem: =props.modeItem
+              style:
+                margin-left: 25px
+            slots:
+              default:
+                - component: oh-icon
+                  config:
+                    color: '=(items[props.modeItem].state=="HEAT") ? "#E74239" : "gray"'
+                    icon: iconify:ion:flame-sharp
+                    width: 25px
+          - component: oh-link
+            config:
+              action: command
+              actionCommand: DRY
+              actionItem: =props.modeItem
+              style:
+                margin-left: 25px
+            slots:
+              default:
+                - component: oh-icon
+                  config:
+                    color: '=(items[props.modeItem].state=="DRY") ? "#E7D200" : "gray"'
+                    icon: iconify:material-symbols:cool-to-dry-rounded
+                    width: 25px
+          - component: oh-repeater
+            config:
+              fetchMetadata: semantics,metadata,listWidget
+              filter: "(loop.fanspeedItem.groupNames.indexOf(props.groupItem) >= 0) ? true : false"
+              for: fanspeedItem
+              itemTags: Control,Wind
+              sourceType: itemsWithTags
+            slots:
+              default:
+                - component: oh-link
+                  config:
+                    action: options
+                    actionItem: =loop.fanspeedItem.name
+                    style:
+                      margin-left: 120px
+                  slots:
+                    default:
+                      - component: f7-chip
+                        config:
+                          text: "=items[loop.fanspeedItem.name].displayState ? items[loop.fanspeedItem.name].displayState : items[loop.fanspeedItem.name].state"
+                      - component: oh-icon
+                        config:
+                          color: gray
+                          icon: iconify:material-symbols:mode-fan
+                          width: 25px
+          - component: oh-repeater
+            config:
+              fetchMetadata: semantics,metadata,listWidget
+              filter: "(loop.vanesItem.groupNames.indexOf(props.groupItem) >= 0) ? true : false"
+              for: vanesItem
+              itemTags: Control,Opening
+              sourceType: itemsWithTags
+            slots:
+              default:
+                - component: oh-link
+                  config:
+                    action: options
+                    actionItem: =loop.vanesItem.name
+                    style:
+                      margin-left: 20px
+                  slots:
+                    default:
+                      - component: f7-chip
+                        config:
+                          text: "=items[loop.vanesItem.name].displayState ? items[loop.vanesItem.name].displayState : items[loop.vanesItem.name].state"
+                      - component: oh-icon
+                        config:
+                          color: gray
+                          icon: f7:move
+                          width: 25px
