@@ -2,20 +2,18 @@ uid: main_widget_RadiatorControl_Card
 tags: []
 props:
   parameters:
-    - default: Heizkörperthermosat im Arbeitszimmer
-      description: Title of the card
+    - description: Title of the card
       label: Title
       name: Title
       required: false
       type: TEXT
     - context: item
-      default: shellytrv60a423d0d4c21921680161
       description: Temperature Equipment Group
       label: Temperature Equipment Group
       name: groupItem
       required: false
       type: TEXT
-timestamp: Nov 22, 2022, 9:02:54 AM
+timestamp: Nov 25, 2022, 12:04:51 AM
 component: f7-block
 config:
   style:
@@ -117,7 +115,7 @@ slots:
                 - component: oh-link
                   config:
                     action: popup
-                    popupOpen: .myPopupOpen
+                    popupOpen: ="."+props.groupItem
                     style:
                       margin-top: 15px
                   slots:
@@ -132,7 +130,7 @@ slots:
                           width: 32px
                       - component: f7-popup
                         config:
-                          class: myPopupOpen
+                          class: =props.groupItem
                           closeByBackdropClick: true
                           closeByOutsideClick: true
                           closeOnEscape: true
@@ -346,6 +344,7 @@ slots:
           - component: f7-row
             config:
               style:
+                align-items: center
                 display: flex
                 flex-direction: column
                 flex-wrap: nowrap
@@ -371,6 +370,7 @@ slots:
                             - component: oh-link
                               config:
                                 style:
+                                  align-items: center
                                   padding-left: 10px
                                 action: options
                                 actionItem: =loop.modeItem.name
@@ -412,32 +412,33 @@ slots:
             config:
               style:
                 align-self: flex-end
+                align-items: center
                 display: flex
                 flex: 1 1 auto
-                flex-direction: column
+                flex-direction: row
                 flex-wrap: nowrap
                 justify-content: flex-end
             slots:
               default:
-                - component: f7-row
+                - component: oh-repeater
                   config:
-                    style:
-                      align-self: flex-end
-                      align-items: center
-                      display: flex
-                      flex: 1 1 auto
-                      flex-direction: row
-                      flex-wrap: nowrap
-                      justify-content: flex-end
+                    for: lowbat
+                    sourceType: itemsInGroup
+                    groupItem: =props.groupItem
+                    fetchMetadata: semantics,metadata
+                    filter: (loop.lowbat.tags).includes("Alarm") && (loop.lowbat.tags).includes("Energy")
                   slots:
                     default:
-                      - component: oh-repeater
+                      - component: f7-row
                         config:
-                          fetchMetadata: semantics,metadata
-                          for: lowbat
-                          sourceType: itemsInGroup
-                          groupItem: =props.groupItem
-                          filter: (loop.lowbat.tags).includes("Alarm") && (loop.lowbat.tags).includes("Energy")
+                          style:
+                            align-self: flex-end
+                            align-items: center
+                            display: flex
+                            flex: 1 1 auto
+                            flex-direction: row
+                            flex-wrap: nowrap
+                            justify-content: flex-end
                         slots:
                           default:
                             - component: oh-icon
@@ -449,8 +450,41 @@ slots:
                                   flex-direction: row
                                   flex-wrap: nowrap
                                   justify-content: flex-end
-                                  padding-right: 10px
-                                  padding-bottom: 10px
+                                  margin-bottom: 10px
                                 color: '=(items[loop.lowbat.name].state =="ON") ? "red" : "#D3D3D3"'
                                 icon: '=items[loop.lowbat.name].state === "OFF" ? "iconify:ic:twotone-battery-std" : "iconify:mdi:battery-alert-variant-outline"'
                                 width: 28px
+                - component: oh-repeater
+                  config:
+                    fetchMetadata: semantics,metadata
+                    for: batteryLevel
+                    sourceType: itemsInGroup
+                    groupItem: =props.groupItem
+                    filter: (loop.batteryLevel.tags).includes("Measurement") && (loop.batteryLevel.tags).includes("Energy")
+                  slots:
+                    default:
+                      - component: f7-row
+                        config:
+                          style:
+                            align-self: flex-end
+                            align-items: center
+                            display: flex
+                            flex: 1 1 auto
+                            flex-direction: row
+                            flex-wrap: nowrap
+                            justify-content: flex-end
+                        slots:
+                          default:
+                            - component: Label
+                              config:
+                                text: =items[loop.batteryLevel.name].state
+                                style:
+                                  align-self: flex-end
+                                  align-items: center
+                                  display: flex
+                                  flex-direction: row
+                                  flex-wrap: nowrap
+                                  justify-content: flex-end
+                                  color: gray
+                                  margin-right: 10px
+                                  margin-bottom: 10px
