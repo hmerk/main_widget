@@ -4,6 +4,12 @@ The RadiatorControl card used by main_widget will show all radiator controls (th
 
 ## Usage
 
+
+For a „fancy“ naming, the widget makes use of the uiSemantics.
+Information on usage/configuration can be founde here
+
+https://community.openhab.org/t/semantic-ui-using-enriched-semantic-to-ease-ui-creation/116882
+
 All radiator controls need to have their own Group (**Group->Equipment->RadiatorControl**).
 
 - Equipment Group
@@ -26,6 +32,8 @@ All radiator controls need to have their own Group (**Group->Equipment->Radiator
   - Semantic Class: Control
   - Semantic Property: Temperature
 
+Control Mode uses Item options. More Information with example for different thermostats will follow.
+
 Example for textual item import
 
 ```csv
@@ -35,15 +43,30 @@ DateTime    comfortOnChildWeekend       "Comfort Weekend"       <time>  (Radiato
 DateTime    ecoOnChildWeekend           "ECO Weekend"           <time>  (RadiatorChild) ["Control", "Timestamp"] {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="4"}
 Switch      timeControlHeatingChild     "Timecontrol Childroom" <time>  (RadiatorChild) ["Control", "Timestamp"]
 ```
-
-
-Control Mode uses Item options. More Information with example for different thermostats will follow.
-
-For a „fancy“ naming, the widget makes use of the uiSemantics.
-Information on usage/configuration can be founde here
-
-https://community.openhab.org/t/semantic-ui-using-enriched-semantic-to-ease-ui-creation/116882
-
+Example GUI rule for schedules
+```csv
+configuration: {}
+triggers:
+  - id: "1"
+    configuration:
+      itemName: ecoOnChildWeek
+      timeOnly: true
+    type: timer.DateTimeTrigger
+conditions:
+  - id: "3"
+    configuration:
+      itemName: timeControlHeatingChild
+      operator: =
+      state: ON
+    type: core.ItemStateCondition
+actions:
+  - inputs: {}
+    id: "2"
+    configuration:
+      itemName: RadiatorChild_targetTemp
+      command: "19"
+    type: core.ItemCommandAction
+```
 
 ## Changelog
 ### Version 0.4
