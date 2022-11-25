@@ -13,7 +13,7 @@ props:
       name: groupItem
       required: false
       type: TEXT
-timestamp: Nov 25, 2022, 12:04:51 AM
+timestamp: Nov 25, 2022, 2:46:09 PM
 component: f7-block
 config:
   style:
@@ -262,21 +262,33 @@ slots:
           flex-direction: row
       slots:
         default:
-          - component: oh-repeater
+          - component: f7-row
             config:
-              fetchMetadata: semantics,metadata
-              for: tempItem
-              sourceType: itemsInGroup
-              groupItem: =props.groupItem
-              filter: (loop.tempItem.tags).includes("Measurement") && (loop.tempItem.tags).includes("Temperature")
+              style:
+                align-self: flex-start
+                display: flex
+                flex: 1 1 auto
+                flex-direction: row
+                flex-wrap: nowrap
+                justify-content: flex-start
+                margin-left: 5px
             slots:
               default:
-                - component: oh-trend
+                - component: oh-repeater
                   config:
-                    trendGradient:
-                      - "#E74239"
-                    trendItem: =loop.tempItem.name
-                    trendSampling: 5
+                    fetchMetadata: semantics,metadata
+                    for: tempItem
+                    sourceType: itemsInGroup
+                    groupItem: =props.groupItem
+                    filter: (loop.tempItem.tags).includes("Measurement") && (loop.tempItem.tags).includes("Temperature")
+                  slots:
+                    default:
+                      - component: oh-trend
+                        config:
+                          trendGradient:
+                            - "#E74239"
+                          trendItem: =loop.tempItem.name
+                          trendSampling: 5
           - component: oh-repeater
             config:
               fetchMetadata: semantics,metadata
@@ -386,6 +398,31 @@ slots:
                       - component: oh-repeater
                         config:
                           fetchMetadata: semantics,metadata
+                          for: modeItem
+                          sourceType: itemsInGroup
+                          groupItem: =props.groupItem
+                          filter: (loop.modeItem.tags).includes("Control") && (loop.modeItem.tags).includes("Temperature") && (loop.modeItem.type=="Number")
+                        slots:
+                          default:
+                            - component: oh-link
+                              config:
+                                style:
+                                  align-items: center
+                                  padding-left: 10px
+                                action: options
+                                actionItem: =loop.modeItem.name
+                              slots:
+                                default:
+                                  - component: f7-chip
+                                    config:
+                                      style:
+                                        align-items: center
+                                        font-weight: 500
+                                        justify-content: flex-end
+                                      text: "=items[loop.modeItem.name].displayState ? items[loop.modeItem.name].displayState : items.items[loop.modeItem.name].state"
+                      - component: oh-repeater
+                        config:
+                          fetchMetadata: semantics,metadata
                           for: boostItem
                           sourceType: itemsInGroup
                           groupItem: =props.groupItem
@@ -426,7 +463,7 @@ slots:
                     sourceType: itemsInGroup
                     groupItem: =props.groupItem
                     fetchMetadata: semantics,metadata
-                    filter: (loop.lowbat.tags).includes("Alarm") && (loop.lowbat.tags).includes("Energy")
+                    filter: (loop.lowbat.tags).includes("LowBattery") && (loop.lowbat.tags).includes("Voltage")
                   slots:
                     default:
                       - component: f7-row
@@ -460,7 +497,7 @@ slots:
                     for: batteryLevel
                     sourceType: itemsInGroup
                     groupItem: =props.groupItem
-                    filter: (loop.batteryLevel.tags).includes("Measurement") && (loop.batteryLevel.tags).includes("Energy")
+                    filter: (loop.batteryLevel.tags).includes("Measurement") && (loop.batteryLevel.tags).includes("Voltage")
                   slots:
                     default:
                       - component: f7-row
