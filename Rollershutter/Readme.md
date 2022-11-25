@@ -37,8 +37,7 @@ You will then need to add initial states to the 4 items via API-Explorer.
       - If Rollershutter state != 0
     
     Codepage for the rule:
-    
-    '''csv
+```csv
     configuration: {}
 triggers:
   - id: "1"
@@ -73,8 +72,7 @@ actions:
       command: UP
       itemName: rollershutterChild
     type: core.ItemCommandAction
-    '''
-    
+```    
     Repeat this for all 4 times to control.
 
 ## Screenshots
