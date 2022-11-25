@@ -1,4 +1,4 @@
-https://github.com/hmerk/main_widget/blob/main/RadiatorControl_Extended/main_widget_RadiatorControl_Card.png
+<img align="right" width="220" src="./main_widget_RadiatorControl_Card.png" type="image/svg+xml"/>
 
 The RadiatorControl card used by main_widget will show all radiator controls (thermostats) in a selected room and show controls based on equipment group members.
 
