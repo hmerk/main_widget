@@ -29,7 +29,7 @@ All radiator controls need to have their own Group (**Group->Equipment->Radiator
 Control Mode uses Item options. More Information with example for different thermostats will follow.
 
 For a „fancy“ naming, the widget makes use of the uiSemantics.
-Information on usage/configuration can be founde here
+Information on usage/configuration can be found here
 
 https://community.openhab.org/t/semantic-ui-using-enriched-semantic-to-ease-ui-creation/116882
 

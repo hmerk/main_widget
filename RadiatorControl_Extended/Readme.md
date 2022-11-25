@@ -6,7 +6,7 @@ The RadiatorControl card used by main_widget will show all radiator controls (th
 
 
 For a „fancy“ naming, the widget makes use of the uiSemantics.
-Information on usage/configuration can be founde here
+Information on usage/configuration can be found here
 
 https://community.openhab.org/t/semantic-ui-using-enriched-semantic-to-ease-ui-creation/116882
 
@@ -21,7 +21,7 @@ Number:Temperature      targetTempHeatingChild      "Target Temperature"    <tem
 Number:Temperature      ambientTempHeatingChild     "Ambient Temperature"   <temperature>   (RadiatorChild) ["Measurement", "Temperature"]
 Number:Dimensionless    batteryLevelHeatingChild    "Batterylevel"          <batterylevel>  (RadiatorChild) ["Measurement", "Voltage"]      {stateDescription=" "[pattern="%.0f %%"]}
 Switch                  lowBatteryHeatingChild      "LowBattery"            <lowbattery>    (RadiatorChild) ["LowBattery", "Voltage"]
-Switch                  timeControlHeatingChild     "Timecontrol Childroom" <time>          (RadiatorChild) ["Control", "Timestamp"]    
+Switch                  timeControlHeatingChild     "Timecontrol Childroom" <time>          (RadiatorChild) ["Control", "Timestamp"]
 DateTime                comfortOnChildWeek          "Comfort Week"          <time>          (RadiatorChild) ["Control", "Timestamp"]        {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="1"}
 DateTime                ecoOnChildWeek              "ECO Week"              <time>          (RadiatorChild) ["Control", "Timestamp"]        {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="2"}
 DateTime                comfortOnChildWeekend       "Comfort Weekend"       <time>          (RadiatorChild) ["Control", "Timestamp"]        {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="3"}
