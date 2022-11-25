@@ -2,7 +2,7 @@ uid: main_widget_FloorsAndRooms
 tags: []
 props:
   parameterGroups: []
-timestamp: Nov 3, 2022, 8:37:23 PM
+timestamp: Nov 25, 2022, 2:04:15 PM
 component: f7-block
 config:
   style:
@@ -57,7 +57,7 @@ slots:
                                 visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? true : (vars.objVar.selectThing=="Lights") ? true : false'
                 - component: oh-repeater
                   config:
-                    fetchMetadata: semantics,metadata,listWidget
+                    fetchMetadata: semantics,metadata,uiSemantics
                     filter: loop.equipmentItem.metadata.semantics.config.hasLocation == loop.roomItem.name
                     for: equipmentItem
                     itemTags: Blinds
@@ -66,7 +66,7 @@ slots:
                     default:
                       - component: oh-repeater
                         config:
-                          fetchMetadata: semantics,metadata,listWidget,uiSemantics
+                          fetchMetadata: semantics,metadata,uiSemantics
                           filter: '(loop.shutterItem.type=="Rollershutter") ? true : false'
                           for: shutterItem
                           groupItem: =loop.equipmentItem.name
@@ -84,10 +84,10 @@ slots:
                                 default:
                                   - component: widget:main_widget_Rollershutter_Card
                                     config:
-                                      RollerGroup: =loop.equipmentItem.name
+                                      groupItem: =loop.equipmentItem.name
                                       RollerItem: =loop.shutterItem.name
                                       RollerMode: = loop.modeItem.name
-                                      Title: "=loop.shutterItem.metadata.uiSemantics ? loop.shutterItem.metadata.uiSemantics.config.equipment + loop.shutterItem.metadata.uiSemantics.config.preposition + loop.shutterItem.metadata.uiSemantics.config.location : loop.shutterItem.label"
+                                      Title: "=loop.equipmentItem.metadata.uiSemantics ? loop.equipmentItem.metadata.uiSemantics.config.equipment + loop.equipmentItem.metadata.uiSemantics.config.preposition + loop.equipmentItem.metadata.uiSemantics.config.location : loop.equipmentItem.label"
                                       visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? true : (vars.objVar.selectThing=="Rollers") ? true : false'
                 - component: oh-repeater
                   config:
