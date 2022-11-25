@@ -36,9 +36,9 @@ You will then need to add initial states to the 4 items via API-Explorer.
       - If rollerChildTimeControl = ON
       - If Rollershutter state != 0
     
-    Codepage for the rule:
+Codepage for the rule:
 ```csv
-    configuration: {}
+configuration: {}
 triggers:
   - id: "1"
     configuration:
@@ -72,8 +72,8 @@ actions:
       command: UP
       itemName: rollershutterChild
     type: core.ItemCommandAction
-```    
     Repeat this for all 4 times to control.
+```    
 
 ## Screenshots
 
