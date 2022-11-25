@@ -55,7 +55,7 @@ config:
       text-decoration: underline;
       text-underline-offset: 2px;
       font-weight: bold;
-    } 
+    }
 
     .unselected_menu_item {
       color: #8C8C8C;
@@ -64,29 +64,26 @@ config:
 
     .selected_bottom_navbar_item {
      color: white;
-     
      font-size: 12px;
      height: auto;
-     --f7-button-bg-color: transparent;  
+     --f7-button-bg-color: transparent;
      display: flex;
      flex-direction: column;
      align-items: center;
      padding-top: 1%;
      padding-bottom: 1%;
-
-    }  
+    }
 
     .unselected_bottom_navbar_item {
-     
      color: #8c8c8c;
      font-size: 12px;
      height: auto;
-     --f7-button-bg-color: transparent 
+     --f7-button-bg-color: transparent
           display: flex;
      flex-direction: column;
      padding-top: 2%;
      padding-bottom: 2%;
-    } 
+    }
 slots:
   default:
     - component: f7-block
@@ -308,7 +305,7 @@ slots:
                 - component: oh-repeater
                   config:
                     fetchMetadata: metadata,semantics,widgetOrder
-                    filter: (loop.menuArrayRoom.metadata) && (loop.menuArrayRoom.metadata.semantics.value).includes("Room")
+                    filter: (loop.menuArrayRoom.metadata) && ( (loop.menuArrayRoom.metadata.semantics.value).includes("Room") || (loop.menuArrayRoom.metadata.semantics.value).includes("Corridor") )
                     for: menuArrayRoom
                     fragment: true
                     groupItem: =vars.objVar.floor
@@ -353,7 +350,7 @@ slots:
                 - component: oh-repeater
                   config:
                     fetchMetadata: metadata,semantics,widgetOrder
-                    filter: (loop.menuArrayRoom.metadata) && (loop.menuArrayRoom.metadata.semantics.value).includes("Room") && (loop.menuArrayRoom.metadata.semantics.config.hasLocation == vars.objVar.floor)
+                    filter: (loop.menuArrayRoom.metadata) && ((loop.menuArrayRoom.metadata.semantics.value).includes("Room")  || (loop.menuArrayRoom.metadata.semantics.value).includes("Corridor")) && (loop.menuArrayRoom.metadata.semantics.config.hasLocation == vars.objVar.floor)
                     for: menuArrayRoom
                     fragment: true
                     itemTags: ","
