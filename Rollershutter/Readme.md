@@ -72,8 +72,8 @@ actions:
       command: UP
       itemName: rollershutterChild
     type: core.ItemCommandAction
-    Repeat this for all 4 times to control.
 ```    
+Repeat this for all 4 times to control.
 
 ## Screenshots
 
