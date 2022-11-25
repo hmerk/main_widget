@@ -7,6 +7,22 @@ Installation:
 - <s>Add the non semantic tag "Floor" to all your floors and if you like, also add the widgetOrderIndex to them</s>
 - <s>Add the name of the floor group 8e.g. gGroundfloor) as a new non semantic tag to each room in that particular floor </s>
 - If you want a specific ordering in the floors and/or rooms menu, please add the widgetOrderIndex as metadata to your items in the model.
+
+Example for textual item import
+```csv
+Group   Attic           "Attic"                     <attic>                             ["Attic"]           {widgetOrder="1"}    
+Group   FirstFloor      "FirstFloor"                <firstfloor>                        ["FirstFloor"]      {widgetOrder="2"}    
+Group   GroundFloor     "GroundFloor"               <groundfloor>                       ["GroundFloor"]     {widgetOrder="3"}    
+Group   Cellar          "Cellar"                    <cellar>                            ["Basement"]        {widgetOrder="4"}    
+
+Group   Office          "Office"                    <office>            (Attic)         ["Room"]            {widgetOrder="1"}    
+Group   Guest           "Guestroom"                 <suitcase>          (Attic)         ["Bedroom"]         {widgetOrder="2"}
+Group   CorridorFF      "Corridor Firstfloor"       <corridor>          (FirstFloor)    ["Corridor"]        {widgetOrder="3"}    
+Group   Childroom       "Childroom"                 <bedroom_blue>      (FirstFloor)    ["Bedroom"]         {widgetOrder="4"}    
+Group   Bathroom        "Bathroom"                  <bath>              (FirstFloor)    ["Bathroom"]        {widgetOrder="5"}    
+Group   Bedroom         "Bedroom"                   <bed>               (FirstFloor)    ["Bedroom"]         {widgetOrder="6"}    
+```
+
 - Install all needed widgets for this projekt from the marketplace.
 - Create an new layout page in openHAB MainUI
 - Enter the code tab for the new page and paste the following code
