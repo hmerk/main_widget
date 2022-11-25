@@ -1,16 +1,16 @@
 https://github.com/hmerk/main_widget/blob/main/Rollershutter/main_widget_Rollershutter_Card.png
 
 The main_widget rollershutter card is one of the sub widgets to let you control your rollershutters with a unique look and feel.
-Apart from just controling your rollershutters with sending up and down commands, you can also send predefined values like 50% to your device.
+Apart from just controlling your rollershutters with sending up and down commands, you can also send predefined values like 50% to your device.
 Latest version now supports to control time based opening and closing of rollershutters with the new DateTime-trigger for rules.
 
 ## Installation and Setup
 This widget can be installed via the marketplace. For basic operation, no configuration is needed.
 
-To use the time based triggers, there eare some additional steps needed.
+To use the time based triggers, there are some additional steps needed.
 - Install the timepicker widget from the marketplace.
-  - https://community.openhab.org/t/time-picker/118865 
-  
+  - https://community.openhab.org/t/time-picker/118865
+
 - You will need 5 additional items in your rollershutter equipment group, here we take the rollershutters in the childroom as an example
   - A Switch item to enable/disable the automatic/time control [mandatory]
   - 4 DateTime items for holding the different Times, openWeekday, closeWeekday, openWeekend, closeWeekend [optional]
@@ -20,14 +20,14 @@ Example for textual item import
 Group                   RollershutterChild      "Rollershutter Childroom"   <blinds>    (Childroom)          ["Blinds"]                 {uiSemantics="uiSemantics"[preposition=" in the ", equipment="Rollershutter", location="Childroom"]}
 
 Rollershutter           rollershutterChild      "Rollershutter"             <blinds>    (RollershutterChild) ["Control", "Opening"]
-Switch                  rollerChildTimeControl  "Timecontrol"               <time>      (RollershutterChild) ["Control", "Timestamp"]    
+Switch                  rollerChildTimeControl  "Timecontrol"               <time>      (RollershutterChild) ["Control", "Timestamp"]
 DateTime                rollerOpenChildWeek     "Open Week"                 <time>      (RollershutterChild) ["Control", "Timestamp"]   {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="1"}
 DateTime                rollerCloseChildWeek    "Close Week"                <time>      (RollershutterChild) ["Control", "Timestamp"]   {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="2"}
 DateTime                rollerOpenChildWeekend  "Open Weekend"              <time>      (RollershutterChild) ["Control", "Timestamp"]   {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="3"}
 DateTime                rollerCloseChildWeekend "Close Weekend"             <time>      (RollershutterChild) ["Control", "Timestamp"]   {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="4"}
 ```
 You will then need to add initial states to the 4 items via API-Explorer.
-    
+
   - Create 4 rules for opening and closing the rollershutter [optional]
     -  When : it is a date and time specified in an item -> choose item "rollerOpenChildWeek"
     -  Then : Send command up to rollershutterChild item
@@ -35,7 +35,7 @@ You will then need to add initial states to the 4 items via API-Explorer.
       - Ephemeris : it is a weekday
       - If rollerChildTimeControl = ON
       - If Rollershutter state != 0
-    
+
 Codepage for the rule:
 ```csv
 configuration: {}
@@ -72,7 +72,7 @@ actions:
       command: UP
       itemName: rollershutterChild
     type: core.ItemCommandAction
-```    
+```
 Repeat this for all 4 times to control.
 
 ## Screenshots

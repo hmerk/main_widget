@@ -29,7 +29,7 @@ For a dimmable or color light, the following Items can be configured.
   - Semantic Property: None
 
 For a „fancy“ naming, the widget makes use of the uiSemantics.
-Information on usage/configuration can be founde here
+Information on usage/configuration can be found here
 
 https://community.openhab.org/t/semantic-ui-using-enriched-semantic-to-ease-ui-creation/116882
 
