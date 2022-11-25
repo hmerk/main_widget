@@ -17,8 +17,6 @@ Group                   RadiatorChild               "Radiator Childroom"    <rad
 String                  modeHeatingChild            "Heating Mode"          <heating>       (RadiatorChild) ["Control", "Temperature"]
 // Some devices have numeric mode values, use a number item instead
 // Number               modeHeatingChild            "Heating Mode"          <heating>       (RadiatorChild) ["Control", "Temperature"]
-
-String                  modeHeatingChild            "Heating Mode"          <heating>       (RadiatorChild) ["Control", "Temperature"]
 Number:Temperature      targetTempHeatingChild      "Target Temperature"    <temperature>   (RadiatorChild) ["Setpoint", "Temperature"]
 Number:Temperature      ambientTempHeatingChild     "Ambient Temperature"   <temperature>   (RadiatorChild) ["Measurement", "Temperature"]
 Number:Dimensionless    batteryLevelHeatingChild    "Batterylevel"          <batterylevel>  (RadiatorChild) ["Measurement", "Voltage"]      {stateDescription=" "[pattern="%.0f %%"]}
