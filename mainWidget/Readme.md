@@ -73,3 +73,4 @@ https://community.openhab.org/t/semantic-ui-using-enriched-semantic-to-ease-ui-c
 - initial release
 
 ## Resources
+https://github.com/hmerk/main_widget/blob/main/mainWidget/main_widget.yaml
