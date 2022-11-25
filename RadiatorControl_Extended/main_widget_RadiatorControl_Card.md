@@ -1,4 +1,4 @@
-_[🖍 Add a primary screenshot or a logo here. The first image of the post will be promoted seen in the add-on list in the UI.]_
+https://github.com/hmerk/main_widget/blob/main/RadiatorControl_Extended/main_widget_RadiatorControl_Card.png
 
 The RadiatorControl card used by main_widget will show all radiator controls (thermostats) in a selected room and show controls based on equipment group members.
 
@@ -10,38 +10,24 @@ Information on usage/configuration can be founde here
 
 https://community.openhab.org/t/semantic-ui-using-enriched-semantic-to-ease-ui-creation/116882
 
-All radiator controls need to have their own Group (**Group->Equipment->RadiatorControl**).
-
-- Equipment Group
-  - Type: Group
-  - Category: heating (not used)
-  - Semantic Class: RadiatorControl
-- Ambient Temperature
-  - Type : Number or Number:Temperature
-  - Category: temperature (not used)
-  - Semantic Class: Measurement
-  - Semantic Property: Temperature
-- Target Temperatur
-  - Type : Number or Number:Temperature
-  - Category: temperature (not used)
-  - Semantic Class: Setpoint
-  - Semantic Property: Temperature
-- Control Mode
-  - Type : String or Number (type not used)
-  - Category: temperature (not used)
-  - Semantic Class: Control
-  - Semantic Property: Temperature
-
-Control Mode uses Item options. More Information with example for different thermostats will follow.
-
 Example for textual item import
-
 ```csv
-DateTime    comfortOnChildWeek          "Comfort Week"          <time>  (RadiatorChild) ["Control", "Timestamp"] {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="1"}
-DateTime    ecoOnChildWeek              "ECO Week"              <time>  (RadiatorChild) ["Control", "Timestamp"] {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="2"}
-DateTime    comfortOnChildWeekend       "Comfort Weekend"       <time>  (RadiatorChild) ["Control", "Timestamp"] {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="3"}
-DateTime    ecoOnChildWeekend           "ECO Weekend"           <time>  (RadiatorChild) ["Control", "Timestamp"] {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="4"}
-Switch      timeControlHeatingChild     "Timecontrol Childroom" <time>  (RadiatorChild) ["Control", "Timestamp"]
+Group                   RadiatorChild               "Radiator Childroom"    <radiator>      (Childroom)     ["RadiatorControl"]             {uiSemantics="uiSemantics"[preposition=" in the ", equipment="Radiator", location="Childroom"]}
+
+String                  modeHeatingChild            "Heating Mode"          <heating>       (RadiatorChild) ["Control", "Temperature"]
+// Some devices have numeric mode values, use a number item instead
+// Number               modeHeatingChild            "Heating Mode"          <heating>       (RadiatorChild) ["Control", "Temperature"]
+
+String                  modeHeatingChild            "Heating Mode"          <heating>       (RadiatorChild) ["Control", "Temperature"]
+Number:Temperature      targetTempHeatingChild      "Target Temperature"    <temperature>   (RadiatorChild) ["Setpoint", "Temperature"]
+Number:Temperature      ambientTempHeatingChild     "Ambient Temperature"   <temperature>   (RadiatorChild) ["Measurement", "Temperature"]
+Number:Dimensionless    batteryLevelHeatingChild    "Batterylevel"          <batterylevel>  (RadiatorChild) ["Measurement", "Voltage"]      {stateDescription=" "[pattern="%.0f %%"]}
+Switch                  lowBatteryHeatingChild      "LowBattery"            <lowbattery>    (RadiatorChild) ["LowBattery", "Voltage"]
+Switch                  timeControlHeatingChild     "Timecontrol Childroom" <time>          (RadiatorChild) ["Control", "Timestamp"]    
+DateTime                comfortOnChildWeek          "Comfort Week"          <time>          (RadiatorChild) ["Control", "Timestamp"]        {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="1"}
+DateTime                ecoOnChildWeek              "ECO Week"              <time>          (RadiatorChild) ["Control", "Timestamp"]        {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="2"}
+DateTime                comfortOnChildWeekend       "Comfort Weekend"       <time>          (RadiatorChild) ["Control", "Timestamp"]        {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="3"}
+DateTime                ecoOnChildWeekend           "ECO Weekend"           <time>          (RadiatorChild) ["Control", "Timestamp"]        {stateDescription=" "[pattern="%1$tH:%1$tM"],widgetOrder="4"}
 ```
 Example GUI rule for schedules
 ```csv
