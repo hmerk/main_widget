@@ -4,12 +4,6 @@ The RadiatorControl card used by main_widget will show all radiator controls (th
 
 ## Usage
 
-
-For a „fancy“ naming, the widget makes use of the uiSemantics.
-Information on usage/configuration can be found here
-
-https://community.openhab.org/t/semantic-ui-using-enriched-semantic-to-ease-ui-creation/116882
-
 Example for textual item import
 ```csv
 Group                   RadiatorChild               "Radiator Childroom"    <radiator>      (Childroom)     ["RadiatorControl"]             {uiSemantics="uiSemantics"[preposition=" in the ", equipment="Radiator", location="Childroom"]}
