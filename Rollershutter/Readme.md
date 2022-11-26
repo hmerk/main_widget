@@ -1,4 +1,4 @@
-https://github.com/hmerk/main_widget/blob/main/Rollershutter/main_widget_Rollershutter_Card.png
+<img align="right" width="220" src="./main_widget_Rollershutter_Card.png" type="image/svg+xml"/>
 
 The main_widget rollershutter card is one of the sub widgets to let you control your rollershutters with a unique look and feel.
 Apart from just controlling your rollershutters with sending up and down commands, you can also send predefined values like 50% to your device.
