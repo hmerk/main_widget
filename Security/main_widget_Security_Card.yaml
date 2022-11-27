@@ -223,7 +223,7 @@ slots:
                         config:
                           bgColor: transparent
                           iconMaterial: sensor_window
-                          iconColor: '=loop.cameraMember.state != "CLOSED" ? "red" : "gray"'
+                          iconColor: '=loop.windowMember.state != "CLOSED" ? "red" : "gray"'
                           iconSize: 20px
                     default:
                       - component: f7-accordion-content
