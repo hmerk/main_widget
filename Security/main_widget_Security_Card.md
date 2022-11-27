@@ -1,4 +1,4 @@
-![image|690x272](upload://aQIbY26oEIUtSXnJralvyQKmw6V.png)
+![image|690x272](https://community-openhab-org.s3.dualstack.eu-central-1.amazonaws.com/original/3X/f/e/fe679e62729afd3fcdccd038e7a5a268eb5a8d9b.png)
 
 This widget card will show the members of your configured security groups and the state of your alarm system. For usage, you will need the following groups and items in your modell and configured within the main_widget.
 - securityGroup [semantic or non semantic]
@@ -21,3 +21,4 @@ This widget card will show the members of your configured security groups and th
 
 ## Resources
 
+https://github.com/hmerk/main_widget/blob/main/Security/main_widget_Security_Card.yaml

@@ -9,8 +9,12 @@ The idea is to have a UI for [openHAB3](https://www.openhab.org/) that dynamical
 ## Concept idea
 This main UI widget is based on a proper configuration of the [openHAB semantic model](https://www.openhab.org/docs/tutorial/model.html#semantic-model). The project aims show all information automatically - if found in the model - without additional configuration by the user.
 
+To help getting more information about an item we make use of an extention of the semantic model via the [uiSemantics](https://community.openhab.org/t/semantic-ui-using-enriched-semantic-to-ease-ui-creation/116882).
+
 The UI is split into multiple specialized widgets that are shown if the model contains the needed data.
 
+* [openPage](mainWidget/openPage.md)
+* [Main widget](mainWidget/main_widget.md)
 * [Home widget](mainWidget/main_widget_Home.md)
 * [Floors and Rooms widget](mainWidget/main_widget_FloorsAndRooms.md)
 * [Weather widget](Weather\main_widget_Weather_Card.md)

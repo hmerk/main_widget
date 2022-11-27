@@ -47,3 +47,4 @@ Documentation update
 
 ## Resources
 
+https://github.com/hmerk/main_widget/blob/main/RadiatorControl/main_widget_RadiatorControl_Card.yaml

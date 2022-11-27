@@ -45,3 +45,4 @@ https://community.openhab.org/t/semantic-ui-using-enriched-semantic-to-ease-ui-c
 
 ## Resources
 
+https://github.com/hmerk/main_widget/blob/main/Lights/main_widget_Light_Card.yaml

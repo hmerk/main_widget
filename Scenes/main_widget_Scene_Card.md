@@ -15,3 +15,4 @@ To use this widget you need to create a scenes groups which has to be configured
 
 ## Resources
 
+https://github.com/hmerk/main_widget/blob/main/Scenes/main_widget_Scene_Card.yaml

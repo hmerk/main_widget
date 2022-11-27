@@ -30,3 +30,4 @@ Control Mode, Fanspeed and Vane Position use Item options. More Information with
 
 ## Resources
 
+https://github.com/hmerk/main_widget/blob/main/HVAC/main_widget_HVAC_Card.yaml

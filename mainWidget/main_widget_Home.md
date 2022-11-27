@@ -12,3 +12,4 @@ _[🖍 Upload other screenshots if necessary or remove the section.]_
 
 ## Resources
 
+https://github.com/hmerk/main_widget/blob/main/mainWidget/main_widget_Home.yaml
