@@ -245,7 +245,7 @@ slots:
                                       default:
                                         - component: oh-repeater
                                           config:
-                                            fetchMetadata: semantics,uiSewmantics
+                                            fetchMetadata: semantics,uiSemantics
                                             fragment: true
                                             for: windowMember
                                             sourceType: itemsInGroup
