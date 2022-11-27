@@ -3,12 +3,6 @@ tags: []
 props:
   parameters:
     - context: item
-      description: Security Group Item
-      label: Security Group
-      name: securityGroup
-      required: true
-      type: TEXT
-    - context: item
       description: Security Mode Item
       label: Security Mode
       name: securityMode
@@ -20,6 +14,7 @@ props:
       name: referencePIN
       required: false
       type: TEXT
+timestamp: Nov 27, 2022, 7:03:46 PM
 component: f7-card
 config:
   style:
@@ -181,11 +176,12 @@ slots:
                                       default:
                                         - component: oh-repeater
                                           config:
-                                            fetchMetadata: semantics
+                                            fetchMetadata: semantics,uiSemantics
                                             fragment: true
                                             for: doorMember
                                             sourceType: itemsInGroup
                                             groupItem: =loop.securityGroupMember.name
+                                            filter: (loop.doorMember.tags).includes("OpenState")
                                           slots:
                                             default:
                                               - component: f7-list-item
@@ -194,7 +190,7 @@ slots:
                                                     margin-top: -7px
                                                     fontSize: 14px
                                                     font-weight: 800
-                                                  title: =loop.doorMember.label
+                                                  title: "=loop.doorMember.metadata.uiSemantics ? loop.doorMember.metadata.uiSemantics.config.equipment + loop.doorMember.metadata.uiSemantics.config.preposition + loop.doorMember.metadata.uiSemantics.config.location : loop.doorMember.name"
                                                 slots:
                                                   default:
                                                     - component: f7-chip
@@ -249,11 +245,12 @@ slots:
                                       default:
                                         - component: oh-repeater
                                           config:
-                                            fetchMetadata: semantics
+                                            fetchMetadata: semantics,uiSewmantics
                                             fragment: true
                                             for: windowMember
                                             sourceType: itemsInGroup
                                             groupItem: =loop.securityGroupMember.name
+                                            filter: (loop.windowMember.tags).includes("OpenState")
                                           slots:
                                             default:
                                               - component: f7-list-item
@@ -262,7 +259,7 @@ slots:
                                                     margin-top: -7px
                                                     fontSize: 14px
                                                     font-weight: 800
-                                                  title: =loop.windowMember.label
+                                                  title: "=loop.windowMember.metadata.uiSemantics ? loop.windowMember.metadata.uiSemantics.config.equipment + loop.windowMember.metadata.uiSemantics.config.preposition + loop.windowMember.metadata.uiSemantics.config.location : loop.windowMember.name"
                                                 slots:
                                                   default:
                                                     - component: f7-chip
@@ -317,11 +314,12 @@ slots:
                                       default:
                                         - component: oh-repeater
                                           config:
-                                            fetchMetadata: semantics
+                                            fetchMetadata: semantics,uiSemantics
                                             fragment: true
                                             for: motionMember
                                             sourceType: itemsInGroup
                                             groupItem: =loop.securityGroupMember.name
+                                            filter: (loop.motionMember.tags).includes("Presence")
                                           slots:
                                             default:
                                               - component: f7-list-item
@@ -330,7 +328,7 @@ slots:
                                                     margin-top: -7px
                                                     fontSize: 14px
                                                     font-weight: 800
-                                                  title: =loop.motionMember.label
+                                                  title: "=loop.motionMember.metadata.uiSemantics ? loop.motionMember.metadata.uiSemantics.config.equipment + loop.motionMember.metadata.uiSemantics.config.preposition + loop.motionMember.metadata.uiSemantics.config.location : loop.motionMember.name"
                                                 slots:
                                                   default:
                                                     - component: f7-chip
