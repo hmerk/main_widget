@@ -12,3 +12,4 @@ _[🖍 Upload other screenshots if necessary or remove the section.]_
 
 ## Resources
 
+https://github.com/hmerk/main_widget/blob/main/Security/main_widget_Security_Keypad.yaml

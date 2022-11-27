@@ -14,3 +14,4 @@ _[🖍 Upload other screenshots if necessary or remove the section.]_
 
 ## Resources
 
+https://github.com/hmerk/main_widget/blob/main/Weather/main_widget_Weather_Card.yaml

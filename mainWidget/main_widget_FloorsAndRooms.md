@@ -17,3 +17,4 @@ tbd
 
 ## Resources
 
+https://github.com/hmerk/main_widget/blob/main/mainWidget/main_widget_FloorsAndRooms.yaml

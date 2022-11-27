@@ -1,4 +1,4 @@
-![image|334x500](upload://erz5nxmtJVSVFDpjeI5CfETTq6Y.png)
+![image|334x500](https://community-openhab-org.s3.dualstack.eu-central-1.amazonaws.com/original/3X/6/5/653c25618df28ef9e292ccd42cf8e0193c4eef90.png)
 
 The Lights widget card used by main_widget will show all kind of lights equipment in a selected room and show controlls based on equipment group members.
 
@@ -45,3 +45,4 @@ https://community.openhab.org/t/semantic-ui-using-enriched-semantic-to-ease-ui-c
 
 ## Resources
 
+https://github.com/hmerk/main_widget/blob/main/Lights/main_widget_Light_Card.yaml
