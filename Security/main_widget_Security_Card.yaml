@@ -20,11 +20,12 @@ props:
       name: referencePIN
       required: false
       type: TEXT
+timestamp: Oct 16, 2022, 1:06:32 PM
 component: f7-card
 config:
   style:
-    background: =(themeOptions.dark=="light") ? ("white"):("black")
     --f7-card-header-border-color: transparent
+    background: =(themeOptions.dark=="light") ? ("white"):("black")
     border-radius: 10px
     margin-left: 5px
     margin-right: 5px
@@ -53,8 +54,8 @@ slots:
                           action: popup
                           actionModal: widget:main_widget_Security_Keypad
                           actionModalConfig:
-                            securityMode: =props.securityMode
                             referencePIN: =props.referencePIN
+                            securityMode: =props.securityMode
                             targetMode: armed-home
                           class:
                             - padding-top-half
@@ -84,8 +85,8 @@ slots:
                           action: popup
                           actionModal: widget:main_widget_Security_Keypad
                           actionModalConfig:
-                            securityMode: =props.securityMode
                             referencePIN: =props.referencePIN
+                            securityMode: =props.securityMode
                             targetMode: disarmed
                           class:
                             - padding-top-half
@@ -115,8 +116,8 @@ slots:
                           action: popup
                           actionModal: widget:main_widget_Security_Keypad
                           actionModalConfig:
-                            securityMode: =props.securityMode
                             referencePIN: =props.referencePIN
+                            securityMode: =props.securityMode
                             targetMode: armed-away
                           class:
                             - padding-top-half
@@ -137,41 +138,35 @@ slots:
                           text: ARMED AWAY
           - component: f7-list
             config:
-              noHairlinesBetween: true
               accordionList: true
+              noHairlinesBetween: true
             slots:
               default:
                 - component: f7-list-item
                   config:
                     accordionItem: true
                     style:
-                      margin-top: 15px
-                      fontSize: 15px
                       font-weight: bold
+                      fontSize: 15px
+                      margin-top: 15px
                     title: Door Sensors
                   slots:
-                    inner-end:
-                      - component: f7-chip
-                        config:
-                          bgColor: transparent
-                          iconMaterial: sensor_door
-                          iconColor: '=loop.doorMember.state != "CLOSED" ? "red" : "gray"'
-                          iconSize: 20px
                     default:
                       - component: f7-accordion-content
                         config:
-                          noHairlinesBetween: true
                           accordionList: true
+                          noHairlinesBetween: true
                         slots:
                           default:
                             - component: oh-repeater
                               config:
                                 accordionList: true
                                 fetchMetadata: semantics,widgetOrder,uiSemantics
+                                filter: '((loop.doorMember.category == "Door") || ((loop.doorMember.category).includes("door"))) ? true : false'
+                                for: doorMember
                                 fragment: true
-                                for: securityGroupMember
+                                itemTags: OpenState
                                 sourceType: itemsWithTags
-                                itemTags: Door
                               slots:
                                 default:
                                   - component: oh-list
@@ -179,67 +174,59 @@ slots:
                                       noHairlinesBetween: true
                                     slots:
                                       default:
-                                        - component: oh-repeater
+                                        - component: f7-list-item
                                           config:
-                                            fetchMetadata: semantics
-                                            fragment: true
-                                            for: doorMember
-                                            sourceType: itemsInGroup
-                                            groupItem: =loop.securityGroupMember.name
+                                            style:
+                                              font-weight: 800
+                                              fontSize: 14px
+                                              margin-top: -7px
+                                            title: "=loop.doorMember.metadata.uiSemantics ? loop.doorMember.metadata.uiSemantics.config.equipment + loop.doorMember.metadata.uiSemantics.config.preposition + loop.doorMember.metadata.uiSemantics.config.location : loop.doorMember.label"
                                           slots:
                                             default:
-                                              - component: f7-list-item
+                                              - component: f7-chip
                                                 config:
-                                                  style:
-                                                    margin-top: -7px
-                                                    fontSize: 14px
-                                                    font-weight: 800
-                                                  title: =loop.doorMember.label
-                                                slots:
-                                                  default:
-                                                    - component: f7-chip
-                                                      config:
-                                                        bgColor: transparent
-                                                        iconMaterial: sensor_door
-                                                        iconColor: '=loop.doorMember.state != "CLOSED" ? "red" : "gray"'
-                                                        iconSize: 20px
+                                                  bgColor: transparent
+                                                  iconColor: '=(items[loop.doorMember.name].state == "CLOSED") ? "gray" : "red"'
+                                                  iconMaterial: sensor_door
+                                                  iconSize: 20px
+                    inner-end:
+                      - component: f7-chip
+                        config:
+                          bgColor: transparent
+                          iconColor: '=Number(items.gDoorsOpen.state)>=1 ? "rot" : "gray"'
+                          iconMaterial: sensor_door
+                          iconSize: 20px
           - component: f7-list
             config:
-              noHairlinesBetween: true
               accordionList: true
+              noHairlinesBetween: true
             slots:
               default:
                 - component: f7-list-item
                   config:
                     accordionItem: true
                     style:
-                      margin-top: 15px
-                      fontSize: 15px
                       font-weight: bold
+                      fontSize: 15px
+                      margin-top: 15px
                     title: Window Sensors
                   slots:
-                    inner-end:
-                      - component: f7-chip
-                        config:
-                          bgColor: transparent
-                          iconMaterial: sensor_window
-                          iconColor: '=loop.windowMember.state != "CLOSED" ? "red" : "gray"'
-                          iconSize: 20px
                     default:
                       - component: f7-accordion-content
                         config:
-                          noHairlinesBetween: true
                           accordionList: true
+                          noHairlinesBetween: true
                         slots:
                           default:
                             - component: oh-repeater
                               config:
                                 accordionList: true
                                 fetchMetadata: semantics,widgetOrder,uiSemantics
+                                filter: '((loop.windowMember.category == "Window") || (loop.windowMember.category == "window")) ? true : false'
+                                for: windowMember
                                 fragment: true
-                                for: securityGroupMember
+                                itemTags: OpenState
                                 sourceType: itemsWithTags
-                                itemTags: Window
                               slots:
                                 default:
                                   - component: oh-list
@@ -247,163 +234,135 @@ slots:
                                       noHairlinesBetween: true
                                     slots:
                                       default:
-                                        - component: oh-repeater
+                                        - component: f7-list-item
                                           config:
-                                            fetchMetadata: semantics
-                                            fragment: true
-                                            for: windowMember
-                                            sourceType: itemsInGroup
-                                            groupItem: =loop.securityGroupMember.name
+                                            style:
+                                              font-weight: 800
+                                              fontSize: 14px
+                                              margin-top: -7px
+                                            title: "=loop.windowMember.metadata.uiSemantics ? loop.windowMember.metadata.uiSemantics.config.equipment + loop.windowMember.metadata.uiSemantics.config.preposition + loop.windowMember.metadata.uiSemantics.config.location : loop.windowMember.label"
                                           slots:
                                             default:
-                                              - component: f7-list-item
+                                              - component: f7-chip
                                                 config:
-                                                  style:
-                                                    margin-top: -7px
-                                                    fontSize: 14px
-                                                    font-weight: 800
-                                                  title: =loop.windowMember.label
-                                                slots:
-                                                  default:
-                                                    - component: f7-chip
-                                                      config:
-                                                        bgColor: transparent
-                                                        iconMaterial: sensor_window
-                                                        iconColor: '=loop.windowMember.state != "CLOSED" ? "red" : "gray"'
-                                                        iconSize: 20px
+                                                  bgColor: transparent
+                                                  iconColor: '=items[loop.windowMember.name].state == "CLOSED" ? "gray" : "red"'
+                                                  iconMaterial: sensor_window
+                                                  iconSize: 20px
+                    inner-end:
+                      - component: f7-chip
+                        config:
+                          bgColor: transparent
+                          iconColor: '=Number(items.gWindowsOpen.state)>=1 ? "rot" : "gray"'
+                          iconMaterial: sensor_window
+                          iconSize: 20px
           - component: f7-list
             config:
-              noHairlinesBetween: true
               accordionList: true
+              noHairlinesBetween: true
             slots:
               default:
                 - component: f7-list-item
                   config:
                     accordionItem: true
                     style:
-                      margin-top: 15px
-                      fontSize: 15px
                       font-weight: bold
+                      fontSize: 15px
+                      margin-top: 15px
                     title: Motion Sensors
                   slots:
-                    inner-end:
-                      - component: f7-chip
-                        config:
-                          bgColor: transparent
-                          iconMaterial: sensors
-                          iconColor: '=loop.motionMember.state != "OFF" ? "red" : "gray"'
-                          iconSize: 20px
                     default:
                       - component: f7-accordion-content
                         config:
-                          noHairlinesBetween: true
                           accordionList: true
+                          noHairlinesBetween: true
                         slots:
                           default:
                             - component: oh-repeater
                               config:
                                 accordionList: true
                                 fetchMetadata: semantics,widgetOrder,uiSemantics
+                                filter: '(loop.motionDetector.category=="motion") ? true : false'
+                                for: motionDetector
                                 fragment: true
-                                for: securityGroupMember
+                                itemTags: Alarm,Presence
                                 sourceType: itemsWithTags
-                                itemTags: MotionDetector
                               slots:
                                 default:
-                                  - component: oh-list
+                                  - component: f7-list-item
                                     config:
-                                      noHairlinesBetween: true
+                                      style:
+                                        font-weight: 800
+                                        fontSize: 14px
+                                        margin-top: -7px
+                                      title: "=loop.motionDetector.metadata.uiSemantics ? loop.motionDetector.metadata.uiSemantics.config.equipment + loop.motionDetector.metadata.uiSemantics.config.preposition + loop.motionDetector.metadata.uiSemantics.config.location : loop.motionDetector.label"
                                     slots:
                                       default:
-                                        - component: oh-repeater
+                                        - component: f7-chip
                                           config:
-                                            fetchMetadata: semantics
-                                            fragment: true
-                                            for: motionMember
-                                            sourceType: itemsInGroup
-                                            groupItem: =loop.securityGroupMember.name
-                                          slots:
-                                            default:
-                                              - component: f7-list-item
-                                                config:
-                                                  style:
-                                                    margin-top: -7px
-                                                    fontSize: 14px
-                                                    font-weight: 800
-                                                  title: =loop.motionMember.label
-                                                slots:
-                                                  default:
-                                                    - component: f7-chip
-                                                      config:
-                                                        bgColor: transparent
-                                                        iconMaterial: sensors
-                                                        iconColor: '=loop.motionMember.state != "OFF" ? "red" : "gray"'
-                                                        iconSize: 20px
+                                            bgColor: transparent
+                                            iconColor: '=items[loop.motionDetector.name].state == "OFF" ? "gray" : "red"'
+                                            iconMaterial: sensors
+                                            iconSize: 20px
+                    inner-end:
+                      - component: f7-chip
+                        config:
+                          bgColor: transparent
+                          iconColor: '=Number(items.motionDetected.state)>=1 ? "red" : "gray"'
+                          iconMaterial: sensors
+                          iconSize: 20px
           - component: f7-list
             config:
-              noHairlinesBetween: true
               accordionList: true
+              noHairlinesBetween: true
             slots:
               default:
                 - component: f7-list-item
                   config:
                     accordionItem: true
                     style:
-                      margin-top: 15px
-                      fontSize: 15px
                       font-weight: bold
+                      fontSize: 15px
+                      margin-top: 15px
                     title: Surveillance
                   slots:
-                    inner-end:
-                      - component: f7-chip
-                        config:
-                          bgColor: transparent
-                          iconMaterial: video_camera_front
-                          iconColor: '=loop.cameraMember.state != "CLOSED" ? "red" : "gray"'
-                          iconSize: 20px
                     default:
                       - component: f7-accordion-content
                         config:
-                          noHairlinesBetween: true
                           accordionList: true
+                          noHairlinesBetween: true
                         slots:
                           default:
                             - component: oh-repeater
                               config:
                                 accordionList: true
                                 fetchMetadata: semantics,widgetOrder,uiSemantics
+                                filter: '(loop.surveilance.category=="camera") ? true : false'
+                                for: surveilance
                                 fragment: true
-                                for: securityGroupMember
+                                itemTags: Control,Power
                                 sourceType: itemsWithTags
-                                itemTags: Camera
                               slots:
                                 default:
-                                  - component: oh-list
+                                  - component: f7-list-item
                                     config:
-                                      noHairlinesBetween: true
+                                      style:
+                                        font-weight: 800
+                                        fontSize: 14px
+                                        margin-top: -7px
+                                      title: "=loop.surveilance.metadata.uiSemantics ? loop.surveilance.metadata.uiSemantics.config.equipment + loop.surveilance.metadata.uiSemantics.config.preposition + loop.surveilance.metadata.uiSemantics.config.location : loop.surveilance.label"
                                     slots:
                                       default:
-                                        - component: oh-repeater
+                                        - component: f7-chip
                                           config:
-                                            fetchMetadata: semantics
-                                            fragment: true
-                                            for: cameraMember
-                                            sourceType: itemsInGroup
-                                            groupItem: =loop.securityGroupMember.name
-                                          slots:
-                                            default:
-                                              - component: f7-list-item
-                                                config:
-                                                  style:
-                                                    margin-top: -7px
-                                                    fontSize: 14px
-                                                    font-weight: 800
-                                                  title: =loop.cameraMember.label
-                                                slots:
-                                                  default:
-                                                    - component: f7-chip
-                                                      config:
-                                                        bgColor: transparent
-                                                        iconMaterial: video_camera_front
-                                                        iconColor: '=loop.cameraMember.state != "OFF" ? "red" : "gray"'
-                                                        iconSize: 20px
+                                            bgColor: transparent
+                                            iconColor: '=items[loop.surveilance].state == "OFF" ? "red" : "gray"'
+                                            iconMaterial: video_camera_front
+                                            iconSize: 20px
+                    inner-end:
+                      - component: f7-chip
+                        config:
+                          bgColor: transparent
+                          iconColor: gray
+                          iconMaterial: video_camera_front
+                          iconSize: 20px
