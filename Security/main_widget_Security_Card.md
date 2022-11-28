@@ -1,4 +1,5 @@
-![image|690x272](https://community-openhab-org.s3.dualstack.eu-central-1.amazonaws.com/original/3X/4/c/4c0b285fa9c83bde46a23f85d5b6e49049aa3ddd.png)
+![image](https://user-images.githubusercontent.com/5521736/204392641-454f9cdb-1d7a-44f0-965b-04117a44b892.png)
+
 
 This widget card will show the members of your configured security groups and the state of your alarm system. For usage, you will need the following groups and items in your modell and configured within the main_widget.
 - securityGroup [semantic or non semantic]
