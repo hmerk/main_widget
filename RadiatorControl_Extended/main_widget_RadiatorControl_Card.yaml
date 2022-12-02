@@ -394,7 +394,7 @@ slots:
                                         align-items: center
                                         font-weight: 500
                                         justify-content: flex-end
-                                      text: "=items[loop.modeItem.name].displayState ? items[loop.modeItem.name].displayState : items.items[loop.modeItem.name].state"
+                                      text: "=items[loop.modeItem.name].displayState ? items[loop.modeItem.name].displayState : items[loop.modeItem.name].state"
                       - component: oh-repeater
                         config:
                           fetchMetadata: semantics,metadata
@@ -419,7 +419,7 @@ slots:
                                         align-items: center
                                         font-weight: 500
                                         justify-content: flex-end
-                                      text: "=items[loop.modeItem.name].displayState ? items[loop.modeItem.name].displayState : items.items[loop.modeItem.name].state"
+                                      text: "=items[loop.modeItem.name].displayState ? items[loop.modeItem.name].displayState : items[loop.modeItem.name].state"
                       - component: oh-repeater
                         config:
                           fetchMetadata: semantics,metadata

@@ -224,4 +224,4 @@ slots:
                           default:
                             - component: f7-chip
                               config:
-                                text: "=items[loop.modeItem.name].displayState ? items[loop.modeItem.name].displayState : items.items[loop.modeItem.name].state"
+                                text: "=items[loop.modeItem.name].displayState ? items[loop.modeItem.name].displayState : items[loop.modeItem.name].state"
