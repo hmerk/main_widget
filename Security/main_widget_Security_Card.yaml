@@ -20,7 +20,7 @@ props:
       name: referencePIN
       required: false
       type: TEXT
-timestamp: Oct 16, 2022, 1:06:32 PM
+timestamp: Nov 28, 2022, 8:18:26 AM
 component: f7-card
 config:
   style:
@@ -337,8 +337,8 @@ slots:
                               config:
                                 accordionList: true
                                 fetchMetadata: semantics,widgetOrder,uiSemantics
-                                filter: '(loop.surveilance.category=="camera") ? true : false'
-                                for: surveilance
+                                filter: '(loop.surveillance.category=="camera") ? true : false'
+                                for: surveillance
                                 fragment: true
                                 itemTags: Control,Power
                                 sourceType: itemsWithTags
@@ -350,13 +350,13 @@ slots:
                                         font-weight: 800
                                         fontSize: 14px
                                         margin-top: -7px
-                                      title: "=loop.surveilance.metadata.uiSemantics ? loop.surveilance.metadata.uiSemantics.config.equipment + loop.surveilance.metadata.uiSemantics.config.preposition + loop.surveilance.metadata.uiSemantics.config.location : loop.surveilance.label"
+                                      title: "=loop.surveillance.metadata.uiSemantics ? loop.surveillance.metadata.uiSemantics.config.equipment + loop.surveillance.metadata.uiSemantics.config.preposition + loop.surveillance.metadata.uiSemantics.config.location : loop.surveillance.label"
                                     slots:
                                       default:
                                         - component: f7-chip
                                           config:
                                             bgColor: transparent
-                                            iconColor: '=items[loop.surveilance].state == "OFF" ? "red" : "gray"'
+                                            iconColor: '=items[loop.surveillance].state == "OFF" ? "red" : "gray"'
                                             iconMaterial: video_camera_front
                                             iconSize: 20px
                     inner-end:
