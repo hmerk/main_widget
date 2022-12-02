@@ -11,7 +11,7 @@ _[🖍 Upload other screenshots if necessary or remove the section.]_
 
 ### Version 0.1
 - initial release
-
+- [original repository](https://github.com/rgrollfitz/oh3-widgets)
 ## Resources
 
 https://github.com/hmerk/main_widget/blob/main/Weather/main_widget_Weather_Card.yaml

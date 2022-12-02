@@ -23,13 +23,21 @@ config:
     margin-bottom: -1em
 slots:
   default:
-    - component: widget:main_widget_Weather_Card
+    - component: oh-repeater
       config:
-        bigCard: true
-        dateFormat: true
-        locationTitle: =props.locationTitle
-        sunIndicator: true
-        visible: '=(!vars.objVar || ((vars.objVar.selectSection=="SECTION0") && !vars.objVar.selectThing)) ? true : false'
+        for: widgetItem
+        itemTags: "WeatherService"
+        sourceType: itemsWithTags
+      slots:
+        default:
+          - component: widget:main_widget_Weather_Card
+            config:
+              bigCard: true
+              dateFormat: true
+              locationTitle: =props.locationTitle
+              itemPrefix: = loop.widgetItem.name + "_"
+              sunIndicator: true
+              visible: '=(!vars.objVar || ((vars.objVar.selectSection=="SECTION0") && !vars.objVar.selectThing)) ? true : false'
     - component: oh-repeater
       config:
         fetchMetadata: semantics,metadata,listWidget
