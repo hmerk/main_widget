@@ -282,7 +282,7 @@ slots:
                               config:
                                 accordionList: true
                                 fetchMetadata: semantics,widgetOrder,uiSemantics
-                                filter: '(loop.motionDetector.category=="motion") ? true : false'
+                                filter: '((loop.motionDetector.category=="Motion") || (loop.motionDetector.category=="motion")) ? true : false'
                                 for: motionDetector
                                 fragment: true
                                 itemTags: Alarm,Presence
@@ -337,7 +337,7 @@ slots:
                               config:
                                 accordionList: true
                                 fetchMetadata: semantics,widgetOrder,uiSemantics
-                                filter: '(loop.surveillance.category=="camera") ? true : false'
+                                filter: '((loop.motionDetector.category=="Camera") || (loop.surveillance.category=="camera")) ? true : false'
                                 for: surveillance
                                 fragment: true
                                 itemTags: Control,Power
