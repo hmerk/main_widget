@@ -17,14 +17,14 @@ The UI is split into multiple specialized widgets that are shown if the model co
 * [Main widget](mainWidget/main_widget.md)
 * [Home widget](mainWidget/main_widget_Home.md)
 * [Floors and Rooms widget](mainWidget/main_widget_FloorsAndRooms.md)
-* [Weather widget](Weather\main_widget_Weather_Card.md)
-* [Security widget](Security\main_widget_Security_Card.md)
-  * including the [Keypad widget](Security\main_widget_Security_Keypad.md)
-* [Scenes widget](Scenes\main_widget_Scene_Card.md)
-* [Light widget](Lights\main_widget_Light_Card.md)
-* [Radiator widget](RadiatorControl\main_widget_RadiatorControl_Card.md)
-* [HVAC widget](HVAC\main_widget_HVAC_Card.md)
-* [Rollershutter widget](Rollershutter\main_widget_Rollershutter_Card.md)
+* [Weather widget](Weather/main_widget_Weather_Card.md)
+* [Security widget](Security/main_widget_Security_Card.md)
+  * including the [Keypad widget](Security/main_widget_Security_Keypad.md)
+* [Scenes widget](Scenes/main_widget_Scene_Card.md)
+* [Light widget](Lights/main_widget_Light_Card.md)
+* [Radiator widget](RadiatorControl/main_widget_RadiatorControl_Card.md)
+* [HVAC widget](HVAC/main_widget_HVAC_Card.md)
+* [Rollershutter widget](Rollershutter/main_widget_Rollershutter_Card.md)
 
 ## Community
 Please check [openHAB community](https://community.openhab.org/t/oh3-main-ui-new-main-widget-development-and-testing-wip/138794) for discussions and proposals.
