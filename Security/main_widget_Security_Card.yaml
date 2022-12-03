@@ -222,7 +222,7 @@ slots:
                               config:
                                 accordionList: true
                                 fetchMetadata: semantics,widgetOrder,uiSemantics
-                                filter: '((loop.windowMember.category == "Window") || (loop.windowMember.category == "window")) ? true : false'
+                                filter: '(loop.windowMember.category == "window") ? true : false'
                                 for: windowMember
                                 fragment: true
                                 itemTags: OpenState
@@ -234,21 +234,32 @@ slots:
                                       noHairlinesBetween: true
                                     slots:
                                       default:
-                                        - component: f7-list-item
+                                        - component: oh-repeater
                                           config:
-                                            style:
-                                              font-weight: 800
-                                              fontSize: 14px
-                                              margin-top: -7px
-                                            title: "=loop.windowMember.metadata.uiSemantics ? loop.windowMember.metadata.uiSemantics.config.equipment + loop.windowMember.metadata.uiSemantics.config.preposition + loop.windowMember.metadata.uiSemantics.config.location : loop.windowMember.label"
+                                            accordionList: true
+                                            fetchMetadata: semantics,widgetOrder,uiSemantics
+                                            filter: "(loop.windowFilter.name == loop.windowMember.metadata.semantics.config.isPointOf) ? true : false"
+                                            for: windowFilter
+                                            fragment: true
+                                            itemTags: Window
+                                            sourceType: itemsWithTags
                                           slots:
                                             default:
-                                              - component: f7-chip
+                                              - component: f7-list-item
                                                 config:
-                                                  bgColor: transparent
-                                                  iconColor: '=items[loop.windowMember.name].state == "CLOSED" ? "gray" : "red"'
-                                                  iconMaterial: sensor_window
-                                                  iconSize: 20px
+                                                  style:
+                                                    font-weight: 800
+                                                    fontSize: 14px
+                                                    margin-top: -7px
+                                                  title: "=loop.windowMember.metadata.uiSemantics ? loop.windowMember.metadata.uiSemantics.config.equipment + loop.windowMember.metadata.uiSemantics.config.preposition + loop.windowMember.metadata.uiSemantics.config.location : loop.windowMember.label"
+                                                slots:
+                                                  default:
+                                                    - component: f7-chip
+                                                      config:
+                                                        bgColor: transparent
+                                                        iconColor: '=items[loop.windowMember.name].state == "CLOSED" ? "gray" : "red"'
+                                                        iconMaterial: sensor_window
+                                                        iconSize: 20px
                     inner-end:
                       - component: f7-chip
                         config:
