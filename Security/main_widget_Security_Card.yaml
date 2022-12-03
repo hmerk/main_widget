@@ -222,7 +222,7 @@ slots:
                               config:
                                 accordionList: true
                                 fetchMetadata: semantics,widgetOrder,uiSemantics
-                                filter: '(loop.windowMember.category == "window") ? true : false'
+                                filter: '((loop.windowMember.category == "Window") || (loop.windowMember.category == "window")) ? true : false'
                                 for: windowMember
                                 fragment: true
                                 itemTags: OpenState
