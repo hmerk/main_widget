@@ -37,6 +37,7 @@ props:
 component: f7-block
 config:
   style:
+    --f7-button-text-transform: none
     --f7-button-text-color: "#8c8c8c"
     --menu-text-color: '= (!props.textColor) ? (themeOptions.dark=="light")? black : white : props.textColor'
     --opmw-menu-text-color: =(themeOptions.dark=="light")?("#8C8C8C"):("#848484")
