@@ -88,7 +88,7 @@ slots:
                                       RollerItem: =loop.shutterItem.name
                                       RollerMode: = loop.modeItem.name
                                       Title: "=loop.equipmentItem.metadata.uiSemantics ? loop.equipmentItem.metadata.uiSemantics.config.equipment + loop.equipmentItem.metadata.uiSemantics.config.preposition + loop.equipmentItem.metadata.uiSemantics.config.location : loop.equipmentItem.label"
-                                      visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? true : (vars.objVar.selectThing=="Rollers") ? true : false'
+                                      visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? false : (vars.objVar.selectThing=="Rollers") ? true : false'
                 - component: oh-repeater
                   config:
                     fetchMetadata: semantics,metadata,listWidget,uiSemantics
@@ -102,7 +102,7 @@ slots:
                         config:
                           Title: "=loop.radiatorItem.metadata.uiSemantics ? loop.radiatorItem.metadata.uiSemantics.config.equipment + loop.radiatorItem.metadata.uiSemantics.config.preposition + loop.radiatorItem.metadata.uiSemantics.config.location : loop.radiatorItem.label"
                           groupItem: =loop.radiatorItem.name
-                          visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? true : (vars.objVar.selectThing=="Climate") ? true : false'
+                          visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? false : (vars.objVar.selectThing=="Climate") ? true : false'
                 - component: oh-repeater
                   config:
                     fetchMetadata: semantics,metadata,listWidget,uiSemantics
@@ -136,4 +136,4 @@ slots:
                                       groupItem: =loop.hvacItem.name
                                       modeItem: =loop.hvacModeItem.name
                                       powerItem: =loop.hvacPowerItem.name
-                                      visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? true : (vars.objVar.selectThing=="Climate") ? true : false'
+                                      visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? false : (vars.objVar.selectThing=="Climate") ? true : false'
