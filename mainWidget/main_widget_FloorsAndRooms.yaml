@@ -2,7 +2,7 @@ uid: main_widget_FloorsAndRooms
 tags: []
 props:
   parameterGroups: []
-timestamp: Nov 25, 2022, 2:04:15 PM
+timestamp: Dec 6, 2022, 11:03:05 PM
 component: f7-block
 config:
   style:
@@ -51,8 +51,9 @@ slots:
                           default:
                             - component: widget:main_widget_Light_Card
                               config:
-                                Title: "=loop.lightItem.metadata.uiSemantics ? loop.lightItem.metadata.uiSemantics.config.equipment + loop.lightItem.metadata.uiSemantics.config.preposition + loop.lightItem.metadata.uiSemantics.config.location : loop.lightItem.label"
+                                Title: "=loop.lightPowerItem.metadata.uiSemantics ? loop.lightPowerItem.metadata.uiSemantics.config.equipment + loop.lightPowerItem.metadata.uiSemantics.config.preposition + loop.lightPowerItem.metadata.uiSemantics.config.location : loop.lightItem.label"
                                 groupItem: =loop.lightItem.name
+                                groupCategory: =loop.lightItem.category
                                 powerItem: = loop.lightPowerItem.name
                                 visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? true : (vars.objVar.selectThing=="Lights") ? true : false'
                 - component: oh-repeater
