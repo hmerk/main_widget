@@ -2,6 +2,11 @@ uid: main_widget_Light_Card
 tags: []
 props:
   parameters:
+    - description: Title of the card
+      label: Title
+      name: Title
+      required: false
+      type: TEXT
     - context: item
       description: Light Equipment Group
       label: Light Equipment Group
@@ -56,7 +61,7 @@ slots:
               default:
                 - component: Label
                   config:
-                    text: =props.groupItem
+                    text: =props.Title
                 - component: f7-row
                   config:
                     style:
