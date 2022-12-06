@@ -2,7 +2,7 @@ uid: main_widget_FloorsAndRooms
 tags: []
 props:
   parameterGroups: []
-timestamp: Nov 25, 2022, 2:04:15 PM
+timestamp: Dec 6, 2022, 11:03:05 PM
 component: f7-block
 config:
   style:
@@ -87,8 +87,8 @@ slots:
                                       groupItem: =loop.equipmentItem.name
                                       RollerItem: =loop.shutterItem.name
                                       RollerMode: = loop.modeItem.name
-                                      Title: "=loop.equipmentItem.metadata.uiSemantics ? loop.equipmentItem.metadata.uiSemantics.config.equipment + loop.equipmentItem.metadata.uiSemantics.config.preposition + loop.equipmentItem.metadata.uiSemantics.config.location : loop.equipmentItem.label"
-                                      visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? false : (vars.objVar.selectThing=="Rollers") ? true : false'
+                                      Title: "=loop.shutterItem.metadata.uiSemantics ? loop.shutterItem.metadata.uiSemantics.config.equipment + loop.shutterItem.metadata.uiSemantics.config.preposition + loop.shutterItem.metadata.uiSemantics.config.location : loop.shutterItem.label"
+                                      visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? true : (vars.objVar.selectThing=="Rollers") ? true : false'
                 - component: oh-repeater
                   config:
                     fetchMetadata: semantics,metadata,listWidget,uiSemantics
