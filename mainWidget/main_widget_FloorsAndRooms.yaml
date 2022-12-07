@@ -54,7 +54,7 @@ slots:
                                 Title: "=loop.lightItem.metadata.uiSemantics ? loop.lightItem.metadata.uiSemantics.config.equipment + loop.lightItem.metadata.uiSemantics.config.preposition + loop.lightItem.metadata.uiSemantics.config.location : loop.lightItem.label"
                                 groupItem: =loop.lightItem.name
                                 powerItem: = loop.lightPowerItem.name
-                                visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? false : (vars.objVar.selectThing=="Lights") ? true : false'
+                                visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? true : (vars.objVar.selectThing=="Lights") ? true : false'
                 - component: oh-repeater
                   config:
                     fetchMetadata: semantics,metadata,uiSemantics
@@ -88,7 +88,7 @@ slots:
                                       RollerItem: =loop.shutterItem.name
                                       RollerMode: = loop.modeItem.name
                                       Title: "=loop.shutterItem.metadata.uiSemantics ? loop.shutterItem.metadata.uiSemantics.config.equipment + loop.shutterItem.metadata.uiSemantics.config.preposition + loop.shutterItem.metadata.uiSemantics.config.location : loop.shutterItem.label"
-                                      visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? true : (vars.objVar.selectThing=="Rollers") ? true : false'
+                                      visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? falsee : (vars.objVar.selectThing=="Rollers") ? true : false'
                 - component: oh-repeater
                   config:
                     fetchMetadata: semantics,metadata,listWidget,uiSemantics
