@@ -54,7 +54,7 @@ slots:
                                 Title: "=loop.lightItem.metadata.uiSemantics ? loop.lightItem.metadata.uiSemantics.config.equipment + loop.lightItem.metadata.uiSemantics.config.preposition + loop.lightItem.metadata.uiSemantics.config.location : loop.lightItem.label"
                                 groupItem: =loop.lightItem.name
                                 powerItem: = loop.lightPowerItem.name
-                                visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? true : (vars.objVar.selectThing=="Lights") ? true : false'
+                                visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? false : (vars.objVar.selectThing=="Lights") ? true : false'
                 - component: oh-repeater
                   config:
                     fetchMetadata: semantics,metadata,uiSemantics
