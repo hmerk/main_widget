@@ -1,0 +1,66 @@
+uid: main_widget_Presence_Card
+tags: []
+props:
+  parameters:
+    - context: item
+      label: Item to control a presence
+      name: presence
+      required: true
+      type: TEXT
+    - context: Text
+      label: Item Label to control a presence
+      name: presenceName
+      required: true
+      type: TEXT
+timestamp: Dec 18, 2022, 7:16:25 PM
+component: f7-card
+config:
+  noShadow: false
+  padding: false
+  style:
+    padding: 0px
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 15px 1px rgba(0,0,0,0.05)
+    margin-left: 5px
+    margin-right: 5px
+    background: '=items[props.presence].state == "ON" ? "linear-gradient(to bottom right, rgba(80, 230, 80) 0%, rgba(255, 255, 255) 100%)" : "linear-gradient(to bottom right, rgba(255, 255, 255) 0%, rgba(128, 128, 128) 100%)"'
+  stylesheet: >
+    .card-header:after {
+      display: none;
+    }
+slots:
+  content:
+    - component: f7-card-content
+      config:
+        style:
+          height: 2rem
+      slots:
+        default:
+          - component: oh-icon
+            config:
+              icon: '=items[props.presence].state == "ON" ? "f7:person_crop_circle_badge_checkmark" : "f7:person_crop_circle_badge_minus"'
+              height: 36
+              style:
+                "128": 1285p128
+                color: '=items[props.presence].state == "ON" ? "green" : "grey"'
+                position: absolute
+                left: 20px
+          - component: Label
+            config:
+              text: =props.presenceName
+              style:
+                color: black
+                font-weight: 600
+                font-size: 15px
+                position: absolute
+                top: 20px
+                margin-left: 4rem
+          - component: Label
+            config:
+              text: '=items[props.presence].state == "ON" ? "Present" : "Absent"'
+              style:
+                color: black
+                font-weight: 600
+                font-size: 15px
+                top: 20px
+                text-align: right
