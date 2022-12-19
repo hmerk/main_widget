@@ -25,6 +25,12 @@ props:
       name: scenesGroup
       required: false
       type: TEXT
+    - context: item
+      description: Name of presence group item
+      label: Presence Group
+      name: presenceGroup
+      required: false
+      type: TEXT
     - description: Hide Security menu
       label: hide
       name: hideSecurity
@@ -34,6 +40,7 @@ props:
   parameterGroups:
     - name: security
       label: Security Configuration Parameters
+timestamp: Dec 18, 2022, 6:12:56 PM
 component: f7-block
 config:
   style:
@@ -434,6 +441,7 @@ slots:
       config:
         locationTitle: =props.locationTitle
         scenesGroup: =props.scenesGroup
+        presenceGroup: = props.presenceGroup
     - component: widget:main_widget_FloorsAndRooms
     - component: f7-block
       config:
@@ -468,6 +476,20 @@ slots:
                     icon-f7: shield_fill
                     iconBadge: =(Number(items.gDoorsOpen.state)+Number(items.gWindowsOpen.state)+Number(items.motionDetected.state))
                     text: Security
+                - component: oh-link
+                  config:
+                    action: variable
+                    actionVariable: objVar
+                    actionVariableValue:
+                      floor: =vars.objVar.floor
+                      room: =vars.objVar.room
+                      selectSection: =vars.objVar.selectSection
+                      selectThing: Presence
+                    badgeColor: '=(vars.objVar && (vars.objVar.selectThing=="Presence")) ? "orange" : "red"'
+                    class: '=(vars.objVar && (vars.objVar.selectThing=="Presence")) ? "selected_bottom_navbar_item" : "unselected_bottom_navbar_item"'
+                    icon-f7: person_badge_plus_fill
+                    iconBadge: =(Number(items.gDoorsOpen.state))
+                    text: Presence
                 - component: oh-link
                   config:
                     action: variable

@@ -22,6 +22,7 @@ The UI is split into multiple specialized widgets that are shown if the model co
   * including the [Keypad widget](Security\main_widget_Security_Keypad.md)
 * [Scenes widget](Scenes\main_widget_Scene_Card.md)
 * [Light widget](Lights\main_widget_Light_Card.md)
+* [Presence widget](Presence\main_widget_Presence_Card.yaml)
 * [Radiator widget](RadiatorControl\main_widget_RadiatorControl_Card.md)
 * [HVAC widget](HVAC\main_widget_HVAC_Card.md)
 * [Rollershutter widget](Rollershutter\main_widget_Rollershutter_Card.md)

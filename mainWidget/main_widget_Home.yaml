@@ -13,7 +13,14 @@ props:
       name: scenesGroup
       required: false
       type: TEXT
+    - context: item
+      description: Name of presence group item
+      label: Presence Group
+      name: presenceGroup
+      required: false
+      type: TEXT
   parameterGroups: []
+timestamp: Dec 18, 2022, 7:19:33 PM
 component: f7-block
 config:
   style:
@@ -51,6 +58,19 @@ slots:
               scene: =loop.sceneItem.name
               sceneName: =loop.sceneItem.label
               visible: '=vars.objVar ? ((vars.objVar.selectSection + vars.objVar.selectThing)=="SECTION0Scenes") ? true : false : false'
+    - component: oh-repeater
+      config:
+        fetchMetadata: semantics,metadata,listWidget
+        for: presenceItem
+        groupItem: =props.presenceGroup
+        sourceType: itemsInGroup
+      slots:
+        default:
+          - component: widget:main_widget_Presence_Card
+            config:
+              presence: =loop.presenceItem.name
+              presenceName: =loop.presenceItem.label
+              visible: '=vars.objVar ? ((vars.objVar.selectSection + vars.objVar.selectThing)=="SECTION0Presence") ? true : false : false'
     - component: widget:main_widget_Security_Card
       config:
         visible: '=vars.objVar ? ((vars.objVar.selectSection + vars.objVar.selectThing)=="SECTION0Security") ? true : false : false'
