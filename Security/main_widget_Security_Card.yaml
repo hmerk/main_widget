@@ -193,7 +193,7 @@ slots:
                       - component: f7-chip
                         config:
                           bgColor: transparent
-                          iconColor: '=Number(items.gDoorsOpen.state)>=1 ? "rot" : "gray"'
+                          iconColor: '=Number(items.gDoorsOpen.state)>=1 ? "red" : "gray"'
                           iconMaterial: sensor_door
                           iconSize: 20px
           - component: f7-list
@@ -253,7 +253,7 @@ slots:
                       - component: f7-chip
                         config:
                           bgColor: transparent
-                          iconColor: '=Number(items.gWindowsOpen.state)>=1 ? "rot" : "gray"'
+                          iconColor: '=Number(items.gWindowsOpen.state)>=1 ? "red" : "gray"'
                           iconMaterial: sensor_window
                           iconSize: 20px
           - component: f7-list
