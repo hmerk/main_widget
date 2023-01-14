@@ -2,7 +2,7 @@ uid: main_widget_FloorsAndRooms
 tags: []
 props:
   parameterGroups: []
-timestamp: Nov 25, 2022, 2:04:15 PM
+timestamp: Jan 12, 2023, 7:09:52 PM
 component: f7-block
 config:
   style:
@@ -51,7 +51,8 @@ slots:
                           default:
                             - component: widget:main_widget_Light_Card
                               config:
-                                Title: "=loop.lightItem.metadata.uiSemantics ? loop.lightItem.metadata.uiSemantics.config.equipment + loop.lightItem.metadata.uiSemantics.config.preposition + loop.lightItem.metadata.uiSemantics.config.location : loop.lightItem.label"
+                                Title: "=loop.lightPowerItem.metadata.uiSemantics ? loop.lightPowerItem.metadata.uiSemantics.config.equipment + loop.lightPowerItem.metadata.uiSemantics.config.preposition + loop.lightPowerItem.metadata.uiSemantics.config.location : loop.lightItem.label"
+                                groupCategory: =loop.lightItem.category
                                 groupItem: =loop.lightItem.name
                                 powerItem: = loop.lightPowerItem.name
                                 visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? true : (vars.objVar.selectThing=="Lights") ? true : false'
@@ -67,28 +68,38 @@ slots:
                       - component: oh-repeater
                         config:
                           fetchMetadata: semantics,metadata,uiSemantics
-                          filter: '(loop.shutterItem.type=="Rollershutter") ? true : false'
-                          for: shutterItem
+                          filter: '(loop.shutterItemSet.type=="Rollershutter") && ((loop.shutterItemSet.tags).includes("Setpoint")) ? true : false'
+                          for: shutterItemSet
                           groupItem: =loop.equipmentItem.name
                           sourceType: itemsInGroup
                         slots:
                           default:
                             - component: oh-repeater
                               config:
-                                fetchMetadata: semantics,metadata
-                                filter: loop.modeItem.type=="Switch"
-                                for: modeItem
+                                fetchMetadata: semantics,metadata,uiSemantics
+                                filter: '(loop.shutterItemAct.type=="Rollershutter") && ((loop.shutterItemAct.tags).includes("Control")) ? true : false'
+                                for: shutterItemAct
                                 groupItem: =loop.equipmentItem.name
                                 sourceType: itemsInGroup
                               slots:
                                 default:
-                                  - component: widget:main_widget_Rollershutter_Card
+                                  - component: oh-repeater
                                     config:
+                                      fetchMetadata: semantics,metadata
+                                      filter: loop.modeItem.type=="Switch"
+                                      for: modeItem
                                       groupItem: =loop.equipmentItem.name
-                                      RollerItem: =loop.shutterItem.name
-                                      RollerMode: = loop.modeItem.name
-                                      Title: "=loop.equipmentItem.metadata.uiSemantics ? loop.equipmentItem.metadata.uiSemantics.config.equipment + loop.equipmentItem.metadata.uiSemantics.config.preposition + loop.equipmentItem.metadata.uiSemantics.config.location : loop.equipmentItem.label"
-                                      visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? false : (vars.objVar.selectThing=="Rollers") ? true : false'
+                                      sourceType: itemsInGroup
+                                    slots:
+                                      default:
+                                        - component: widget:main_widget_Rollershutter_Card
+                                          config:
+                                            RollerItemSet: =loop.shutterItemSet.name
+                                            RollerItemAct: =loop.shutterItemAct.name
+                                            RollerMode: = loop.modeItem.name
+                                            Title: "=loop.shutterItemSet.metadata.uiSemantics ? loop.shutterItemSet.metadata.uiSemantics.config.equipment + loop.shutterItemSet.metadata.uiSemantics.config.preposition + loop.shutterItemSet.metadata.uiSemantics.config.location : loop.shutterItemSet.label"
+                                            groupItem: =loop.equipmentItem.name
+                                            visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? true : (vars.objVar.selectThing=="Rollers") ? true : false'
                 - component: oh-repeater
                   config:
                     fetchMetadata: semantics,metadata,listWidget,uiSemantics
@@ -102,7 +113,7 @@ slots:
                         config:
                           Title: "=loop.radiatorItem.metadata.uiSemantics ? loop.radiatorItem.metadata.uiSemantics.config.equipment + loop.radiatorItem.metadata.uiSemantics.config.preposition + loop.radiatorItem.metadata.uiSemantics.config.location : loop.radiatorItem.label"
                           groupItem: =loop.radiatorItem.name
-                          visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? false : (vars.objVar.selectThing=="Climate") ? true : false'
+                          visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? true : (vars.objVar.selectThing=="Climate") ? true : false'
                 - component: oh-repeater
                   config:
                     fetchMetadata: semantics,metadata,listWidget,uiSemantics
@@ -136,4 +147,4 @@ slots:
                                       groupItem: =loop.hvacItem.name
                                       modeItem: =loop.hvacModeItem.name
                                       powerItem: =loop.hvacPowerItem.name
-                                      visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? false : (vars.objVar.selectThing=="Climate") ? true : false'
+                                      visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? true : (vars.objVar.selectThing=="Climate") ? true : false'

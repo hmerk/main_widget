@@ -16,7 +16,7 @@ props:
     - context: item
       description: Item to control
       label: Rollershutter Item
-      name: RollerItem
+      name: RollerItemSet
       required: true
       type: TEXT
     - context: item
@@ -88,12 +88,12 @@ slots:
                       - component: f7-chip
                         config:
                           style:
-                            background-color: '=(Number(items[props.RollerItem].state.split(" ")[0])==0) ? "#6A6A6A" : (Number(items[props.RollerItem].state.split(" ")[0])==100) ? "#6A6A6A" : "Transparent"'
-                            color: '=(Number(items[props.RollerItem].state.split(" ")[0])==0) ? "white" : (Number(items[props.RollerItem].state.split(" ")[0])==100) ? "white" : "#6A6A6A"'
+                            background-color: '=(Number(items[props.RollerItemSet].state.split(" ")[0])==0) ? "#6A6A6A" : (Number(items[props.RollerItemSet].state.split(" ")[0])==100) ? "#6A6A6A" : "Transparent"'
+                            color: '=(Number(items[props.RollerItemSet].state.split(" ")[0])==0) ? "white" : (Number(items[props.RollerItemSet].state.split(" ")[0])==100) ? "white" : "#6A6A6A"'
                             font-size: 16px
                             font-weight: 200
                             justify-content: flex-end
-                          text: '=(Number(items[props.RollerItem].state.split(" ")[0])==0) ? "OPEN" : (Number(items[props.RollerItem].state.split(" ")[0])==100) ? "CLOSED" : items[props.RollerItem].displayState ? items[props.RollerItem].displayState : items[props.RollerItem].state'
+                          text: '=(Number(items[props.RollerItemAct].state.split(" ")[0])==0) ? "OPEN" : (Number(items[props.RollerItemAct].state.split(" ")[0])==100) ? "CLOSED" : items[props.RollerItemAct].displayState ? items[props.RollerItemAct].displayState : items[props.RollerItemAct].state'
           - component: f7-row
             config:
               style:
@@ -337,7 +337,7 @@ slots:
                   config:
                     action: command
                     actionCommand: UP
-                    actionItem: =props.RollerItem
+                    actionItem: =props.RollerItemSet
                     iconColor: "#E74239"
                     iconF7: arrow_up_circle
                     iconSize: 35
@@ -353,7 +353,7 @@ slots:
                   config:
                     action: command
                     actionCommand: STOP
-                    actionItem: =props.RollerItem
+                    actionItem: =props.RollerItemSet
                     iconColor: "#E74239"
                     iconF7: stop_circle
                     iconSize: 35
@@ -369,7 +369,7 @@ slots:
                   config:
                     action: command
                     actionCommand: DOWN
-                    actionItem: =props.RollerItem
+                    actionItem: =props.RollerItemSet
                     iconColor: "#E74239"
                     iconF7: arrow_down_circle
                     iconSize: 35
@@ -498,12 +498,12 @@ slots:
                         config:
                           action: command
                           actionCommand: =loop.positionPreset
-                          actionItem: =props.RollerItem
+                          actionItem: =props.RollerItemSet
                         slots:
                           default:
                             - component: f7-chip
                               config:
                                 style:
-                                  background-color: '=(Number(items[props.RollerItem].state.split(" ")[0])==loop.positionPreset) ? "#E74239" : "#D3D3D3"'
+                                  background-color: '=(Number(items[props.RollerItemSet].state.split(" ")[0])==loop.positionPreset) ? "#E74239" : "#D3D3D3"'
                                   color: black
                                 text: =loop.positionPreset
