@@ -15,8 +15,14 @@ props:
       type: TEXT
     - context: item
       description: Item to control
-      label: Rollershutter Item
+      label: Rollershutter Item to set
       name: RollerItemSet
+      required: true
+      type: TEXT
+    - context: item
+      description: Item show shutter level
+      label: Rollershutter Item to show
+      name: RollerItemAct
       required: true
       type: TEXT
     - context: item
@@ -25,7 +31,7 @@ props:
       name: RollerMode
       required: true
       type: TEXT
-timestamp: Nov 25, 2022, 1:55:54 PM
+timestamp: Jan 12, 2023, 8:41:17 PM
 component: f7-block
 config:
   style:
@@ -50,7 +56,7 @@ slots:
         default:
           - component: oh-icon
             config:
-              icon: iconify:mdi:window-shutter
+              icon: '=(Number(items[props.RollerItemAct].state.split(" ")[0])==0) ? "iconify:mdi:window-shutter-open" : (Number(items[props.RollerItemAct].state.split(" ")[0])==100) ? "iconify:mdi:window-shutter" : "iconify:mdi:window-shutter-auto"'
               style:
                 color: rgb(106,106,106)
                 margin-left: 5px
@@ -115,11 +121,11 @@ slots:
                     default:
                       - component: oh-icon
                         config:
+                          icon: iconify:mdi:window-shutter-cog
                           style:
                             color: rgb(106,106,106)
                             padding-right: 15px
                             width: 40px
-                          icon: iconify:mdi:gear
                           width: 32px
                       - component: f7-popup
                         config:
@@ -134,8 +140,8 @@ slots:
                               config:
                                 noGap: true
                                 style:
-                                  align-self: center
                                   align-items: center
+                                  align-self: center
                                   display: flex
                                   flex: 1 1 auto
                                   flex-direction: row
@@ -146,18 +152,18 @@ slots:
                                 default:
                                   - component: oh-repeater
                                     config:
-                                      for: blindsScheduleControl
-                                      sourceType: itemsInGroup
-                                      groupItem: =props.groupItem
                                       fetchMetadata: semantics,metadata,widgetOrder
                                       filter: (loop.blindsScheduleControl.tags).includes("Control") && (loop.blindsScheduleControl.tags).includes("Timestamp") && (loop.blindsScheduleControl.type=="Switch")
+                                      for: blindsScheduleControl
+                                      groupItem: =props.groupItem
+                                      sourceType: itemsInGroup
                                     slots:
                                       default:
                                         - component: f7-row
                                           config:
                                             style:
-                                              align-self: center
                                               align-items: center
+                                              align-self: center
                                               display: flex
                                               flex: 1 1 auto
                                               flex-direction: row
@@ -171,15 +177,15 @@ slots:
                                                   item: =loop.blindsScheduleControl.name
                                               - component: Label
                                                 config:
-                                                  text: =loop.blindsScheduleControl.label
                                                   style:
                                                     padding-left: 50px
+                                                  text: =loop.blindsScheduleControl.label
                             - component: f7-row
                               config:
                                 noGap: true
                                 style:
-                                  align-self: center
                                   align-items: center
+                                  align-self: center
                                   display: flex
                                   flex: 1 1 auto
                                   flex-direction: row
@@ -190,18 +196,18 @@ slots:
                                 default:
                                   - component: oh-repeater
                                     config:
-                                      for: blindsSchedule
-                                      sourceType: itemsInGroup
-                                      groupItem: =props.groupItem
                                       fetchMetadata: semantics,metadata,widgetOrder
                                       filter: (loop.blindsSchedule.tags).includes("Control") && (loop.blindsSchedule.tags).includes("Timestamp") && !(loop.blindsSchedule.type=="Switch")
+                                      for: blindsSchedule
+                                      groupItem: =props.groupItem
+                                      sourceType: itemsInGroup
                                     slots:
                                       default:
                                         - component: f7-row
                                           config:
                                             style:
-                                              align-self: center
                                               align-items: center
+                                              align-self: center
                                               display: flex
                                               flex: 1 1 auto
                                               flex-direction: row
@@ -482,16 +488,19 @@ slots:
               default:
                 - component: oh-repeater
                   config:
-                    sourceType: array
                     for: positionPreset
+                    fragment: true
                     in:
+                      - "10"
                       - "20"
-                      - "32"
+                      - "30"
+                      - "40"
                       - "50"
                       - "60"
+                      - "70"
                       - "80"
                       - "90"
-                    fragment: true
+                    sourceType: array
                   slots:
                     default:
                       - component: oh-link
