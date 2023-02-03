@@ -23,7 +23,7 @@ props:
   parameterGroups:
     - name: security
       label: Security Configuration Parameters
-timestamp: Feb 2, 2023, 9:29:08 PM
+timestamp: Feb 3, 2023, 10:54:42 AM
 component: f7-block
 config:
   style:
@@ -80,9 +80,9 @@ config:
       /*--tobNavbar Buttons*/
       --mW-topNavbar-button-color-selected: #262626;
       --mW-topNavbar-button-color-unselected: #B9B9B9;
-      --mW-topNavbar-button-underline-color: #FBBF02;
+      --mW-topNavbar-button-underline-color: var(--f7-theme-color);
       /*--tobNavbar Swiper*/
-      --mW-topNavbar-swiper-navigation-color: #FBBF02;
+      --mW-topNavbar-swiper-navigation-color: #898989;
       --mW-topNavbar-swiper-navigation-size: 20px;
       }      
     .mainWidget .topNavbar .button {
@@ -170,16 +170,30 @@ slots:
                                 slidesPerView: 1
                                 spaceBetween: 0
                               "320":
-                                slidesPerGroup: 2
                                 slidesPerView: 2
+                                slidesPerGroup: 2
                                 spaceBetween: 0
                               "480":
-                                slidesPerGroup: 3
                                 slidesPerView: 3
+                                slidesPerGroup: 3
                                 spaceBetween: 0
                               "640":
                                 slidesPerView: 4
                                 slidesPerGroup: 4
+                                spaceBetween: 0
+                              "940":
+                                slidesPerView: 5
+                                slidesPerGroup: 5
+                                spaceBetween: 0
+                              "1400":
+                                slidesPerView: 6
+                                slidesPerGroup: 6
+                                spaceBetween: 0
+                              "1800":
+                                slidesPerView: 8
+                                slidesPerGroup: 8
+                                spaceBetween: 0
+                            centerInsufficientSlides: true
                             grabCursor: true
                             keyboard: true
                             mousewheel: true
@@ -193,6 +207,7 @@ slots:
                             padding-right: 50px
                             --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
                             --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
+                            width: 100%
                         slots:
                           default:
                             - component: oh-repeater
@@ -208,10 +223,8 @@ slots:
                                   - component: f7-swiper-slide
                                     config:
                                       expandable: true
-                                      id: 1
                                       style:
                                         border-radius: 5px
-                                        width: 150px
                                     slots:
                                       default:
                                         - component: oh-button
@@ -259,11 +272,25 @@ slots:
                                 slidesPerView: 4
                                 slidesPerGroup: 4
                                 spaceBetween: 0
+                              "940":
+                                slidesPerView: 5
+                                slidesPerGroup: 5
+                                spaceBetween: 0
+                              "1400":
+                                slidesPerView: 6
+                                slidesPerGroup: 6
+                                spaceBetween: 0
+                              "1800":
+                                slidesPerView: 8
+                                slidesPerGroup: 8
+                                spaceBetween: 0
+                            centerInsufficientSlides: true
                             grabCursor: true
                             keyboard: true
                             mousewheel: true
                             observeSlideChildren: true
                             observer: true
+                            observeParents: true
                             runCallbacksOnInit: true
                             updateOnWindowResize: true
                             watchOverflow: true
@@ -336,6 +363,20 @@ slots:
                               "640":
                                 slidesPerView: 4
                                 slidesPerGroup: 4
+                                spaceBetween: 0
+                              "940":
+                                slidesPerView: 5
+                                slidesPerGroup: 5
+                                spaceBetween: 0
+                              "1400":
+                                slidesPerView: 6
+                                slidesPerGroup: 6
+                                spaceBetween: 0
+                              "1800":
+                                slidesPerView: 8
+                                slidesPerGroup: 8
+                                spaceBetween: 0
+                            centerInsufficientSlides: true
                             grabCursor: true
                             keyboard: true
                             mousewheel: true
