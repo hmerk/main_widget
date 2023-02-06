@@ -2,18 +2,7 @@ uid: main_widget
 tags: []
 props:
   parameters:
-    - description: Set default color for Text
-      label: Text color
-      name: textColor
-      required: false
-      type: TEXT
-    - defaultValue: RGB(96, 96, 96)
-      description: Set default color for Text
-      label: Bottom-Navbar-Color
-      name: bnavColor
-      required: false
-      type: TEXT
-    - defaultValue: Somewhere
+    - default: Somewhere
       description: Name for your weather location
       label: Weather Location
       name: locationTitle
@@ -34,542 +23,713 @@ props:
   parameterGroups:
     - name: security
       label: Security Configuration Parameters
+timestamp: Feb 4, 2023, 9:35:23 PM
 component: f7-block
 config:
   style:
-    --f7-button-text-transform: none
-    --f7-button-text-color: "#8c8c8c"
-    --menu-text-color: '= (!props.textColor) ? (themeOptions.dark=="light")? black : white : props.textColor'
-    --opmw-menu-text-color: =(themeOptions.dark=="light")?("#8C8C8C"):("#848484")
     background: =(themeOptions.dark=="light") ? ("white"):("black")
-    display: flex
-    flex-direction: column
-    height: calc(100vh - var(--f7-toolbar-height) - var(--f7-safe-area-bottom) - var(--f7-safe-area-top))
-    justify-content: space-between
+    height: 100vh
     margin: 0
     padding: 0
     width: 100%
   stylesheet: >
-    .selected_menu_item {
-      color: var(--menu-text-color);
-      text-decoration-color: #F8BB00 !important;
+    
+    .container { 
+      height: 100%;
+      display: grid; 
+      grid-template-columns: 100%; 
+      grid-template-rows: min-content 1fr auto; 
+      gap: 10px 0px;
+      margin: 0 !important;
+      padding: calc(15px + var(--f7-safe-area-top)) 0px var(--f7-safe-area-bottom) 0px !important;
+      
+      grid-template-areas: 
+        "header"
+        "main"
+        "footer";
+      }   
+    .header {   
+      grid-area: header;
+      
+      margin: 0;
+      overflow: hidden;
+      }          
+    .main {
+      grid-area: main;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+      } 
+    .main::-webkit-scrollbar {
+        display: none;
+      } 
+    .footer {
+      grid-area: footer; 
+      overflow: hidden;
+      } 
+    .mainWidget {
+      
+      --f7-theme-color: #FBBF02;
+      --f7-theme-color-rgb: 251, 191, 2;
+      /*toggles*/
+      --f7-toggle-active-color: #545454;
+      --f7-toggle-inactive-color: #B9B9B9;
+
+      /*Custom Vars*/
+      /*--tobNavbar Buttons*/
+      --mW-topNavbar-button-color-selected: #262626;
+      --mW-topNavbar-button-color-unselected: #B9B9B9;
+      --mW-topNavbar-button-underline-color: var(--f7-theme-color);
+      /*--tobNavbar Swiper*/
+      --mW-topNavbar-swiper-navigation-color: #898989;
+      --mW-topNavbar-swiper-navigation-size: 20px;
+      }      
+    .mainWidget .topNavbar .button {
+        --f7-button-hover-bg-color: transparent;
+        --f7-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), .07);
+        --f7-button-text-color: var(--mW-topNavbar-button-color-unselected);
+      }
+    .mainWidget .topNavbar .selected_menu_item {
+      color: var(--mW-topNavbar-button-color);
+      text-decoration-color: var(--mW-topNavbar-button-underline-color) !important;
       text-decoration: underline;
-      text-underline-offset: 2px;
-      font-weight: bold;
-    }
-
-    .unselected_menu_item {
-      color: #8C8C8C;
+      text-underline-offset: 5px;
+      } 
+    .mainWidget .topNavbar .unselected_menu_item {
+      color: var(--mW-topNavbar-button-color-unselected);
       font-weight: 300;
-    }
-
-    .selected_bottom_navbar_item {
-     color: white;
-     font-size: 12px;
-     height: auto;
-     --f7-button-bg-color: transparent;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     padding-top: 1%;
-     padding-bottom: 1%;
-    }
-
-    .unselected_bottom_navbar_item {
-     color: #8c8c8c;
-     font-size: 12px;
-     height: auto;
-     --f7-button-bg-color: transparent
-          display: flex;
-     flex-direction: column;
-     padding-top: 2%;
-     padding-bottom: 2%;
-    }
+      }    
 slots:
   default:
     - component: f7-block
       config:
-        style:
-          flex: 0 0 auto
-          overflow: scroll
+        class:
+          - container
+          - mainWidget
       slots:
         default:
-          - component: f7-segmented
+          - component: f7-block
             config:
-              style:
-                flex: 1 1 auto
-                gap: 10px
-                justify-content: center
-                margin-left: 2%
-                margin-right: 2%
+              class:
+                - no-padding
+                - header
+                - topNavbar
             slots:
               default:
-                - component: oh-repeater
+                - component: f7-row
                   config:
-                    for: baseMenu
-                    fragment: true
-                    in:
-                      - name: Home
-                      - name: Floors
-                      - name: Rooms
-                    map: loop.baseMenu.name
-                    sourceType: array
-                  slots:
-                    default:
-                      - component: oh-button
-                        config:
-                          action: variable
-                          actionVariable: objVar
-                          actionVariableValue:
-                            selectSection: ="SECTION" + loop.baseMenu_idx
-                          class: '=vars.objVar.selectSection=="SECTION" + loop.baseMenu_idx ? "selected_menu_item" : "unselected_menu_item"'
-                          large: true
-                          style:
-                            flex: 0 1 auto
-                            font-size: 24px
-                            font-weight: 200
-                            width: auto
-                          text: =loop.baseMenu
-          - component: f7-row
-            config:
-              style:
-                align-items: center
-                display: flex
-                flex-direction: row
-                flex-wrap: nowrap
-                height: 2em
-                justify-content: space-between
-                width: 100%
-              visible: false
-            slots:
-              default:
-                - component: oh-button
-                  config:
-                    action: variable
-                    actionVariable: buttonIndexHome
-                    actionVariableValue: =(vars.buttonIndexHome || 0) + 1
-                    iconF7: chevron_left
                     style:
-                      color: "#F8BB00"
-                      flex: 0 0 auto
-                      height: 2em
-                - component: oh-repeater
-                  config:
-                    fetchMetadata: metadata,semantics,widgetOrder
-                    filter: (loop.menuArray.metadata) && (loop.menuArray.metadata.semantics.value).includes("Floor")
-                    for: menuArray
-                    fragment: true
-                    itemTags: ","
-                    map: loop.menuArray_source
-                    sourceType: itemsWithTags
+                      height: auto
+                      justify-content: center
+                      margin-left: 2%
+                      margin-right: 2%
                   slots:
                     default:
-                      - component: f7-row
+                      - component: oh-repeater
                         config:
+                          for: baseMenu
+                          fragment: true
+                          in:
+                            - name: Home
+                            - name: Floors
+                            - name: Rooms
+                          sourceType: array
+                        slots:
+                          default:
+                            - component: oh-button
+                              config:
+                                action: variable
+                                actionVariable: objVar
+                                actionVariableValue:
+                                  selectSection: ="SECTION" + loop.baseMenu_idx
+                                class:
+                                  - '=vars.objVar ? "" : "unselected_menu_item"'
+                                  - '=vars.objVar.selectSection=="SECTION" + loop.baseMenu_idx ? "selected_menu_item" : "unselected_menu_item"'
+                                large: true
+                                style:
+                                  font-size: 24px
+                                  width: auto
+                                text: =loop.baseMenu.name
+                - component: f7-row
+                  config:
+                    style:
+                      width: 100%
+                    visible: '=vars.objVar ? (vars.objVar.selectSection=="SECTION1") ? true : false : false'
+                  slots:
+                    default:
+                      - component: f7-swiper
+                        config:
+                          navigation: true
+                          params:
+                            breakpoints:
+                              "0":
+                                slidesPerView: 1
+                                spaceBetween: 0
+                              "240":
+                                slidesPerView: 1
+                                spaceBetween: 0
+                              "320":
+                                slidesPerView: 2
+                                slidesPerGroup: 2
+                                spaceBetween: 0
+                              "480":
+                                slidesPerView: 3
+                                slidesPerGroup: 3
+                                spaceBetween: 0
+                              "640":
+                                slidesPerView: 4
+                                slidesPerGroup: 4
+                                spaceBetween: 0
+                              "940":
+                                slidesPerView: 5
+                                slidesPerGroup: 5
+                                spaceBetween: 0
+                              "1400":
+                                slidesPerView: 6
+                                slidesPerGroup: 6
+                                spaceBetween: 0
+                              "1800":
+                                slidesPerView: 8
+                                slidesPerGroup: 8
+                                spaceBetween: 0
+                            centerInsufficientSlides: true
+                            grabCursor: true
+                            keyboard: true
+                            mousewheel: true
+                            observeSlideChildren: true
+                            observer: true
+                            runCallbacksOnInit: true
+                            updateOnWindowResize: true
+                            watchOverflow: true
                           style:
-                            display: flex
-                            height: 2em
-                            justify-content: center
-                            overflow: hidden
+                            padding-left: 50px
+                            padding-right: 50px
+                            --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
+                            --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
+                            width: 100%
                         slots:
                           default:
                             - component: oh-repeater
                               config:
-                                filter: loop.menuArray_idx == 0
-                                for: menuButtonHome
+                                fetchMetadata: metadata,semantics,widgetOrder
+                                filter: (loop.floorArray.metadata) && (loop.floorArray.metadata.semantics.value).includes("Floor")
+                                for: floorArray
                                 fragment: true
-                                in: =loop.menuArray
-                                map: ((loop.menuButtonHome.metadata && loop.menuButtonHome.metadata.widgetOrder && loop.menuButtonHome.metadata.widgetOrder.value) || 0).toString().padStart(3,'0') + '&' + loop.menuButtonHome_idx
+                                itemTags: ","
+                                sourceType: itemsWithTags
                               slots:
                                 default:
-                                  - component: oh-button
+                                  - component: f7-swiper-slide
                                     config:
-                                      action: variable
-                                      actionVariable: objVar
-                                      actionVariableValue:
-                                        floor: =loop.menuArray[loop.menuButtonHome_source.sort()[loop.menuButtonHome_idx].split('&')[1]].name
-                                        selectSection: = vars.objVar.selectSection
+                                      expandable: true
                                       style:
-                                        flex: 0 0 auto
-                                        height: 2em
-                                        order: =(((vars.buttonIndexHome || 0) % loop.menuButtonHome_source.length) + loop.menuButtonHome_source.length + loop.menuButtonHome_idx) % loop.menuButtonHome_source.length
-                                      text: =loop.menuArray[loop.menuButtonHome_source.sort()[loop.menuButtonHome_idx].split('&')[1]].label
-                - component: oh-button
+                                        border-radius: 5px
+                                    slots:
+                                      default:
+                                        - component: oh-button
+                                          config:
+                                            action: variable
+                                            actionVariable: objVar
+                                            actionVariableValue:
+                                              floor: =loop.floorArray.name
+                                              selectSection: SECTION2
+                                            class:
+                                              - '=vars.objVar ? "" : "unselected_menu_item"'
+                                              - '=(vars.objVar.floor == loop.floorArray.name) ? "selected_menu_item" : "unselected_menu_item"'
+                                            large: true
+                                            style:
+                                              font-size: 16px
+                                              width: auto
+                                            text: =loop.floorArray.label
+                - component: f7-row
                   config:
-                    action: variable
-                    actionVariable: buttonIndexHome
-                    actionVariableValue: =(vars.buttonIndexHome || 0) - 1
-                    iconF7: chevron_right
                     style:
-                      color: "#F8BB00"
-                      flex: 0 0 auto
-                      height: 2em
-          - component: f7-row
-            config:
-              style:
-                align-items: center
-                display: flex
-                flex-direction: row
-                flex-wrap: nowrap
-                height: 2em
-                justify-content: center
-                width: 100%
-              visible: '=vars.objVar ? (vars.objVar.selectSection=="SECTION1") ? true : false : false'
-            slots:
-              default:
-                - component: oh-button
-                  config:
-                    action: variable
-                    actionVariable: buttonIndexFloor
-                    actionVariableValue: =(vars.buttonIndexFloor || 0) + 1
-                    iconF7: chevron_left
-                    style:
-                      color: "#F8BB00"
-                      flex: 0 0 auto
-                      height: 2em
-                - component: oh-repeater
-                  config:
-                    fetchMetadata: metadata,semantics,widgetOrder
-                    filter: (loop.menuArray.metadata) && (loop.menuArray.metadata.semantics.value).includes("Floor")
-                    for: menuArray
-                    fragment: true
-                    itemTags: ","
-                    map: loop.menuArray_source
-                    sourceType: itemsWithTags
+                      width: 100%
+                    visible: '=!vars.objVar ? false : (vars.objVar.selectSection=="SECTION2" && !vars.objVar.floor) ? true : false'
                   slots:
                     default:
-                      - component: f7-row
+                      - component: f7-swiper
                         config:
+                          navigation: true
+                          params:
+                            breakpoints:
+                              "0":
+                                slidesPerView: 1
+                                spaceBetween: 0
+                              "240":
+                                slidesPerView: 1
+                                spaceBetween: 0
+                              "320":
+                                slidesPerView: 2
+                                slidesPerGroup: 2
+                                spaceBetween: 0
+                              "480":
+                                slidesPerView: 3
+                                slidesPerGroup: 3
+                                spaceBetween: 0
+                              "640":
+                                slidesPerView: 4
+                                slidesPerGroup: 4
+                                spaceBetween: 0
+                              "940":
+                                slidesPerView: 5
+                                slidesPerGroup: 5
+                                spaceBetween: 0
+                              "1400":
+                                slidesPerView: 6
+                                slidesPerGroup: 6
+                                spaceBetween: 0
+                              "1800":
+                                slidesPerView: 8
+                                slidesPerGroup: 8
+                                spaceBetween: 0
+                            centerInsufficientSlides: true
+                            grabCursor: true
+                            keyboard: true
+                            mousewheel: true
+                            observeSlideChildren: true
+                            observer: true
+                            observeParents: true
+                            runCallbacksOnInit: true
+                            updateOnWindowResize: true
+                            watchOverflow: true
+                            init: true
                           style:
-                            display: flex
-                            height: 2em
-                            justify-content: center
-                            overflow: hidden
+                            --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
+                            --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
+                            padding-left: 50px
+                            padding-right: 50px
+                            width: 100%
                         slots:
                           default:
                             - component: oh-repeater
                               config:
-                                filter: loop.menuArray_idx == 0
-                                for: menuButtonFloor
+                                fetchMetadata: metadata,semantics,widgetOrder
+                                filter: (loop.roomArray.metadata) && ((loop.roomArray.metadata.semantics.value).includes("Room")  || (loop.roomArray.metadata.semantics.value).includes("Corridor")) && (loop.roomArray.metadata.semantics.config.hasLocation == vars.objVar.floor)
+                                for: roomArray
                                 fragment: true
-                                in: =loop.menuArray
-                                map: ((loop.menuButtonFloor.metadata && loop.menuButtonFloor.metadata.widgetOrder && loop.menuButtonFloor.metadata.widgetOrder.value) || 0).toString().padStart(3,'0') + '&' + loop.menuButtonFloor_idx
+                                itemTags: ","
+                                sourceType: itemsWithTags
                               slots:
                                 default:
-                                  - component: oh-button
+                                  - component: f7-swiper-slide
                                     config:
-                                      action: variable
-                                      actionVariable: objVar
-                                      actionVariableValue:
-                                        floor: =loop.menuArray[loop.menuButtonFloor_source.sort()[loop.menuButtonFloor_idx].split('&')[1]].name
-                                        selectSection: SECTION2
-                                      class: '=(vars.objVar.floor ==(loop.menuArray[loop.menuButtonFloor_source.sort()[loop.menuButtonFloor_idx].split("&")[1]].name)) ? "selected_menu_item" : "unselected_menu_item"'
                                       style:
-                                        flex: 0 0 auto
-                                        height: 2em
-                                        order: =(((vars.buttonIndexFloor || 0) % loop.menuButtonFloor_source.length) + loop.menuButtonFloor_source.length + loop.menuButtonFloor_idx) % loop.menuButtonFloor_source.length
-                                        text-underline-offset: 4px
-                                      text: =loop.menuArray[loop.menuButtonFloor_source.sort()[loop.menuButtonFloor_idx].split('&')[1]].label
-                - component: oh-button
+                                        border-radius: 5px
+                                    slots:
+                                      default:
+                                        - component: oh-button
+                                          config:
+                                            action: variable
+                                            actionVariable: objVar
+                                            actionVariableValue:
+                                              floor: =vars.objVar.floor
+                                              room: =loop.roomArray.name
+                                              selectSection: =vars.objVar.selectSection
+                                            class:
+                                              - '=vars.objVar ? "" : "unselected_menu_item"'
+                                              - '=(vars.objVar.room == loop.roomArray.name) ? "selected_menu_item" : "unselected_menu_item"'
+                                            style:
+                                              font-size: 16px
+                                              width: auto
+                                            text: =loop.roomArray.label
+                - component: f7-row
                   config:
-                    action: variable
-                    actionVariable: buttonIndexFloor
-                    actionVariableValue: =(vars.buttonIndexFloor || 0) - 1
-                    iconF7: chevron_right
                     style:
-                      color: "#F8BB00"
-                      flex: 0 0 auto
-                      height: 2em
-          - component: f7-row
-            config:
-              style:
-                align-items: center
-                display: flex
-                flex-direction: row
-                flex-wrap: nowrap
-                height: 2em
-                justify-content: center
-                width: 100%
-              visible: '=vars.objVar ? (vars.objVar.selectSection=="SECTION2") ? true : false : false'
-            slots:
-              default:
-                - component: oh-button
-                  config:
-                    action: variable
-                    actionVariable: buttonIndexRoom
-                    actionVariableValue: =(vars.buttonIndexRoom || 0) + 1
-                    iconF7: chevron_left
-                    style:
-                      color: "#F8BB00"
-                      flex: 0 0 auto
-                      height: 2em
-                - component: oh-repeater
-                  config:
-                    fetchMetadata: metadata,semantics,widgetOrder
-                    filter: (loop.menuArrayRoom.metadata) && ( (loop.menuArrayRoom.metadata.semantics.value).includes("Room") || (loop.menuArrayRoom.metadata.semantics.value).includes("Corridor") )
-                    for: menuArrayRoom
-                    fragment: true
-                    groupItem: =vars.objVar.floor
-                    map: loop.menuArrayRoom_source
-                    sourceType: itemsInGroup
-                    visible: "=!vars.objVar ? false : (vars.objVar.selectSection==SECTION1) ? false : true"
+                      width: 100%
+                    visible: '=vars.objVar ? (vars.objVar.selectSection=="SECTION2" && vars.objVar.floor ) ? true : false : false'
                   slots:
                     default:
-                      - component: f7-row
+                      - component: f7-swiper
                         config:
+                          navigation: true
+                          params:
+                            breakpoints:
+                              "0":
+                                slidesPerView: 1
+                                spaceBetween: 0
+                              "240":
+                                slidesPerView: 1
+                                spaceBetween: 0
+                              "320":
+                                slidesPerView: 2
+                                slidesPerGroup: 2
+                                spaceBetween: 0
+                              "480":
+                                slidesPerView: 3
+                                slidesPerGroup: 3
+                                spaceBetween: 0
+                              "640":
+                                slidesPerView: 4
+                                slidesPerGroup: 4
+                                spaceBetween: 0
+                              "940":
+                                slidesPerView: 5
+                                slidesPerGroup: 5
+                                spaceBetween: 0
+                              "1400":
+                                slidesPerView: 6
+                                slidesPerGroup: 6
+                                spaceBetween: 0
+                              "1800":
+                                slidesPerView: 8
+                                slidesPerGroup: 8
+                                spaceBetween: 0
+                            centerInsufficientSlides: true
+                            grabCursor: true
+                            keyboard: true
+                            mousewheel: true
+                            observeSlideChildren: true
+                            observer: true
+                            runCallbacksOnInit: true
+                            updateOnWindowResize: true
+                            watchOverflow: true
                           style:
-                            display: flex
-                            height: 2em
-                            justify-content: center
-                            overflow: hidden
+                            --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
+                            --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
+                            padding-left: 50px
+                            padding-right: 50px
+                            width: 100%
                         slots:
                           default:
                             - component: oh-repeater
                               config:
-                                filter: loop.menuArrayRoom_idx == 0
-                                for: menuButtonRoom
+                                fetchMetadata: metadata,semantics
+                                filter: (loop.roomArray.metadata) && ( (loop.roomArray.metadata.semantics.value).includes("Room") || (loop.roomArray.metadata.semantics.value).includes("Corridor") )
+                                for: roomArray
                                 fragment: true
-                                in: =loop.menuArrayRoom
-                                map: ((loop.menuButtonRoom.metadata && loop.menuButtonRoom.metadata.widgetOrder && loop.menuButtonRoom.metadata.widgetOrder.value) || 0).toString().padStart(3,'0') + '&' + loop.menuButtonRoom_idx
+                                groupItem: =vars.objVar.floor
+                                sourceType: itemsInGroup
                               slots:
                                 default:
-                                  - component: oh-button
+                                  - component: f7-swiper-slide
                                     config:
-                                      action: variable
-                                      actionVariable: objVar
-                                      actionVariableValue:
-                                        floor: =vars.objVar.floor
-                                        room: =loop.menuArrayRoom[loop.menuButtonRoom_source.sort()[loop.menuButtonRoom_idx].split('&')[1]].name
-                                        selectSection: =vars.objVar.selectSection
-                                      class: '=(vars.objVar.room ==(loop.menuArrayRoom[loop.menuButtonRoom_source.sort()[loop.menuButtonRoom_idx].split("&")[1]].name)) ? "selected_menu_item" : "unselected_menu_item"'
                                       style:
-                                        flex: 0 0 auto
-                                        height: 2em
-                                        order: =(((vars.buttonIndexRoom || 0) % loop.menuButtonRoom_source.length) + loop.menuButtonRoom_source.length + loop.menuButtonRoom_idx) % loop.menuButtonRoom_source.length
-                                        text-underline-offset: 4px
-                                      text: =loop.menuArrayRoom[loop.menuButtonRoom_source.sort()[loop.menuButtonRoom_idx].split('&')[1]].label
-                - component: oh-repeater
+                                        border-radius: 5px
+                                    slots:
+                                      default:
+                                        - component: oh-button
+                                          config:
+                                            action: variable
+                                            actionVariable: objVar
+                                            actionVariableValue:
+                                              floor: =vars.objVar.floor
+                                              room: =loop.roomArray.name
+                                              selectSection: =vars.objVar.selectSection
+                                            class: '=(vars.objVar.room == loop.roomArray.name) ? "selected_menu_item" : "unselected_menu_item"'
+                                            text: =loop.roomArray.label
+          - component: f7-block
+            config:
+              class:
+                - main
+                - no-margin
+                - no-padding
+            slots:
+              default:
+                - component: widget:main_widget_Home_Card
                   config:
-                    fetchMetadata: metadata,semantics,widgetOrder
-                    filter: (loop.menuArrayRoom.metadata) && ((loop.menuArrayRoom.metadata.semantics.value).includes("Room")  || (loop.menuArrayRoom.metadata.semantics.value).includes("Corridor")) && (loop.menuArrayRoom.metadata.semantics.config.hasLocation == vars.objVar.floor)
-                    for: menuArrayRoom
-                    fragment: true
-                    itemTags: ","
-                    map: loop.menuArrayRoom_source
-                    sourceType: itemsWithTags
-                    visible: "=!vars.objVar ? false : (vars.objVar.selectSection==SECTION1) ? false : true"
+                    locationTitle: =props.locationTitle
+                    referencePIN: =props.referencePIN
+                    scenesGroup: =props.scenesGroup
+                    securityGroup: =props.securityGroup
+                    securityMode: =props.securityMode
+                - component: widget:main_widget_FloorsAndRooms
+          - component: f7-block
+            config:
+              class:
+                - no-margin
+                - no-padding
+                - footer
+              style:
+                width: 100%
+              visible: '=vars.objVar ? (vars.objVar.selectSection=="SECTION0") ? true : false : false'
+            slots:
+              default:
+                - component: f7-row
+                  config:
+                    class:
+                      - display-flex
+                    style:
+                      flex-direction: row
+                      height: 100%
+                      justify-content: space-around
                   slots:
                     default:
-                      - component: f7-row
+                      - component: f7-col
                         config:
                           style:
-                            display: flex
-                            height: 2em
-                            justify-content: center
-                            overflow: hidden
+                            height: 70px
+                            min-width: 50px
                         slots:
                           default:
-                            - component: oh-repeater
+                            - component: oh-link
                               config:
-                                filter: loop.menuArrayRoom_idx == 0
-                                for: menuButtonRoom
-                                fragment: true
-                                in: =loop.menuArrayRoom
-                                map: ((loop.menuButtonRoom.metadata && loop.menuButtonRoom.metadata.widgetOrder && loop.menuButtonRoom.metadata.widgetOrder.value) || 0).toString().padStart(3,'0') + '&' + loop.menuButtonRoom_idx
+                                action: variable
+                                actionVariable: objVar
+                                actionVariableValue:
+                                  floor: =vars.objVar.floor
+                                  room: =vars.objVar.room
+                                  selectSection: =vars.objVar.selectSection
+                                  selectThing: '=vars.objVar.selectThing == "Security" ? undefined : "Security"'
+                                class:
+                                  - padding-half
+                                style:
+                                  color: '=vars.objVar.selectThing == "Security" ? "var(--f7-toggle-active-color)" : "var(--f7-toggle-inactive-color)"'
+                                  display: flex
+                                  flex-direction: column
+                                  height: 100%
                               slots:
                                 default:
-                                  - component: oh-button
+                                  - component: oh-icon
                                     config:
-                                      action: variable
-                                      actionVariable: objVar
-                                      actionVariableValue:
-                                        floor: =vars.objVar.floor
-                                        room: =loop.menuArrayRoom[loop.menuButtonRoom_source.sort()[loop.menuButtonRoom_idx].split('&')[1]].name
-                                        selectSection: =vars.objVar.selectSection
-                                      class: '=(vars.objVar.room ==(loop.menuArrayRoom[loop.menuButtonRoom_source.sort()[loop.menuButtonRoom_idx].split("&")[1]].name)) ? "selected_menu_item" : "unselected_menu_item"'
-                                      style:
-                                        flex: 0 0 auto
-                                        height: 2em
-                                        order: =(((vars.buttonIndexRoom || 0) % loop.menuButtonRoom_source.length) + loop.menuButtonRoom_source.length + loop.menuButtonRoom_idx) % loop.menuButtonRoom_source.length
-                                        text-underline-offset: 4px
-                                      text: =loop.menuArrayRoom[loop.menuButtonRoom_source.sort()[loop.menuButtonRoom_idx].split('&')[1]].label
-                - component: oh-button
-                  config:
-                    action: variable
-                    actionVariable: buttonIndexRoom
-                    actionVariableValue: =(vars.buttonIndexRoom || 0) - 1
-                    iconF7: chevron_right
-                    style:
-                      color: "#F8BB00"
-                      flex: 0 0 auto
-                      height: 2em
-          - component: f7-row
-            config:
-              style:
-                align-items: center
-                display: flex
-                flex-direction: row
-                flex-wrap: nowrap
-                height: 2em
-                justify-content: center
-                width: 100%
-              visible: "=!vars.objVar ? false : !vars.objVar.floor ? false : true"
-            slots:
-              default:
-                - component: oh-repeater
-                  config:
-                    fetchMetadata: semantics,metadata,widgetOrder
-                    filter: loop.floorItem.name==vars.objVar.floor
-                    for: floorItem
-                    itemTags: ","
-                    sourceType: itemsWithTags
-                  slots:
-                    default:
-                      - component: f7-chip
+                                      height: 100%
+                                      icon: iconify:carbon:security
+                                  - component: Label
+                                    config:
+                                      text: Security
+                      - component: f7-col
                         config:
                           style:
-                            background: "#F8BB00"
-                          text: =loop.floorItem.label
-    - component: widget:main_widget_Home_Card
-      config:
-        locationTitle: =props.locationTitle
-        scenesGroup: =props.scenesGroup
-    - component: widget:main_widget_FloorsAndRooms
-    - component: f7-block
-      config:
-        style:
-          background: =props.bnavColor
-          border-radius: 0px 0px 10px 10px
-          flex: 0 0 auto
-          margin-bottom: -4em
-          overflow: scroll
-        visible: '=vars.objVar ? (vars.objVar.selectSection=="SECTION0") ? true : false : false'
-      slots:
-        default:
-          - component: f7-segmented
+                            height: 70px
+                            min-width: 50px
+                        slots:
+                          default:
+                            - component: oh-link
+                              config:
+                                action: variable
+                                actionVariable: objVar
+                                actionVariableValue:
+                                  floor: =vars.objVar.floor
+                                  room: =vars.objVar.room
+                                  selectSection: =vars.objVar.selectSection
+                                  selectThing: '=vars.objVar.selectThing == "Scenes" ? undefined : "Scenes"'
+                                class:
+                                  - padding-half
+                                style:
+                                  color: '=vars.objVar.selectThing == "Scenes" ? "var(--f7-toggle-active-color)" : "var(--f7-toggle-inactive-color)"'
+                                  display: flex
+                                  flex-direction: column
+                                  height: 100%
+                              slots:
+                                default:
+                                  - component: oh-icon
+                                    config:
+                                      height: 100%
+                                      icon: iconify:heroicons:rectangle-stack
+                                  - component: Label
+                                    config:
+                                      text: Scenes
+                      - component: f7-col
+                        config:
+                          style:
+                            height: 70px
+                            min-width: 50px
+                        slots:
+                          default:
+                            - component: oh-link
+                              config:
+                                action: variable
+                                actionVariable: objVar
+                                actionVariableValue:
+                                  floor: =vars.objVar.floor
+                                  room: =vars.objVar.room
+                                  selectSection: =vars.objVar.selectSection
+                                  selectThing: '=vars.objVar.selectThing == "Appliances" ? undefined : "Appliances"'
+                                class:
+                                  - padding-half
+                                style:
+                                  color: '=vars.objVar.selectThing == "Appliances" ?  "var(--f7-toggle-active-color)" : "var(--f7-toggle-inactive-color)"'
+                                  display: flex
+                                  flex-direction: column
+                                  height: 100%
+                              slots:
+                                default:
+                                  - component: oh-icon
+                                    config:
+                                      height: 80%
+                                      icon: iconify:bi:plugin
+                                  - component: Label
+                                    config:
+                                      text: Appliances
+                      - component: f7-col
+                        config:
+                          style:
+                            height: 70px
+                            min-width: 50px
+                        slots:
+                          default:
+                            - component: oh-link
+                              config:
+                                action: variable
+                                actionVariable: objVar
+                                actionVariableValue:
+                                  floor: =vars.objVar.floor
+                                  room: =vars.objVar.room
+                                  selectSection: =vars.objVar.selectSection
+                                  selectThing: '=vars.objVar.selectThing == "Energy" ? undefined : "Energy"'
+                                class:
+                                  - padding-half
+                                style:
+                                  color: '=vars.objVar.selectThing == "Energy" ?  "var(--f7-toggle-active-color)" : "var(--f7-toggle-inactive-color)"'
+                                  display: flex
+                                  flex-direction: column
+                                  height: 100%
+                              slots:
+                                default:
+                                  - component: oh-icon
+                                    config:
+                                      height: 80%
+                                      icon: iconify:simple-line-icons:energy
+                                  - component: Label
+                                    config:
+                                      text: Energy
+          - component: f7-block
             config:
+              class:
+                - no-margin
+                - no-padding
+                - footer
               style:
-                display: flex
-                flex-direction: row
-                justify-content: space-around
+                width: 100%
+              visible: '=vars.objVar ? (vars.objVar.selectSection=="SECTION0") ? false : true : false'
             slots:
               default:
-                - component: oh-link
+                - component: f7-row
                   config:
-                    action: variable
-                    actionVariable: objVar
-                    actionVariableValue:
-                      floor: =vars.objVar.floor
-                      room: =vars.objVar.room
-                      selectSection: =vars.objVar.selectSection
-                      selectThing: Security
-                    badgeColor: '=(vars.objVar && (vars.objVar.selectThing=="Security")) ? "orange" : "red"'
-                    class: '=(vars.objVar && (vars.objVar.selectThing=="Security")) ? "selected_bottom_navbar_item" : "unselected_bottom_navbar_item"'
-                    icon-f7: shield_fill
-                    iconBadge: =(Number(items.gDoorsOpen.state)+Number(items.gWindowsOpen.state)+Number(items.motionDetected.state))
-                    text: Security
-                - component: oh-link
-                  config:
-                    action: variable
-                    actionVariable: objVar
-                    actionVariableValue:
-                      floor: =vars.objVar.floor
-                      room: =vars.objVar.room
-                      selectSection: =vars.objVar.selectSection
-                      selectThing: Scenes
-                    class: '=(vars.objVar && (vars.objVar.selectThing=="Scenes")) ? "selected_bottom_navbar_item" : "unselected_bottom_navbar_item"'
-                    icon-f7: rectangle_on_rectangle_angled
-                    text: Scenes
-                - component: oh-link
-                  config:
-                    action: variable
-                    actionVariable: objVar
-                    actionVariableValue:
-                      floor: =vars.objVar.floor
-                      room: =vars.objVar.room
-                      selectSection: =vars.objVar.selectSection
-                      selectThing: Appliances
-                    class: '=(vars.objVar && (vars.objVar.selectThing=="Weather")) ? "selected_bottom_navbar_item" : "unselected_bottom_navbar_item"'
-                    iconMaterial: power
-                    text: Appliances
-                - component: oh-link
-                  config:
-                    action: variable
-                    actionVariable: objVar
-                    actionVariableValue:
-                      floor: =vars.objVar.floor
-                      room: =vars.objVar.room
-                      selectSection: =vars.objVar.selectSection
-                      selectThing: Energy
-                    badgeColor: green
-                    class: '=(vars.objVar && (vars.objVar.selectThing=="Energy")) ? "selected_bottom_navbar_item" : "unselected_bottom_navbar_item"'
-                    icon-f7: bolt_fill
-                    iconBadge: ""
-                    text: Energy
-    - component: f7-block
-      config:
-        style:
-          background: =props.bnavColor
-          border-radius: 0px 0px 10px 10px
-          flex: 0 0 auto
-          margin-bottom: -4em
-          overflow: scroll
-        visible: '=vars.objVar ? (vars.objVar.selectSection=="SECTION0") ? false : true : false'
-      slots:
-        default:
-          - component: f7-segmented
-            config:
-              style:
-                display: flex
-                flex-direction: row
-                justify-content: space-around
-            slots:
-              default:
-                - component: oh-link
-                  config:
-                    action: variable
-                    actionVariable: objVar
-                    actionVariableValue:
-                      floor: =vars.objVar.floor
-                      room: =vars.objVar.room
-                      selectSection: =vars.objVar.selectSection
-                      selectThing: Lights
-                    class: '=(vars.objVar && (vars.objVar.selectThing=="Lights")) ? "selected_bottom_navbar_item" : "unselected_bottom_navbar_item"'
-                    icon-f7: lightbulb_fill
-                    text: Lights
-                - component: oh-link
-                  config:
-                    action: variable
-                    actionVariable: objVar
-                    actionVariableValue:
-                      floor: =vars.objVar.floor
-                      room: =vars.objVar.room
-                      selectSection: =vars.objVar.selectSection
-                      selectThing: Rollers
-                    class: '=(vars.objVar && (vars.objVar.selectThing=="Rollers")) ? "selected_bottom_navbar_item" : "unselected_bottom_navbar_item"'
-                    icon-f7: archivebox
-                    text: Shades
-                - component: oh-link
-                  config:
-                    action: variable
-                    actionVariable: objVar
-                    actionVariableValue:
-                      floor: =vars.objVar.floor
-                      room: =vars.objVar.room
-                      selectSection: =vars.objVar.selectSection
-                      selectThing: Climate
-                    class: '=(vars.objVar && (vars.objVar.selectThing=="Climate")) ? "selected_bottom_navbar_item" : "unselected_bottom_navbar_item"'
-                    icon-f7: snow
-                    text: Climate
-                - component: oh-link
-                  config:
-                    action: variable
-                    actionVariable: objVar
-                    actionVariableValue:
-                      floor: =vars.objVar.floor
-                      room: =vars.objVar.room
-                      selectSection: =vars.objVar.selectSection
-                      selectThing: Appliances
-                    class: '=(vars.objVar && (vars.objVar.selectThing=="Appliances")) ? "selected_bottom_navbar_item" : "unselected_bottom_navbar_item"'
-                    iconMaterial: power
-                    text: Appliances
+                    class:
+                      - display-flex
+                    style:
+                      flex-direction: row
+                      height: 100%
+                      justify-content: space-around
+                  slots:
+                    default:
+                      - component: f7-col
+                        config:
+                          style:
+                            height: 70px
+                            min-width: 50px
+                        slots:
+                          default:
+                            - component: oh-link
+                              config:
+                                action: variable
+                                actionVariable: objVar
+                                actionVariableValue:
+                                  floor: =vars.objVar.floor
+                                  room: =vars.objVar.room
+                                  selectSection: =vars.objVar.selectSection
+                                  selectThing: '=vars.objVar.selectThing == "Lights" ? undefined : "Lights"'
+                                class:
+                                  - padding-half
+                                style:
+                                  color: '=vars.objVar.selectThing == "Lights" ? "var(--f7-toggle-active-color)" : "var(--f7-toggle-inactive-color)"'
+                                  display: flex
+                                  flex-direction: column
+                                  height: 100%
+                              slots:
+                                default:
+                                  - component: oh-icon
+                                    config:
+                                      height: 100%
+                                      icon: iconify:clarity:lightbulb-line
+                                  - component: Label
+                                    config:
+                                      text: Lights
+                      - component: f7-col
+                        config:
+                          style:
+                            height: 70px
+                            min-width: 50px
+                        slots:
+                          default:
+                            - component: oh-link
+                              config:
+                                action: variable
+                                actionVariable: objVar
+                                actionVariableValue:
+                                  floor: =vars.objVar.floor
+                                  room: =vars.objVar.room
+                                  selectSection: =vars.objVar.selectSection
+                                  selectThing: '=vars.objVar.selectThing == "Rollers" ? undefined : "Rollers"'
+                                class:
+                                  - padding-half
+                                style:
+                                  color: '=vars.objVar.selectThing == "Rollers" ? "var(--f7-toggle-active-color)" : "var(--f7-toggle-inactive-color)"'
+                                  display: flex
+                                  flex-direction: column
+                                  height: 100%
+                              slots:
+                                default:
+                                  - component: oh-icon
+                                    config:
+                                      height: 100%
+                                      icon: iconify:mdi:window-shutter
+                                  - component: Label
+                                    config:
+                                      text: Rollers
+                      - component: f7-col
+                        config:
+                          style:
+                            height: 70px
+                            min-width: 50px
+                        slots:
+                          default:
+                            - component: oh-link
+                              config:
+                                action: variable
+                                actionVariable: objVar
+                                actionVariableValue:
+                                  floor: =vars.objVar.floor
+                                  room: =vars.objVar.room
+                                  selectSection: =vars.objVar.selectSection
+                                  selectThing: '=vars.objVar.selectThing == "Climate" ? undefined : "Climate"'
+                                class:
+                                  - padding-half
+                                style:
+                                  color: '=vars.objVar.selectThing == "Climate" ?  "var(--f7-toggle-active-color)" : "var(--f7-toggle-inactive-color)"'
+                                  display: flex
+                                  flex-direction: column
+                                  height: 100%
+                              slots:
+                                default:
+                                  - component: oh-icon
+                                    config:
+                                      height: 80%
+                                      icon: iconify:ph:thermometer-hot-light
+                                  - component: Label
+                                    config:
+                                      text: Climate
+                      - component: f7-col
+                        config:
+                          style:
+                            height: 70px
+                            min-width: 50px
+                        slots:
+                          default:
+                            - component: oh-link
+                              config:
+                                action: variable
+                                actionVariable: objVar
+                                actionVariableValue:
+                                  floor: =vars.objVar.floor
+                                  room: =vars.objVar.room
+                                  selectSection: =vars.objVar.selectSection
+                                  selectThing: '=vars.objVar.selectThing == "Appliances" ? undefined : "Appliances"'
+                                class:
+                                  - padding-half
+                                style:
+                                  color: '=vars.objVar.selectThing == "Appliances" ?  "var(--f7-toggle-active-color)" : "var(--f7-toggle-inactive-color)"'
+                                  display: flex
+                                  flex-direction: column
+                                  height: 100%
+                              slots:
+                                default:
+                                  - component: oh-icon
+                                    config:
+                                      height: 80%
+                                      icon: iconify:bi:plugin
+                                  - component: Label
+                                    config:
+                                      text: Appliances
