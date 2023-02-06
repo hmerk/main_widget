@@ -7,6 +7,7 @@ config:
   style:
     --f7-block-padding-horizontal: 0px
     --f7-block-padding-vertical: 0px
+    --f7-navbar-height: 0
 blocks:
   - component: oh-block
     config:
