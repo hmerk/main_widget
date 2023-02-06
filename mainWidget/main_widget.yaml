@@ -23,7 +23,7 @@ props:
   parameterGroups:
     - name: security
       label: Security Configuration Parameters
-timestamp: Feb 4, 2023, 9:35:23 PM
+timestamp: Feb 6, 2023, 10:41:52 AM
 component: f7-block
 config:
   style:
@@ -42,7 +42,6 @@ config:
       gap: 10px 0px;
       margin: 0 !important;
       padding: calc(15px + var(--f7-safe-area-top)) 0px var(--f7-safe-area-bottom) 0px !important;
-      
       grid-template-areas: 
         "header"
         "main"
@@ -203,8 +202,8 @@ slots:
                             updateOnWindowResize: true
                             watchOverflow: true
                           style:
-                            padding-left: 50px
-                            padding-right: 50px
+                            #padding-left: 50px
+                            #padding-right: 50px
                             --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
                             --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
                             width: 100%
@@ -298,8 +297,8 @@ slots:
                           style:
                             --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
                             --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
-                            padding-left: 50px
-                            padding-right: 50px
+                            #padding-left: 50px
+                            #padding-right: 50px
                             width: 100%
                         slots:
                           default:
@@ -388,8 +387,8 @@ slots:
                           style:
                             --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
                             --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
-                            padding-left: 50px
-                            padding-right: 50px
+                            #padding-left: 50px
+                            #padding-right: 50px
                             width: 100%
                         slots:
                           default:
