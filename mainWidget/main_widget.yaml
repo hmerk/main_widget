@@ -202,8 +202,6 @@ slots:
                             updateOnWindowResize: true
                             watchOverflow: true
                           style:
-                            #padding-left: 50px
-                            #padding-right: 50px
                             --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
                             --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
                             width: 100%
@@ -297,8 +295,6 @@ slots:
                           style:
                             --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
                             --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
-                            #padding-left: 50px
-                            #padding-right: 50px
                             width: 100%
                         slots:
                           default:
@@ -387,8 +383,6 @@ slots:
                           style:
                             --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
                             --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
-                            #padding-left: 50px
-                            #padding-right: 50px
                             width: 100%
                         slots:
                           default:
