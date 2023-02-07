@@ -23,7 +23,7 @@ props:
   parameterGroups:
     - name: security
       label: Security Configuration Parameters
-timestamp: Feb 4, 2023, 9:35:23 PM
+timestamp: Feb 6, 2023, 8:57:00 PM
 component: f7-block
 config:
   style:
@@ -42,7 +42,6 @@ config:
       gap: 10px 0px;
       margin: 0 !important;
       padding: calc(15px + var(--f7-safe-area-top)) 0px var(--f7-safe-area-bottom) 0px !important;
-      
       grid-template-areas: 
         "header"
         "main"
@@ -89,6 +88,7 @@ config:
         --f7-button-hover-bg-color: transparent;
         --f7-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), .07);
         --f7-button-text-color: var(--mW-topNavbar-button-color-unselected);
+        --f7-button-text-transform: none;
       }
     .mainWidget .topNavbar .selected_menu_item {
       color: var(--mW-topNavbar-button-color);
@@ -203,8 +203,6 @@ slots:
                             updateOnWindowResize: true
                             watchOverflow: true
                           style:
-                            padding-left: 50px
-                            padding-right: 50px
                             --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
                             --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
                             width: 100%
@@ -246,6 +244,7 @@ slots:
                   config:
                     style:
                       width: 100%
+                      height: auto
                     visible: '=!vars.objVar ? false : (vars.objVar.selectSection=="SECTION2" && !vars.objVar.floor) ? true : false'
                   slots:
                     default:
@@ -298,8 +297,6 @@ slots:
                           style:
                             --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
                             --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
-                            padding-left: 50px
-                            padding-right: 50px
                             width: 100%
                         slots:
                           default:
@@ -338,6 +335,7 @@ slots:
                   config:
                     style:
                       width: 100%
+                      height: auto
                     visible: '=vars.objVar ? (vars.objVar.selectSection=="SECTION2" && vars.objVar.floor ) ? true : false : false'
                   slots:
                     default:
@@ -388,8 +386,6 @@ slots:
                           style:
                             --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
                             --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
-                            padding-left: 50px
-                            padding-right: 50px
                             width: 100%
                         slots:
                           default:
@@ -419,6 +415,29 @@ slots:
                                               selectSection: =vars.objVar.selectSection
                                             class: '=(vars.objVar.room == loop.roomArray.name) ? "selected_menu_item" : "unselected_menu_item"'
                                             text: =loop.roomArray.label
+                - component: f7-row
+                  config:
+                    style:
+                      justify-content: center
+                      width: 100%
+                      height: auto
+                    visible: "=!vars.objVar ? false : !vars.objVar.floor ? false : true"
+                  slots:
+                    default:
+                      - component: oh-repeater
+                        config:
+                          fetchMetadata: semantics,metadata,widgetOrder
+                          filter: loop.floorItem.name==vars.objVar.floor
+                          for: floorItem
+                          itemTags: ","
+                          sourceType: itemsWithTags
+                        slots:
+                          default:
+                            - component: f7-chip
+                              config:
+                                style:
+                                  background: "#F8BB00"
+                                text: =loop.floorItem.label                                            
           - component: f7-block
             config:
               class:
