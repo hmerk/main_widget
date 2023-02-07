@@ -23,7 +23,7 @@ props:
   parameterGroups:
     - name: security
       label: Security Configuration Parameters
-timestamp: Feb 6, 2023, 10:41:52 AM
+timestamp: Feb 6, 2023, 8:57:00 PM
 component: f7-block
 config:
   style:
@@ -88,6 +88,7 @@ config:
         --f7-button-hover-bg-color: transparent;
         --f7-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), .07);
         --f7-button-text-color: var(--mW-topNavbar-button-color-unselected);
+        --f7-button-text-transform: none;
       }
     .mainWidget .topNavbar .selected_menu_item {
       color: var(--mW-topNavbar-button-color);
@@ -243,6 +244,7 @@ slots:
                   config:
                     style:
                       width: 100%
+                      height: auto
                     visible: '=!vars.objVar ? false : (vars.objVar.selectSection=="SECTION2" && !vars.objVar.floor) ? true : false'
                   slots:
                     default:
@@ -333,6 +335,7 @@ slots:
                   config:
                     style:
                       width: 100%
+                      height: auto
                     visible: '=vars.objVar ? (vars.objVar.selectSection=="SECTION2" && vars.objVar.floor ) ? true : false : false'
                   slots:
                     default:
@@ -412,6 +415,29 @@ slots:
                                               selectSection: =vars.objVar.selectSection
                                             class: '=(vars.objVar.room == loop.roomArray.name) ? "selected_menu_item" : "unselected_menu_item"'
                                             text: =loop.roomArray.label
+                - component: f7-row
+                  config:
+                    style:
+                      justify-content: center
+                      width: 100%
+                      height: auto
+                    visible: "=!vars.objVar ? false : !vars.objVar.floor ? false : true"
+                  slots:
+                    default:
+                      - component: oh-repeater
+                        config:
+                          fetchMetadata: semantics,metadata,widgetOrder
+                          filter: loop.floorItem.name==vars.objVar.floor
+                          for: floorItem
+                          itemTags: ","
+                          sourceType: itemsWithTags
+                        slots:
+                          default:
+                            - component: f7-chip
+                              config:
+                                style:
+                                  background: "#F8BB00"
+                                text: =loop.floorItem.label                                            
           - component: f7-block
             config:
               class:
