@@ -1,5 +1,5 @@
 uid: main_widget
-tags: []
+tags: [improvements Nico_R]
 props:
   parameters:
     - default: Somewhere
@@ -23,7 +23,7 @@ props:
   parameterGroups:
     - name: security
       label: Security Configuration Parameters
-timestamp: Feb 6, 2023, 8:57:00 PM
+timestamp: Feb 10, 2023, 3:20:59 PM
 component: f7-block
 config:
   style:
@@ -33,73 +33,83 @@ config:
     padding: 0
     width: 100%
   stylesheet: >
-    
-    .container { 
-      height: 100%;
-      display: grid; 
-      grid-template-columns: 100%; 
-      grid-template-rows: min-content 1fr auto; 
-      gap: 10px 0px;
-      margin: 0 !important;
-      padding: calc(15px + var(--f7-safe-area-top)) 0px var(--f7-safe-area-bottom) 0px !important;
-      grid-template-areas: 
-        "header"
-        "main"
-        "footer";
-      }   
-    .header {   
-      grid-area: header;
-      
-      margin: 0;
-      overflow: hidden;
-      }          
+    .container {
+        height: 100%;
+        display: grid; 
+        grid-template-columns: 100%; 
+        grid-template-rows: min-content 1fr auto; 
+        gap: 10px 0px;
+        margin: 0 !important;
+        padding: calc(15px + var(--f7-safe-area-top)) 0px var(--f7-safe-area-bottom) 0px !important;
+        grid-template-areas: 
+          "header"
+          "main"
+          "footer";
+        }
+    .header {
+        grid-area: header;
+
+        margin: 0;
+        overflow: hidden;
+        }
     .main {
-      grid-area: main;
-      overflow-y: scroll;
-      overflow-x: hidden;
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
-      } 
+        grid-area: main;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+        }
     .main::-webkit-scrollbar {
         display: none;
-      } 
+        }
     .footer {
-      grid-area: footer; 
-      overflow: hidden;
-      } 
+        grid-area: footer; 
+        overflow: hidden;
+        }
     .mainWidget {
-      
-      --f7-theme-color: #FBBF02;
-      --f7-theme-color-rgb: 251, 191, 2;
-      /*toggles*/
-      --f7-toggle-active-color: #545454;
-      --f7-toggle-inactive-color: #B9B9B9;
-
-      /*Custom Vars*/
-      /*--tobNavbar Buttons*/
-      --mW-topNavbar-button-color-selected: #262626;
-      --mW-topNavbar-button-color-unselected: #B9B9B9;
-      --mW-topNavbar-button-underline-color: var(--f7-theme-color);
-      /*--tobNavbar Swiper*/
-      --mW-topNavbar-swiper-navigation-color: #898989;
-      --mW-topNavbar-swiper-navigation-size: 20px;
-      }      
+        --f7-theme-color: #FBBF02;
+        --f7-theme-color-rgb: 251, 191, 2;
+        /*toggles*/
+        --f7-toggle-active-color: #545454;
+        --f7-toggle-inactive-color: #B9B9B9;
+        /*Custom Vars*/
+        /*--tobNavbar Buttons*/
+        --mW-topNavbar-button-color-selected: #262626;
+        --mW-topNavbar-button-color-unselected: #B9B9B9;
+        --mW-topNavbar-button-underline-color: var(--f7-theme-color);
+        /*--tobNavbar Swiper*/
+        --mW-topNavbar-swiper-navigation-color: #898989;
+        --mW-topNavbar-swiper-navigation-size: 20px;
+        }
     .mainWidget .topNavbar .button {
         --f7-button-hover-bg-color: transparent;
         --f7-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), .07);
         --f7-button-text-color: var(--mW-topNavbar-button-color-unselected);
         --f7-button-text-transform: none;
-      }
+        font-size: 16px;
+        width: auto; 
+        }
     .mainWidget .topNavbar .selected_menu_item {
-      color: var(--mW-topNavbar-button-color);
-      text-decoration-color: var(--mW-topNavbar-button-underline-color) !important;
-      text-decoration: underline;
-      text-underline-offset: 5px;
-      } 
+        color: var(--mW-topNavbar-button-color);
+        text-decoration-color: var(--mW-topNavbar-button-underline-color) !important;
+        text-decoration: underline;
+        text-underline-offset: 5px;
+        }
     .mainWidget .topNavbar .unselected_menu_item {
-      color: var(--mW-topNavbar-button-color-unselected);
-      font-weight: 300;
-      }    
+        color: var(--mW-topNavbar-button-color-unselected);
+        font-weight: 300;
+        }
+    .mainWidget .topNavbar .swiper-button-prev, .mainWidget .topNavbar .swiper-button-next {
+        padding: 20px;
+        width: 100%;
+        height: 40px;
+        }
+    .mainWidget .topNavbar .swiper-button-prev {
+        justify-content: right;
+        }
+    .mainWidget .topNavbar .swiper-button-next{
+        justify-content: left;
+        }
 slots:
   default:
     - component: f7-block
@@ -153,275 +163,409 @@ slots:
                                 text: =loop.baseMenu.name
                 - component: f7-row
                   config:
-                    style:
-                      width: 100%
-                    visible: '=vars.objVar ? (vars.objVar.selectSection=="SECTION1") ? true : false : false'
-                  slots:
-                    default:
-                      - component: f7-swiper
-                        config:
-                          navigation: true
-                          params:
-                            breakpoints:
-                              "0":
-                                slidesPerView: 1
-                                spaceBetween: 0
-                              "240":
-                                slidesPerView: 1
-                                spaceBetween: 0
-                              "320":
-                                slidesPerView: 2
-                                slidesPerGroup: 2
-                                spaceBetween: 0
-                              "480":
-                                slidesPerView: 3
-                                slidesPerGroup: 3
-                                spaceBetween: 0
-                              "640":
-                                slidesPerView: 4
-                                slidesPerGroup: 4
-                                spaceBetween: 0
-                              "940":
-                                slidesPerView: 5
-                                slidesPerGroup: 5
-                                spaceBetween: 0
-                              "1400":
-                                slidesPerView: 6
-                                slidesPerGroup: 6
-                                spaceBetween: 0
-                              "1800":
-                                slidesPerView: 8
-                                slidesPerGroup: 8
-                                spaceBetween: 0
-                            centerInsufficientSlides: true
-                            grabCursor: true
-                            keyboard: true
-                            mousewheel: true
-                            observeSlideChildren: true
-                            observer: true
-                            runCallbacksOnInit: true
-                            updateOnWindowResize: true
-                            watchOverflow: true
-                          style:
-                            --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
-                            --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
-                            width: 100%
-                        slots:
-                          default:
-                            - component: oh-repeater
-                              config:
-                                fetchMetadata: metadata,semantics,widgetOrder
-                                filter: (loop.floorArray.metadata) && (loop.floorArray.metadata.semantics.value).includes("Floor")
-                                for: floorArray
-                                fragment: true
-                                itemTags: ","
-                                sourceType: itemsWithTags
-                              slots:
-                                default:
-                                  - component: f7-swiper-slide
-                                    config:
-                                      expandable: true
-                                      style:
-                                        border-radius: 5px
-                                    slots:
-                                      default:
-                                        - component: oh-button
-                                          config:
-                                            action: variable
-                                            actionVariable: objVar
-                                            actionVariableValue:
-                                              floor: =loop.floorArray.name
-                                              selectSection: SECTION2
-                                            class:
-                                              - '=vars.objVar ? "" : "unselected_menu_item"'
-                                              - '=(vars.objVar.floor == loop.floorArray.name) ? "selected_menu_item" : "unselected_menu_item"'
-                                            large: true
-                                            style:
-                                              font-size: 16px
-                                              width: auto
-                                            text: =loop.floorArray.label
-                - component: f7-row
-                  config:
+                    class:
+                      - align-items-center
+                      - display-flex
                     style:
                       width: 100%
                       height: auto
-                    visible: '=!vars.objVar ? false : (vars.objVar.selectSection=="SECTION2" && !vars.objVar.floor) ? true : false'
+                      display: '=vars.objVar ? (vars.objVar.selectSection=="SECTION1") ? "" : "none !important" : "none !important"'
                   slots:
                     default:
-                      - component: f7-swiper
+                      - component: f7-col
                         config:
-                          navigation: true
-                          params:
-                            breakpoints:
-                              "0":
-                                slidesPerView: 1
-                                spaceBetween: 0
-                              "240":
-                                slidesPerView: 1
-                                spaceBetween: 0
-                              "320":
-                                slidesPerView: 2
-                                slidesPerGroup: 2
-                                spaceBetween: 0
-                              "480":
-                                slidesPerView: 3
-                                slidesPerGroup: 3
-                                spaceBetween: 0
-                              "640":
-                                slidesPerView: 4
-                                slidesPerGroup: 4
-                                spaceBetween: 0
-                              "940":
-                                slidesPerView: 5
-                                slidesPerGroup: 5
-                                spaceBetween: 0
-                              "1400":
-                                slidesPerView: 6
-                                slidesPerGroup: 6
-                                spaceBetween: 0
-                              "1800":
-                                slidesPerView: 8
-                                slidesPerGroup: 8
-                                spaceBetween: 0
-                            centerInsufficientSlides: true
-                            grabCursor: true
-                            keyboard: true
-                            mousewheel: true
-                            observeSlideChildren: true
-                            observer: true
-                            observeParents: true
-                            runCallbacksOnInit: true
-                            updateOnWindowResize: true
-                            watchOverflow: true
-                            init: true
+                          class:
+                            - display-flex
+                            - justify-content-right
+                            - align-items-center
                           style:
-                            --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
-                            --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
-                            width: 100%
+                            width: 10%
                         slots:
                           default:
-                            - component: oh-repeater
+                            - component: f7-block
                               config:
-                                fetchMetadata: metadata,semantics,widgetOrder
-                                filter: (loop.roomArray.metadata) && ((loop.roomArray.metadata.semantics.value).includes("Room")  || (loop.roomArray.metadata.semantics.value).includes("Corridor")) && (loop.roomArray.metadata.semantics.config.hasLocation == vars.objVar.floor)
-                                for: roomArray
-                                fragment: true
-                                itemTags: ","
-                                sourceType: itemsWithTags
+                                style:
+                                  --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
+                                  --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
+                                  position: inherit
+                                class:
+                                  - swiper-button-prev
+                                id: floorsPrev
+                      - component: f7-col
+                        config:
+                          style:
+                            flex-grow: 1
+                        slots:
+                          default:
+                            - component: f7-swiper
+                              config:
+                                params:
+                                  navigation:
+                                    prevEl: "#floorsPrev"
+                                    nextEl: "#floorsNext"
+                                  breakpoints:
+                                    "0":
+                                      slidesPerView: 1
+                                      spaceBetween: 0
+                                    "240":
+                                      slidesPerView: 1
+                                      spaceBetween: 0
+                                    "320":
+                                      slidesPerView: 2
+                                      slidesPerGroup: 2
+                                      spaceBetween: 0
+                                    "480":
+                                      slidesPerView: 3
+                                      slidesPerGroup: 3
+                                      spaceBetween: 0
+                                    "640":
+                                      slidesPerView: 4
+                                      slidesPerGroup: 4
+                                      spaceBetween: 0
+                                    "940":
+                                      slidesPerView: 5
+                                      slidesPerGroup: 5
+                                      spaceBetween: 0
+                                    "1400":
+                                      slidesPerView: 6
+                                      slidesPerGroup: 6
+                                      spaceBetween: 0
+                                    "1800":
+                                      slidesPerView: 8
+                                      slidesPerGroup: 8
+                                      spaceBetween: 0
+                                  centerInsufficientSlides: true
+                                  grabCursor: true
+                                  keyboard: true
+                                  mousewheel: true
+                                  observeSlideChildren: true
+                                  observer: true
+                                  runCallbacksOnInit: true
+                                  updateOnWindowResize: true
+                                  watchOverflow: true
+                                style:
+                                  width: 100%
                               slots:
                                 default:
-                                  - component: f7-swiper-slide
+                                  - component: oh-repeater
                                     config:
-                                      style:
-                                        border-radius: 5px
+                                      fetchMetadata: metadata,semantics,widgetOrder
+                                      filter: (loop.floorArray.metadata) && (loop.floorArray.metadata.semantics.value).includes("Floor")
+                                      for: floorArray
+                                      fragment: true
+                                      itemTags: ","
+                                      sourceType: itemsWithTags
                                     slots:
                                       default:
-                                        - component: oh-button
+                                        - component: f7-swiper-slide
                                           config:
-                                            action: variable
-                                            actionVariable: objVar
-                                            actionVariableValue:
-                                              floor: =vars.objVar.floor
-                                              room: =loop.roomArray.name
-                                              selectSection: =vars.objVar.selectSection
-                                            class:
-                                              - '=vars.objVar ? "" : "unselected_menu_item"'
-                                              - '=(vars.objVar.room == loop.roomArray.name) ? "selected_menu_item" : "unselected_menu_item"'
+                                            expandable: true
                                             style:
-                                              font-size: 16px
-                                              width: auto
-                                            text: =loop.roomArray.label
+                                              border-radius: 5px
+                                          slots:
+                                            default:
+                                              - component: oh-button
+                                                config:
+                                                  action: variable
+                                                  actionVariable: objVar
+                                                  actionVariableValue:
+                                                    floor: =loop.floorArray.name
+                                                    selectSection: SECTION2
+                                                  class:
+                                                    - '=vars.objVar ? "" : "unselected_menu_item"'
+                                                    - '=(vars.objVar.floor == loop.floorArray.name) ? "selected_menu_item" : "unselected_menu_item"'
+                                                  text: =loop.floorArray.label
+                      - component: f7-col
+                        config:
+                          class:
+                            - display-flex
+                            - justify-content-center
+                            - align-items-center
+                          style:
+                            width: 10%
+                        slots:
+                          default:
+                            - component: f7-block
+                              config:
+                                style:
+                                  --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
+                                  --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
+                                  position: inherit
+                                class:
+                                  - swiper-button-next
+                                id: floorsNext
                 - component: f7-row
                   config:
+                    class:
+                      - align-items-center
                     style:
                       width: 100%
                       height: auto
-                    visible: '=vars.objVar ? (vars.objVar.selectSection=="SECTION2" && vars.objVar.floor ) ? true : false : false'
+                      display: '=!vars.objVar ? "none !important" : (vars.objVar.selectSection=="SECTION2" && !vars.objVar.floor) ? "" : "none !important"'
                   slots:
                     default:
-                      - component: f7-swiper
+                      - component: f7-col
                         config:
-                          navigation: true
-                          params:
-                            breakpoints:
-                              "0":
-                                slidesPerView: 1
-                                spaceBetween: 0
-                              "240":
-                                slidesPerView: 1
-                                spaceBetween: 0
-                              "320":
-                                slidesPerView: 2
-                                slidesPerGroup: 2
-                                spaceBetween: 0
-                              "480":
-                                slidesPerView: 3
-                                slidesPerGroup: 3
-                                spaceBetween: 0
-                              "640":
-                                slidesPerView: 4
-                                slidesPerGroup: 4
-                                spaceBetween: 0
-                              "940":
-                                slidesPerView: 5
-                                slidesPerGroup: 5
-                                spaceBetween: 0
-                              "1400":
-                                slidesPerView: 6
-                                slidesPerGroup: 6
-                                spaceBetween: 0
-                              "1800":
-                                slidesPerView: 8
-                                slidesPerGroup: 8
-                                spaceBetween: 0
-                            centerInsufficientSlides: true
-                            grabCursor: true
-                            keyboard: true
-                            mousewheel: true
-                            observeSlideChildren: true
-                            observer: true
-                            runCallbacksOnInit: true
-                            updateOnWindowResize: true
-                            watchOverflow: true
+                          class:
+                            - display-flex
+                            - justify-content-center
+                            - align-items-center
                           style:
-                            --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
-                            --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
-                            width: 100%
+                            width: 10%
                         slots:
                           default:
-                            - component: oh-repeater
+                            - component: f7-block
                               config:
-                                fetchMetadata: metadata,semantics
-                                filter: (loop.roomArray.metadata) && ( (loop.roomArray.metadata.semantics.value).includes("Room") || (loop.roomArray.metadata.semantics.value).includes("Corridor") )
-                                for: roomArray
-                                fragment: true
-                                groupItem: =vars.objVar.floor
-                                sourceType: itemsInGroup
+                                style:
+                                  --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
+                                  --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
+                                  position: inherit
+                                class:
+                                  - swiper-button-prev
+                                id: allRoomsPrev
+                      - component: f7-col
+                        config:
+                          style:
+                            flex-grow: 1
+                        slots:
+                          default:
+                            - component: f7-swiper
+                              config:
+                                params:
+                                  navigation:
+                                    prevEl: "#allRoomsPrev"
+                                    nextEl: "#allRoomsNext"
+                                  breakpoints:
+                                    "0":
+                                      slidesPerView: 1
+                                      spaceBetween: 0
+                                    "240":
+                                      slidesPerView: 1
+                                      spaceBetween: 0
+                                    "320":
+                                      slidesPerView: 2
+                                      slidesPerGroup: 2
+                                      spaceBetween: 0
+                                    "480":
+                                      slidesPerView: 3
+                                      slidesPerGroup: 3
+                                      spaceBetween: 0
+                                    "640":
+                                      slidesPerView: 4
+                                      slidesPerGroup: 4
+                                      spaceBetween: 0
+                                    "940":
+                                      slidesPerView: 5
+                                      slidesPerGroup: 5
+                                      spaceBetween: 0
+                                    "1400":
+                                      slidesPerView: 6
+                                      slidesPerGroup: 6
+                                      spaceBetween: 0
+                                    "1800":
+                                      slidesPerView: 8
+                                      slidesPerGroup: 8
+                                      spaceBetween: 0
+                                  centerInsufficientSlides: true
+                                  grabCursor: true
+                                  keyboard: true
+                                  mousewheel: true
+                                  observeSlideChildren: true
+                                  observer: true
+                                  observeParents: true
+                                  runCallbacksOnInit: true
+                                  updateOnWindowResize: true
+                                  watchOverflow: true
+                                style:
+                                  width: 100%
                               slots:
                                 default:
-                                  - component: f7-swiper-slide
+                                  - component: oh-repeater
                                     config:
-                                      style:
-                                        border-radius: 5px
+                                      fetchMetadata: metadata,semantics,widgetOrder
+                                      filter: (loop.roomArray.metadata) && ((loop.roomArray.metadata.semantics.value).includes("Room")  || (loop.roomArray.metadata.semantics.value).includes("Corridor"))
+                                      for: roomArray
+                                      fragment: true
+                                      itemTags: ","
+                                      sourceType: itemsWithTags
                                     slots:
                                       default:
-                                        - component: oh-button
+                                        - component: f7-swiper-slide
                                           config:
-                                            action: variable
-                                            actionVariable: objVar
-                                            actionVariableValue:
-                                              floor: =vars.objVar.floor
-                                              room: =loop.roomArray.name
-                                              selectSection: =vars.objVar.selectSection
-                                            class: '=(vars.objVar.room == loop.roomArray.name) ? "selected_menu_item" : "unselected_menu_item"'
-                                            text: =loop.roomArray.label
+                                            style:
+                                              border-radius: 5px
+                                          slots:
+                                            default:
+                                              - component: oh-button
+                                                config:
+                                                  action: variable
+                                                  actionVariable: objVar
+                                                  actionVariableValue:
+                                                    floor: =vars.objVar.floor
+                                                    room: =loop.roomArray.name
+                                                    selectSection: =vars.objVar.selectSection
+                                                  class:
+                                                    - '=vars.objVar ? "" : "unselected_menu_item"'
+                                                    - '=(vars.objVar.room == loop.roomArray.name) ? "selected_menu_item" : "unselected_menu_item"'
+                                                  text: =loop.roomArray.label
+                      - component: f7-col
+                        config:
+                          class:
+                            - display-flex
+                            - justify-content-center
+                            - align-items-center
+                          style:
+                            width: 10%
+                        slots:
+                          default:
+                            - component: f7-block
+                              config:
+                                style:
+                                  --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
+                                  --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
+                                  position: inherit
+                                class:
+                                  - swiper-button-next
+                                id: allRoomsNext
+                - component: f7-row
+                  config:
+                    class:
+                      - align-items-center
+                    style:
+                      width: 100%
+                      height: auto
+                      display: '=vars.objVar ? (vars.objVar.selectSection=="SECTION2" && vars.objVar.floor ) ? "" : "none !important" : "none !important"'
+                  slots:
+                    default:
+                      - component: f7-col
+                        config:
+                          class:
+                            - display-flex
+                            - justify-content-center
+                            - align-items-center
+                          style:
+                            width: 10%
+                        slots:
+                          default:
+                            - component: f7-block
+                              config:
+                                style:
+                                  --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
+                                  --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
+                                  position: inherit
+                                class:
+                                  - swiper-button-prev
+                                id: roomsOfFloorPrev
+                      - component: f7-col
+                        config:
+                          style:
+                            flex-grow: 1
+                        slots:
+                          default:
+                            - component: f7-swiper
+                              config:
+                                params:
+                                  navigation:
+                                    prevEl: "#roomsOfFloorPrev"
+                                    nextEl: "#roomsOfFloorNext"
+                                  breakpoints:
+                                    "0":
+                                      slidesPerView: 1
+                                      spaceBetween: 0
+                                    "240":
+                                      slidesPerView: 1
+                                      spaceBetween: 0
+                                    "320":
+                                      slidesPerView: 2
+                                      slidesPerGroup: 2
+                                      spaceBetween: 0
+                                    "480":
+                                      slidesPerView: 3
+                                      slidesPerGroup: 3
+                                      spaceBetween: 0
+                                    "640":
+                                      slidesPerView: 4
+                                      slidesPerGroup: 4
+                                      spaceBetween: 0
+                                    "940":
+                                      slidesPerView: 5
+                                      slidesPerGroup: 5
+                                      spaceBetween: 0
+                                    "1400":
+                                      slidesPerView: 6
+                                      slidesPerGroup: 6
+                                      spaceBetween: 0
+                                    "1800":
+                                      slidesPerView: 8
+                                      slidesPerGroup: 8
+                                      spaceBetween: 0
+                                  centerInsufficientSlides: true
+                                  grabCursor: true
+                                  keyboard: true
+                                  mousewheel: true
+                                  observeSlideChildren: true
+                                  observer: true
+                                  runCallbacksOnInit: true
+                                  updateOnWindowResize: true
+                                  watchOverflow: true
+                                style:
+                                  width: 100%
+                              slots:
+                                default:
+                                  - component: oh-repeater
+                                    config:
+                                      fetchMetadata: metadata,semantics
+                                      filter: (loop.roomArray.metadata) && ( (loop.roomArray.metadata.semantics.value).includes("Room") || (loop.roomArray.metadata.semantics.value).includes("Corridor") )
+                                      for: roomArray
+                                      fragment: true
+                                      groupItem: =vars.objVar.floor
+                                      sourceType: itemsInGroup
+                                    slots:
+                                      default:
+                                        - component: f7-swiper-slide
+                                          config:
+                                            style:
+                                              border-radius: 5px
+                                          slots:
+                                            default:
+                                              - component: oh-button
+                                                config:
+                                                  action: variable
+                                                  actionVariable: objVar
+                                                  actionVariableValue:
+                                                    floor: =vars.objVar.floor
+                                                    room: =loop.roomArray.name
+                                                    selectSection: =vars.objVar.selectSection
+                                                  class:
+                                                    - '=vars.objVar ? "" : "unselected_menu_item"'
+                                                    - '=(vars.objVar.room == loop.roomArray.name) ? "selected_menu_item" : "unselected_menu_item"'
+                                                  text: =loop.roomArray.label
+                      - component: f7-col
+                        config:
+                          class:
+                            - display-flex
+                            - justify-content-center
+                            - align-items-center
+                          style:
+                            width: 10%
+                        slots:
+                          default:
+                            - component: f7-block
+                              config:
+                                style:
+                                  --swiper-navigation-color: var(--mW-topNavbar-swiper-navigation-color)
+                                  --swiper-navigation-size: var(--mW-topNavbar-swiper-navigation-size)
+                                  position: inherit
+                                class:
+                                  - swiper-button-next
+                                id: roomsOfFloorNext
                 - component: f7-row
                   config:
                     style:
                       justify-content: center
                       width: 100%
                       height: auto
-                    visible: "=!vars.objVar ? false : !vars.objVar.floor ? false : true"
+                      display: '=!vars.objVar ? "none !important": !vars.objVar.floor ? "none !important" : ""'
                   slots:
                     default:
                       - component: oh-repeater
@@ -437,7 +581,7 @@ slots:
                               config:
                                 style:
                                   background: "#F8BB00"
-                                text: =loop.floorItem.label                                            
+                                text: =loop.floorItem.label
           - component: f7-block
             config:
               class:
@@ -462,7 +606,7 @@ slots:
                 - footer
               style:
                 width: 100%
-              visible: '=vars.objVar ? (vars.objVar.selectSection=="SECTION0") ? true : false : false'
+                display: '=vars.objVar ? (vars.objVar.selectSection=="SECTION0") ? "" : "none !important" : "none !important"'
             slots:
               default:
                 - component: f7-row
@@ -611,7 +755,7 @@ slots:
                 - footer
               style:
                 width: 100%
-              visible: '=vars.objVar ? (vars.objVar.selectSection=="SECTION0") ? false : true : false'
+                display: '=vars.objVar ? (vars.objVar.selectSection=="SECTION0") ? "none !important" : "" : "none !important"'
             slots:
               default:
                 - component: f7-row
