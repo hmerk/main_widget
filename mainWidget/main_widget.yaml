@@ -9,6 +9,24 @@ props:
       name: locationTitle
       required: false
       type: TEXT
+    - default: "1234"
+      description: referencePIN
+      label: referencePIN
+      name: referencePIN
+      required: false
+      type: TEXT
+    - context: item
+      description: securityGroup
+      label: securityGroup
+      name: securityGroup
+      required: false
+      type: TEXT
+    - context: item
+      description: securityMode
+      label: securityMode
+      name: securityMode
+      required: false
+      type: TEXT
     - context: item
       description: Name of scenes group item
       label: Scenes Group
@@ -24,7 +42,7 @@ props:
   parameterGroups:
     - name: security
       label: Security Configuration Parameters
-timestamp: Feb 11, 2023, 8:07:06 PM
+timestamp: Feb 11, 2023, 11:05:31 PM
 component: f7-block
 config:
   style:
@@ -199,7 +217,7 @@ slots:
                             flex-grow: 1
                           class:
                             - display-flex
-                            - align-items-center                            
+                            - align-items-center
                         slots:
                           default:
                             - component: f7-swiper
@@ -470,7 +488,7 @@ slots:
                             flex-grow: 1
                           class:
                             - display-flex
-                            - align-items-center                            
+                            - align-items-center
                         slots:
                           default:
                             - component: f7-swiper
@@ -525,12 +543,12 @@ slots:
                                 default:
                                   - component: oh-repeater
                                     config:
-                                      fetchMetadata: metadata,semantics
-                                      filter: (loop.roomArray.metadata) && ( (loop.roomArray.metadata.semantics.value).includes("Room") || (loop.roomArray.metadata.semantics.value).includes("Corridor") )
+                                      fetchMetadata: metadata,semantics,widgetOrder
+                                      filter: (loop.roomArray.metadata) && ((loop.roomArray.metadata.semantics.value).includes("Room") || (loop.roomArray.metadata.semantics.value).includes("Corridor")) && ((loop.roomArray.metadata.semantics.config.isPartOf).includes(vars.objVar.floor))
                                       for: roomArray
                                       fragment: true
-                                      groupItem: =vars.objVar.floor
-                                      sourceType: itemsInGroup
+                                      itemTags: ","
+                                      sourceType: itemsWithTags
                                     slots:
                                       default:
                                         - component: f7-swiper-slide
@@ -582,7 +600,7 @@ slots:
                       - component: oh-repeater
                         config:
                           fetchMetadata: semantics,metadata,widgetOrder
-                          filter: loop.floorItem.name==vars.objVar.floor
+                          filter: (loop.floorItem.metadata) && (loop.floorItem.name == vars.objVar.floor) && (loop.floorItem.metadata.semantics.value).includes("Floor")
                           for: floorItem
                           itemTags: ","
                           sourceType: itemsWithTags
