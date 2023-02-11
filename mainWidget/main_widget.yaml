@@ -1,5 +1,6 @@
 uid: main_widget
-tags: [improvements Nico_R]
+tags:
+  - improvements Nico_R
 props:
   parameters:
     - default: Somewhere
@@ -23,7 +24,7 @@ props:
   parameterGroups:
     - name: security
       label: Security Configuration Parameters
-timestamp: Feb 10, 2023, 3:20:59 PM
+timestamp: Feb 11, 2023, 8:07:06 PM
 component: f7-block
 config:
   style:
@@ -100,14 +101,15 @@ config:
         font-weight: 300;
         }
     .mainWidget .topNavbar .swiper-button-prev, .mainWidget .topNavbar .swiper-button-next {
-        padding: 20px;
         width: 100%;
         height: 40px;
         }
     .mainWidget .topNavbar .swiper-button-prev {
+        padding-right: 20px;
         justify-content: right;
         }
-    .mainWidget .topNavbar .swiper-button-next{
+    .mainWidget .topNavbar .swiper-button-next {
+        padding-left: 20px;
         justify-content: left;
         }
 slots:
@@ -164,7 +166,7 @@ slots:
                 - component: f7-row
                   config:
                     class:
-                      - align-items-center
+                      - align-items-stretch
                       - display-flex
                     style:
                       width: 100%
@@ -177,9 +179,9 @@ slots:
                           class:
                             - display-flex
                             - justify-content-right
-                            - align-items-center
+                            - align-items-stretch
                           style:
-                            width: 10%
+                            width: 15%
                         slots:
                           default:
                             - component: f7-block
@@ -195,6 +197,9 @@ slots:
                         config:
                           style:
                             flex-grow: 1
+                          class:
+                            - display-flex
+                            - align-items-center                            
                         slots:
                           default:
                             - component: f7-swiper
@@ -280,9 +285,9 @@ slots:
                           class:
                             - display-flex
                             - justify-content-center
-                            - align-items-center
+                            - align-items-stretch
                           style:
-                            width: 10%
+                            width: 15%
                         slots:
                           default:
                             - component: f7-block
@@ -297,7 +302,7 @@ slots:
                 - component: f7-row
                   config:
                     class:
-                      - align-items-center
+                      - align-items-stretch
                     style:
                       width: 100%
                       height: auto
@@ -309,9 +314,9 @@ slots:
                           class:
                             - display-flex
                             - justify-content-center
-                            - align-items-center
+                            - align-items-stretch
                           style:
-                            width: 10%
+                            width: 15%
                         slots:
                           default:
                             - component: f7-block
@@ -327,6 +332,9 @@ slots:
                         config:
                           style:
                             flex-grow: 1
+                          class:
+                            - display-flex
+                            - align-items-center
                         slots:
                           default:
                             - component: f7-swiper
@@ -413,9 +421,9 @@ slots:
                           class:
                             - display-flex
                             - justify-content-center
-                            - align-items-center
+                            - align-items-stretch
                           style:
-                            width: 10%
+                            width: 15%
                         slots:
                           default:
                             - component: f7-block
@@ -430,7 +438,7 @@ slots:
                 - component: f7-row
                   config:
                     class:
-                      - align-items-center
+                      - align-items-stretch
                     style:
                       width: 100%
                       height: auto
@@ -442,9 +450,9 @@ slots:
                           class:
                             - display-flex
                             - justify-content-center
-                            - align-items-center
+                            - align-items-stretch
                           style:
-                            width: 10%
+                            width: 15%
                         slots:
                           default:
                             - component: f7-block
@@ -460,6 +468,9 @@ slots:
                         config:
                           style:
                             flex-grow: 1
+                          class:
+                            - display-flex
+                            - align-items-center                            
                         slots:
                           default:
                             - component: f7-swiper
@@ -545,9 +556,9 @@ slots:
                           class:
                             - display-flex
                             - justify-content-center
-                            - align-items-center
+                            - align-items-stretch
                           style:
-                            width: 10%
+                            width: 15%
                         slots:
                           default:
                             - component: f7-block
