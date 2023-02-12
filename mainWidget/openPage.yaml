@@ -6,14 +6,15 @@ config:
   hideSidebarIcon: true
   style:
     --f7-block-padding-horizontal: 0px
+    --f7-block-padding-vertical: 0px
     --f7-navbar-height: 0
 blocks:
   - component: oh-block
     config:
-      stylesheet: |
+      stylesheet: >
         .block:first-child{
-          margin-top: 15px;
-          }
+          margin: 0px;
+        }
     slots:
       default:
         - component: oh-grid-row
@@ -30,3 +31,4 @@ blocks:
                         scenesGroup:
 masonry: null
 grid: []
+canvas: null
