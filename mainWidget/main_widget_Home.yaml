@@ -19,7 +19,6 @@ config:
   style:
     flex: 1 1 auto
     overflow: scroll
-    margin-top: -1em
     margin-bottom: -1em
 slots:
   default:
