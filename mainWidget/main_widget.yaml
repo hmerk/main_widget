@@ -600,7 +600,7 @@ slots:
                       - component: oh-repeater
                         config:
                           fetchMetadata: semantics,metadata,widgetOrder
-                          filter: (loop.floorItem.metadata) && (loop.floorItem.name == vars.objVar.floor) && (loop.floorItem.metadata.semantics.value).includes("Floor")
+                          filter: ((loop.floorItem.metadata) && (loop.floorItem.metadata.semantics.value).includes("Floor")) && (loop.floorItem.name == vars.objVar.floor)
                           for: floorItem
                           itemTags: ","
                           sourceType: itemsWithTags
