@@ -3,28 +3,9 @@ tags:
   - improvements Nico_R
 props:
   parameters:
-    - default: Somewhere
-      description: Name for your weather location
+    - description: Name for your weather location
       label: Weather Location
       name: locationTitle
-      required: false
-      type: TEXT
-    - default: "1234"
-      description: referencePIN
-      label: referencePIN
-      name: referencePIN
-      required: false
-      type: TEXT
-    - context: item
-      description: securityGroup
-      label: securityGroup
-      name: securityGroup
-      required: false
-      type: TEXT
-    - context: item
-      description: securityMode
-      label: securityMode
-      name: securityMode
       required: false
       type: TEXT
     - context: item
@@ -33,16 +14,7 @@ props:
       name: scenesGroup
       required: false
       type: TEXT
-    - description: Hide Security menu
-      label: hide
-      name: hideSecurity
-      required: false
-      type: BOOLEAN
-      groupName: security
-  parameterGroups:
-    - name: security
-      label: Security Configuration Parameters
-timestamp: Feb 11, 2023, 11:05:31 PM
+timestamp: Feb 13, 2023, 9:59:18 PM
 component: f7-block
 config:
   style:
