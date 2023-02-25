@@ -1,139 +1,219 @@
 uid: main_widget_FloorsAndRooms
-tags: []
+tags:
+  - improvements Nico_R
 props:
   parameterGroups: []
-timestamp: Nov 25, 2022, 2:04:15 PM
+timestamp: Feb 22, 2023, 4:29:23 PM
 component: f7-block
 config:
-  style:
-    flex: 1 1 auto
-    margin-bottom: -1em
-    margin-top: 1em
-    overflow: scroll
-  visible: '=vars.objVar ? (vars.objVar.selectSection=="SECTION0") ? false : true : false'
+  stylesheet: >
+    .invisible {
+      display: none;
+      /*position: absolute;*/
+      /*left: -999em;*/
+      /*opacity: 0.1;*/
+    }    
 slots:
   default:
-    - component: oh-repeater
-      config:
-        fetchMetadata: semantics,metadata,widgetOrder
-        filter: '(vars.objVar && vars.objVar.floor) ? loop.floorItem.name==vars.objVar.floor : (loop.floorItem.metadata) && (loop.floorItem.metadata.semantics.value).includes("Floor")'
-        for: floorItem
-        itemTags: ","
-        sourceType: itemsWithTags
+    - component: f7-block
       slots:
         default:
-          - component: oh-repeater
+          - component: f7-row
             config:
-              fetchMetadata: semantics,metadata,widgetOrder
-              filter: '(vars.objVar && vars.objVar.room) ? loop.roomItem.name==vars.objVar.room : (loop.roomItem.metadata) && ( (loop.roomItem.metadata.semantics.value).includes("Room") || (loop.roomItem.metadata.semantics.value).includes("Corridor") )'
-              for: roomItem
-              groupItem: =loop.floorItem.name
-              sourceType: itemsInGroup
+              class:
+                - justify-content-center
             slots:
               default:
                 - component: oh-repeater
                   config:
-                    fetchMetadata: semantics,metadata,listWidget,uiSemantics
-                    filter: loop.lightItem.metadata.semantics.config.hasLocation == loop.roomItem.name
-                    for: lightItem
-                    itemTags: Lightbulb
+                    fetchMetadata: semantics,widgetOrder
+                    filter: (loop.floors.metadata) && (loop.floors.metadata.semantics.value).includes("Floor")
+                    for: floors
+                    fragment: true
+                    itemTags: ","
                     sourceType: itemsWithTags
                   slots:
                     default:
                       - component: oh-repeater
                         config:
-                          fetchMetadata: semantics,metadata,listWidget,uiSemantics
-                          filter: '(loop.lightPowerItem.type=="Switch") ? true : false'
-                          for: lightPowerItem
-                          groupItem: =loop.lightItem.name
-                          sourceType: itemsInGroup
-                        slots:
-                          default:
-                            - component: widget:main_widget_Light_Card
-                              config:
-                                Title: "=loop.lightItem.metadata.uiSemantics ? loop.lightItem.metadata.uiSemantics.config.equipment + loop.lightItem.metadata.uiSemantics.config.preposition + loop.lightItem.metadata.uiSemantics.config.location : loop.lightItem.label"
-                                groupItem: =loop.lightItem.name
-                                powerItem: = loop.lightPowerItem.name
-                                visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? true : (vars.objVar.selectThing=="Lights") ? true : false'
-                - component: oh-repeater
-                  config:
-                    fetchMetadata: semantics,metadata,uiSemantics
-                    filter: loop.equipmentItem.metadata.semantics.config.hasLocation == loop.roomItem.name
-                    for: equipmentItem
-                    itemTags: Blinds
-                    sourceType: itemsWithTags
-                  slots:
-                    default:
-                      - component: oh-repeater
-                        config:
-                          fetchMetadata: semantics,metadata,uiSemantics
-                          filter: '(loop.shutterItem.type=="Rollershutter") ? true : false'
-                          for: shutterItem
-                          groupItem: =loop.equipmentItem.name
+                          fetchMetadata: semantics
+                          filter: (loop.rooms.metadata) && ((loop.rooms.metadata.semantics.value).includes("Room")  || (loop.rooms.metadata.semantics.value).includes("Corridor"))
+                          for: rooms
+                          fragment: true
+                          groupItem: =loop.floors.name
                           sourceType: itemsInGroup
                         slots:
                           default:
                             - component: oh-repeater
                               config:
-                                fetchMetadata: semantics,metadata
-                                filter: loop.modeItem.type=="Switch"
-                                for: modeItem
-                                groupItem: =loop.equipmentItem.name
-                                sourceType: itemsInGroup
-                              slots:
-                                default:
-                                  - component: widget:main_widget_Rollershutter_Card
-                                    config:
-                                      groupItem: =loop.equipmentItem.name
-                                      RollerItem: =loop.shutterItem.name
-                                      RollerMode: = loop.modeItem.name
-                                      Title: "=loop.equipmentItem.metadata.uiSemantics ? loop.equipmentItem.metadata.uiSemantics.config.equipment + loop.equipmentItem.metadata.uiSemantics.config.preposition + loop.equipmentItem.metadata.uiSemantics.config.location : loop.equipmentItem.label"
-                                      visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? false : (vars.objVar.selectThing=="Rollers") ? true : false'
-                - component: oh-repeater
-                  config:
-                    fetchMetadata: semantics,metadata,listWidget,uiSemantics
-                    filter: loop.radiatorItem.metadata.semantics.config.hasLocation == loop.roomItem.name
-                    for: radiatorItem
-                    itemTags: RadiatorControl
-                    sourceType: itemsWithTags
-                  slots:
-                    default:
-                      - component: widget:main_widget_RadiatorControl_Card
-                        config:
-                          Title: "=loop.radiatorItem.metadata.uiSemantics ? loop.radiatorItem.metadata.uiSemantics.config.equipment + loop.radiatorItem.metadata.uiSemantics.config.preposition + loop.radiatorItem.metadata.uiSemantics.config.location : loop.radiatorItem.label"
-                          groupItem: =loop.radiatorItem.name
-                          visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? false : (vars.objVar.selectThing=="Climate") ? true : false'
-                - component: oh-repeater
-                  config:
-                    fetchMetadata: semantics,metadata,listWidget,uiSemantics
-                    filter: loop.hvacItem.metadata.semantics.config.hasLocation == loop.roomItem.name
-                    for: hvacItem
-                    itemTags: HVAC
-                    sourceType: itemsWithTags
-                  slots:
-                    default:
-                      - component: oh-repeater
-                        config:
-                          fetchMetadata: semantics,metadata,listWidget,uiSemantics
-                          filter: '((loop.hvacPowerItem.groupNames.indexOf(loop.hvacItem.name) >= 0) && (loop.hvacPowerItem.type=="Switch")) ? true : false'
-                          for: hvacPowerItem
-                          itemTags: Control,Power
-                          sourceType: itemsWithTags
-                        slots:
-                          default:
-                            - component: oh-repeater
-                              config:
-                                fetchMetadata: semantics,metadata,listWidget
-                                filter: '((loop.hvacModeItem.groupNames.indexOf(loop.hvacItem.name) >= 0) && (loop.hvacModeItem.type=="String")) ? true : false'
-                                for: hvacModeItem
-                                itemTags: Control,Temperature
+                                fetchMetadata: semantics,uiSemantics
+                                filter: (loop.lightItem.metadata.semantics.config) && (loop.lightItem.metadata.semantics.config.hasLocation) && (loop.lightItem.metadata.semantics.config.hasLocation == loop.rooms.name)
+                                for: lightItem
+                                fragment: true
+                                itemTags: Lightbulb
                                 sourceType: itemsWithTags
                               slots:
                                 default:
-                                  - component: widget:main_widget_HVAC_Card
+                                  - component: oh-repeater
                                     config:
-                                      Title: "=loop.hvacItem.metadata.uiSemantics ? loop.hvacItem.metadata.uiSemantics.config.equipment + loop.hvacItem.metadata.uiSemantics.config.preposition + loop.hvacItem.metadata.uiSemantics.config.location : loop.hvacItem.label"
-                                      groupItem: =loop.hvacItem.name
-                                      modeItem: =loop.hvacModeItem.name
-                                      powerItem: =loop.hvacPowerItem.name
-                                      visible: '=!vars.objVar ? false : !vars.objVar.selectThing ? false : (vars.objVar.selectThing=="Climate") ? true : false'
+                                      fetchMetadata: semantics
+                                      filter: '(loop.lightPowerItem.type=="Switch") ? true : false'
+                                      for: lightPowerItem
+                                      fragment: true
+                                      groupItem: =loop.lightItem.name
+                                      sourceType: itemsInGroup
+                                    slots:
+                                      default:
+                                        - component: f7-col
+                                          config:
+                                            class:
+                                              - '=((vars.objVar.room == loop.lightItem.metadata.semantics.config.hasLocation || (vars.objVar.selectSection == "SECTION2" && !vars.objVar.floor && !vars.objVar.room) || (vars.objVar.selectSection == "SECTION2" && vars.objVar.floor == loop.rooms.metadata.semantics.config.isPartOf && !vars.objVar.room) || (vars.objVar.selectSection == "SECTION1")) && (vars.objVar.selectThing == "Lights" || !vars.objVar.selectThing )) ? "visible" : "invisible"'
+                                            large: 50
+                                            medium: 50
+                                            small: 90
+                                            style:
+                                              overflow: hidden
+                                            width: 100
+                                            xlarge: 33
+                                            xsmall: 100
+                                          slots:
+                                            default:
+                                              - component: widget:main_widget_Light_Card
+                                                config:
+                                                  Title: "=loop.lightItem.metadata.uiSemantics ? loop.lightItem.metadata.uiSemantics.config.equipment + loop.lightItem.metadata.uiSemantics.config.preposition + loop.lightItem.metadata.uiSemantics.config.location : loop.lightItem.label"
+                                                  groupItem: =loop.lightItem.name
+                                                  groupItemLabel: =loop.lightItem.label
+                                                  groupItemLocation: =loop.rooms.label
+                                                  powerItem: = loop.lightPowerItem.name
+                            - component: oh-repeater
+                              config:
+                                fetchMetadata: semantics,metadata,listWidget
+                                filter: (loop.equipmentItem.metadata.semantics.config) && (loop.equipmentItem.metadata.semantics.config.hasLocation) && (loop.equipmentItem.metadata.semantics.config.hasLocation == loop.rooms.name)
+                                for: equipmentItem
+                                fragment: true
+                                itemTags: Blinds
+                                sourceType: itemsWithTags
+                              slots:
+                                default:
+                                  - component: oh-repeater
+                                    config:
+                                      fetchMetadata: semantics,metadata,uiSemantics
+                                      filter: (loop.shutterItem.type == "Rollershutter") && (loop.shutterItem.tags).includes("Control")
+                                      for: shutterItem
+                                      fragment: true
+                                      groupItem: =loop.equipmentItem.name
+                                      sourceType: itemsInGroup
+                                    slots:
+                                      default:
+                                        - component: oh-repeater
+                                          config:
+                                            fetchMetadata: semantics,metadata
+                                            filter: (loop.modeItem.type == "Switch") && (loop.modeItem.tags).includes("Control")
+                                            for: modeItem
+                                            fragment: true
+                                            groupItem: =loop.equipmentItem.name
+                                            sourceType: itemsInGroup
+                                          slots:
+                                            default:
+                                              - component: f7-col
+                                                config:
+                                                  class:
+                                                    - '=((vars.objVar.room == loop.equipmentItem.metadata.semantics.config.hasLocation || (vars.objVar.selectSection == "SECTION2" && !vars.objVar.floor && !vars.objVar.room) || (vars.objVar.selectSection == "SECTION2" && vars.objVar.floor == loop.rooms.metadata.semantics.config.isPartOf && !vars.objVar.room) || (vars.objVar.selectSection == "SECTION1")) && (vars.objVar.selectThing == "Rollers" || !vars.objVar.selectThing )) ? "visible" : "invisible"'
+                                                  large: 50
+                                                  medium: 50
+                                                  small: 90
+                                                  style:
+                                                    overflow: hidden
+                                                  width: 100
+                                                  xlarge: 33
+                                                  xsmall: 100
+                                                slots:
+                                                  default:
+                                                    - component: widget:main_widget_Rollershutter_Card
+                                                      config:
+                                                        RollerItem: =loop.shutterItem.name
+                                                        RollerMode: = loop.modeItem.name
+                                                        Title: "=loop.equipmentItem.metadata.uiSemantics ? loop.equipmentItem.metadata.uiSemantics.config.equipment + loop.equipmentItem.metadata.uiSemantics.config.preposition + loop.equipmentItem.metadata.uiSemantics.config.location : loop.equipmentItem.label"
+                                                        groupItem: =loop.equipmentItem.name
+                                                        groupItemLabel: =loop.equipmentItem.label
+                                                        groupItemLocation: =loop.rooms.label
+                            - component: oh-repeater
+                              config:
+                                fetchMetadata: semantics,metadata,listWidget,uiSemantics
+                                filter: loop.radiatorItem.metadata.semantics.config.hasLocation == loop.rooms.name
+                                for: radiatorItem
+                                fragment: true
+                                itemTags: RadiatorControl
+                                sourceType: itemsWithTags
+                              slots:
+                                default:
+                                  - component: f7-col
+                                    config:
+                                      class:
+                                        - '=((vars.objVar.room == loop.radiatorItem.metadata.semantics.config.hasLocation || (vars.objVar.selectSection == "SECTION2" && !vars.objVar.floor && !vars.objVar.room) || (vars.objVar.selectSection == "SECTION2" && vars.objVar.floor == loop.rooms.metadata.semantics.config.isPartOf && !vars.objVar.room) || (vars.objVar.selectSection == "SECTION1")) && (vars.objVar.selectThing == "Climate" || !vars.objVar.selectThing )) ? "visible" : "invisible"'
+                                      large: 50
+                                      medium: 50
+                                      small: 90
+                                      style:
+                                        overflow: hidden
+                                      width: 100
+                                      xlarge: 33
+                                      xsmall: 100
+                                    slots:
+                                      default:
+                                        - component: widget:main_widget_RadiatorControl_Card_Dev
+                                          config:
+                                            Title: "=loop.radiatorItem.metadata.uiSemantics ? loop.radiatorItem.metadata.uiSemantics.config.equipment + loop.radiatorItem.metadata.uiSemantics.config.preposition + loop.radiatorItem.metadata.uiSemantics.config.location : loop.radiatorItem.label"
+                                            groupItem: =loop.radiatorItem.name
+                                            groupItemLabel: =loop.radiatorItem.label
+                                            groupItemLocation: =loop.rooms.label
+                            - component: oh-repeater
+                              config:
+                                fetchMetadata: semantics,metadata,listWidget,uiSemantics
+                                filter: loop.hvacItem.metadata.semantics.config.hasLocation == loop.rooms.name
+                                for: hvacItem
+                                fragment: true
+                                itemTags: HVAC
+                                sourceType: itemsWithTags
+                              slots:
+                                default:
+                                  - component: oh-repeater
+                                    config:
+                                      fetchMetadata: semantics,metadata,listWidget,uiSemantics
+                                      filter: '((loop.hvacPowerItem.groupNames.indexOf(loop.hvacItem.name) >= 0) && (loop.hvacPowerItem.type=="Switch")) ? true : false'
+                                      for: hvacPowerItem
+                                      fragment: true
+                                      itemTags: Control,Power
+                                      sourceType: itemsWithTags
+                                    slots:
+                                      default:
+                                        - component: oh-repeater
+                                          config:
+                                            fetchMetadata: semantics,metadata,listWidget
+                                            filter: '((loop.hvacModeItem.groupNames.indexOf(loop.hvacItem.name) >= 0) && (loop.hvacModeItem.type=="String")) ? true : false'
+                                            for: hvacModeItem
+                                            fragment: true
+                                            itemTags: Control,Temperature
+                                            sourceType: itemsWithTags
+                                          slots:
+                                            default:
+                                              - component: f7-col
+                                                config:
+                                                  class:
+                                                    - '=((vars.objVar.room == loop.hvacItem.metadata.semantics.config.hasLocation || (vars.objVar.selectSection == "SECTION2" && !vars.objVar.floor && !vars.objVar.room) || (vars.objVar.selectSection == "SECTION2" && vars.objVar.floor == loop.rooms.metadata.semantics.config.isPartOf && !vars.objVar.room) || (vars.objVar.selectSection == "SECTION1")) && (vars.objVar.selectThing == "Climate" || !vars.objVar.selectThing )) ? "visible" : "invisible"'
+                                                  large: 50
+                                                  medium: 50
+                                                  small: 90
+                                                  style:
+                                                    overflow: hidden
+                                                  width: 100
+                                                  xlarge: 33
+                                                  xsmall: 100
+                                                slots:
+                                                  default:
+                                                    - component: widget:main_widget_HVAC_Card
+                                                      config:
+                                                        Title: "=loop.hvacItem.metadata.uiSemantics ? loop.hvacItem.metadata.uiSemantics.config.equipment + loop.hvacItem.metadata.uiSemantics.config.preposition + loop.hvacItem.metadata.uiSemantics.config.location : loop.hvacItem.label"
+                                                        groupItem: =loop.hvacItem.name
+                                                        modeItem: =loop.hvacModeItem.name
+                                                        powerItem: =loop.hvacPowerItem.name
