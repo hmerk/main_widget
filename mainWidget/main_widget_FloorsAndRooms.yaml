@@ -3,7 +3,7 @@ tags:
   - improvements Nico_R
 props:
   parameterGroups: []
-timestamp: Feb 22, 2023, 4:29:23 PM
+timestamp: Feb 26, 2023, 8:13:47 PM
 component: f7-block
 config:
   stylesheet: >
@@ -18,7 +18,7 @@ slots:
     - component: f7-block
       config:
         class:
-          - '=vars.objVar ? (vars.objVar.selectSection=="SECTION0") ? "" : "" : "invisible"'    
+          - '=vars.objVar ? (vars.objVar.selectSection=="SECTION0") ? "" : "" : "invisible"'
       slots:
         default:
           - component: f7-row
@@ -90,7 +90,7 @@ slots:
                                                   powerItem: = loop.lightPowerItem.name
                             - component: oh-repeater
                               config:
-                                fetchMetadata: semantics,metadata,listWidget
+                                fetchMetadata: semantics,uiSemantics
                                 filter: (loop.equipmentItem.metadata.semantics.config) && (loop.equipmentItem.metadata.semantics.config.hasLocation) && (loop.equipmentItem.metadata.semantics.config.hasLocation == loop.rooms.name)
                                 for: equipmentItem
                                 fragment: true
@@ -100,7 +100,7 @@ slots:
                                 default:
                                   - component: oh-repeater
                                     config:
-                                      fetchMetadata: semantics,metadata,uiSemantics
+                                      fetchMetadata: semantics
                                       filter: (loop.shutterItem.type == "Rollershutter") && (loop.shutterItem.tags).includes("Control")
                                       for: shutterItem
                                       fragment: true
@@ -110,7 +110,7 @@ slots:
                                       default:
                                         - component: oh-repeater
                                           config:
-                                            fetchMetadata: semantics,metadata
+                                            fetchMetadata: semantics
                                             filter: (loop.modeItem.type == "Switch") && (loop.modeItem.tags).includes("Control")
                                             for: modeItem
                                             fragment: true
@@ -142,7 +142,7 @@ slots:
                                                         groupItemLocation: =loop.rooms.label
                             - component: oh-repeater
                               config:
-                                fetchMetadata: semantics,metadata,listWidget,uiSemantics
+                                fetchMetadata: semantics,uiSemantics
                                 filter: loop.radiatorItem.metadata.semantics.config.hasLocation == loop.rooms.name
                                 for: radiatorItem
                                 fragment: true
@@ -172,7 +172,7 @@ slots:
                                             groupItemLocation: =loop.rooms.label
                             - component: oh-repeater
                               config:
-                                fetchMetadata: semantics,metadata,listWidget,uiSemantics
+                                fetchMetadata: semantics,uiSemantics
                                 filter: loop.hvacItem.metadata.semantics.config.hasLocation == loop.rooms.name
                                 for: hvacItem
                                 fragment: true
@@ -182,7 +182,7 @@ slots:
                                 default:
                                   - component: oh-repeater
                                     config:
-                                      fetchMetadata: semantics,metadata,listWidget,uiSemantics
+                                      fetchMetadata: semantics
                                       filter: '((loop.hvacPowerItem.groupNames.indexOf(loop.hvacItem.name) >= 0) && (loop.hvacPowerItem.type=="Switch")) ? true : false'
                                       for: hvacPowerItem
                                       fragment: true
@@ -192,7 +192,7 @@ slots:
                                       default:
                                         - component: oh-repeater
                                           config:
-                                            fetchMetadata: semantics,metadata,listWidget
+                                            fetchMetadata: semantics
                                             filter: '((loop.hvacModeItem.groupNames.indexOf(loop.hvacItem.name) >= 0) && (loop.hvacModeItem.type=="String")) ? true : false'
                                             for: hvacModeItem
                                             fragment: true
