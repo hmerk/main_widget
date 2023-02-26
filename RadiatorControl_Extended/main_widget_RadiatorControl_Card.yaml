@@ -22,7 +22,6 @@ config:
     border-bottom-right-radius: var(--f7-card-expandable-border-radius)
     border-top-left-radius: var(--f7-card-expandable-border-radius)
     border-top-right-radius: var(--f7-card-expandable-border-radius)
-    box-shadow: 5px 5px 15px 1px rgba(0,0,0,0.05)
     padding: 0px
 slots:
   default:
