@@ -16,6 +16,9 @@ config:
 slots:
   default:
     - component: f7-block
+      config:
+        class:
+          - '=vars.objVar ? (vars.objVar.selectSection=="SECTION0") ? "" : "" : "invisible"'    
       slots:
         default:
           - component: f7-row
@@ -161,7 +164,7 @@ slots:
                                       xsmall: 100
                                     slots:
                                       default:
-                                        - component: widget:main_widget_RadiatorControl_Card_Dev
+                                        - component: widget:main_widget_RadiatorControl_Card
                                           config:
                                             Title: "=loop.radiatorItem.metadata.uiSemantics ? loop.radiatorItem.metadata.uiSemantics.config.equipment + loop.radiatorItem.metadata.uiSemantics.config.preposition + loop.radiatorItem.metadata.uiSemantics.config.location : loop.radiatorItem.label"
                                             groupItem: =loop.radiatorItem.name
