@@ -19,7 +19,6 @@ config:
   style:
     padding: 0px
     border-radius: var(--f7-card-expandable-border-radius)
-    box-shadow: 5px 5px 15px 1px rgba(0,0,0,0.05)
     margin-left: 5px
     margin-right: 5px
     background: '=items[props.scene].state == "ON" ? "linear-gradient(to bottom right, rgba(230, 230, 0) 0%, rgba(255, 255, 255) 100%)" : "linear-gradient(to bottom right, rgba(255, 255, 255) 0%, rgba(255, 255, 255) 100%)"'
