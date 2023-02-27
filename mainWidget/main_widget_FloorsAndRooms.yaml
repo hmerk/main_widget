@@ -59,7 +59,6 @@ slots:
                                 default:
                                   - component: oh-repeater
                                     config:
-                                      fetchMetadata: semantics
                                       filter: '(loop.lightPowerItem.type=="Switch") ? true : false'
                                       for: lightPowerItem
                                       fragment: true
@@ -100,7 +99,6 @@ slots:
                                 default:
                                   - component: oh-repeater
                                     config:
-                                      fetchMetadata: semantics
                                       filter: (loop.shutterItem.type == "Rollershutter") && (loop.shutterItem.tags).includes("Control")
                                       for: shutterItem
                                       fragment: true
@@ -110,7 +108,6 @@ slots:
                                       default:
                                         - component: oh-repeater
                                           config:
-                                            fetchMetadata: semantics
                                             filter: (loop.modeItem.type == "Switch") && (loop.modeItem.tags).includes("Control")
                                             for: modeItem
                                             fragment: true
