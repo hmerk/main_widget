@@ -26,5 +26,27 @@ The UI is split into multiple specialized widgets that are shown if the model co
 * [HVAC widget](HVAC\main_widget_HVAC_Card.md)
 * [Rollershutter widget](Rollershutter\main_widget_Rollershutter_Card.md)
 
+## item configuration requirements
+| type               | type                 | category     | semantic class  | semantic property | used in card        |
+| ------------------ | -------------------- | ------------ | --------------- | ----------------- | ------------------- |
+| Battery voltage    | Number:Dimensionless | BatteryLevel | Measurement     | Voltage           | Radiator extended   |
+| Battery low        | Switch               | LowBattery   | LowBattery      | Voltage           | Radiator extended   |
+| Door State         | Contact              | Door         | OpenState       | Opening           | Security            |
+| Window state       | Contact              | Window       | OpenState       | Opening           | Security            |
+| Motion detected    | Switch               | Motion       | Alarm           | Presence          | Security            |
+| Thermostat         | Group                | Heating      | RadiatorControl | None / don't care | Radiator (extended) |
+| -->Act Temperature | Number:Temperature   | Temperature  | Measurement     | Temperature       | Radiator (extended) |
+| -->Set Temperature | Number:Temperature   | Temperature  | SetPoint        | Temperature       | Radiator (extended) |
+| Rollershutter      | Group                | Blinds       | Blinds          | None / don't care | Rollershutter       |
+| -->Level           | Rollershutter        | Blinds       | SetPoint        | Level             | Rollershutter       |
+| -->Mode            | Switch               | switch       | Control         | Level             | Rollershutter       |
+| Light(simple)      | Group                | LightBulb    | LightBulb       | None / don't care | Light               |
+| -->State           | Switch               | LightBulb    | Status          | Light             | Light               |
+| Light(dimmer)      | Group                | LightBulb    | LightBulb       | None / don't care | Light               |
+| -->Brightness      | Dimmer               | Light        | Control         | Light             | Light               |
+| Light(color)       | Group                | LightBulb    | LightBulb       | None / don't care | Light               |
+| -->Brightness      | Dimmer               | Light        | Control         | Light             | Light               |
+| -->Color           | Dimmer               | colorlight   | Control         | Light             | Light               |
+
 ## Community
 Please check [openHAB community](https://community.openhab.org/t/oh3-main-ui-new-main-widget-development-and-testing-wip/138794) for discussions and proposals.
